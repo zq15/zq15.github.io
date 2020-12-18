@@ -1,345 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  
-  <title>Java日记 | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="01-JDBC的使用前言大家已经安装好了mysql，并且使用navicate数据库连接工具连接好了 如果navicate破解还存在问题，那这个小工具先过渡也可以，连接方式如下  这次我们使用Java 的JDBC，来连接我们的数据库，并且实现一下增删查改操作，ide是idea 2020.2.3，jdk是1.8版本，驱动包版本，5.0.8 创建表结构localhost上右键新建数据库 **** 字符集">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Java日记">
-<meta property="og:url" content="http://example.com/2020/12/19/Java%E6%97%A5%E8%AE%B0/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="01-JDBC的使用前言大家已经安装好了mysql，并且使用navicate数据库连接工具连接好了 如果navicate破解还存在问题，那这个小工具先过渡也可以，连接方式如下  这次我们使用Java 的JDBC，来连接我们的数据库，并且实现一下增删查改操作，ide是idea 2020.2.3，jdk是1.8版本，驱动包版本，5.0.8 创建表结构localhost上右键新建数据库 **** 字符集">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSmSRe.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSezGD.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSejIK.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSexPO.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSeXa6.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSmpxH.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSmCMd.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSmPsA.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSu88U.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuQU0.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSu3CT.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuMEq.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSul5V.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuG2F.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuJv4.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSutKJ.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuTxg.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuoRS.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuIG8.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuHMQ.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSu5Pf.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000124770.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000531153.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000723701.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000824226.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000948285.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204001209091.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204001439292.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002407128.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002420032.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002454854.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002758419.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002742588.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204004306882.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204004420912.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204004624469.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204004839028.png">
-<meta property="article:published_time" content="2020-12-18T16:17:08.000Z">
-<meta property="article:modified_time" content="2020-12-18T16:17:44.043Z">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s3.ax1x.com/2020/12/08/rSmSRe.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
-
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
-<meta name="generator" content="Hexo 5.3.0"></head>
-
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main"><article id="post-Java日记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/12/19/Java%E6%97%A5%E8%AE%B0/" class="article-date">
-  <time class="dt-published" datetime="2020-12-18T16:17:08.000Z" itemprop="datePublished">2020-12-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      Java日记
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="01-JDBC的使用"><a href="#01-JDBC的使用" class="headerlink" title="01-JDBC的使用"></a>01-JDBC的使用</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>大家已经安装好了mysql，并且使用navicate数据库连接工具连接好了</p>
-<p>如果navicate破解还存在问题，那这个小工具先过渡也可以，连接方式如下</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSmSRe"><img src="https://s3.ax1x.com/2020/12/08/rSmSRe.png" alt="rSmSRe.png"></a></p>
-<p>这次我们使用Java 的JDBC，来连接我们的数据库，并且实现一下增删查改操作，ide是idea 2020.2.3，jdk是1.8版本，驱动包版本，5.0.8</p>
-<h2 id="创建表结构"><a href="#创建表结构" class="headerlink" title="创建表结构"></a>创建表结构</h2><p>localhost上右键新建数据库</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSezGD"><img src="https://s3.ax1x.com/2020/12/08/rSezGD.png" alt="rSezGD.png"></a>****</p>
-<p>字符集和排序规则分别指定这两个，至于为啥暂时不用纠结哈，哈哈，先有点感觉先实现，小周同学在公司里面也是这样的哦，时间比较紧张的时候会先把功能实现，后面再去思考和总结</p>
-<p>创建一张用户表，并且添加字段</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSejIK"><img src="https://s3.ax1x.com/2020/12/08/rSejIK.png" alt="rSejIK.png"></a></p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSexPO"><img src="https://s3.ax1x.com/2020/12/08/rSexPO.png" alt="rSexPO.png"></a></p>
-<p>偷偷说一句，这张表很重要哦，会用很久很久，当然啦，后面会把这个例子越做越完善，从入门到秃头哈哈哈</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSeXa6"><img src="https://s3.ax1x.com/2020/12/08/rSeXa6.png" alt="rSeXa6.png"></a></p>
-<p>新建两个字段，用户名<code>username</code>和密码<code>password</code></p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSmpxH"><img src="https://s3.ax1x.com/2020/12/08/rSmpxH.png" alt="rSmpxH.png"></a></p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSmCMd"><img src="https://s3.ax1x.com/2020/12/08/rSmCMd.png" alt="rSmCMd.png"></a></p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSmPsA"><img src="https://s3.ax1x.com/2020/12/08/rSmPsA.png" alt="rSmPsA.png"></a></p>
-<p>这样，我们的用户(User)表就建好了</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSu88U"><img src="https://s3.ax1x.com/2020/12/08/rSu88U.png" alt="rSu88U.png"></a></p>
-<h2 id="创建一个java项目，引入mysql驱动包"><a href="#创建一个java项目，引入mysql驱动包" class="headerlink" title="创建一个java项目，引入mysql驱动包"></a>创建一个java项目，引入mysql驱动包</h2><p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSuQU0"><img src="https://s3.ax1x.com/2020/12/08/rSuQU0.png" alt="rSuQU0.png"></a></p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSu3CT"><img src="https://s3.ax1x.com/2020/12/08/rSu3CT.png" alt="rSu3CT.png"></a></p>
-<p>一定要选择jdk，一般都是1.8啦</p>
-<p>然后next</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSuMEq"><img src="https://s3.ax1x.com/2020/12/08/rSuMEq.png" alt="rSuMEq.png"></a></p>
-<p>这个界面finish</p>
-<p>创建好的项目是这样的</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSul5V"><img src="https://s3.ax1x.com/2020/12/08/rSul5V.png" alt="rSul5V.png"></a></p>
-<p>我们导入我们的驱动包，为了大家使用方便，我还是把这个包放在项目根目录下面把</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSuG2F"><img src="https://s3.ax1x.com/2020/12/08/rSuG2F.png" alt="rSuG2F.png"></a></p>
-<p>点击file-&gt;project structure</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSuJv4"><img src="https://s3.ax1x.com/2020/12/08/rSuJv4.png" alt="rSuJv4.png"></a></p>
-<p>再次强调这里的jdk版本</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSutKJ"><img src="https://s3.ax1x.com/2020/12/08/rSutKJ.png" alt="rSutKJ.png"></a></p>
-<p>点击Modules-&gt;dependencies-&gt;最右边可以选择第一个和第二个，这里选择第一个，</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSuTxg"><img src="https://s3.ax1x.com/2020/12/08/rSuTxg.png" alt="rSuTxg.png"></a></p>
-<p>勾选我们放入项目根路径下面的数据库驱动包</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSuoRS"><img src="https://s3.ax1x.com/2020/12/08/rSuoRS.png" alt="rSuoRS.png"></a></p>
-<p>加入之后是这样的，然后apply-&gt;ok</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSuIG8"><img src="https://s3.ax1x.com/2020/12/08/rSuIG8.png" alt="rSuIG8.png"></a></p>
-<p>创建一个类测试一下我们导入是否成功</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSuHMQ"><img src="https://s3.ax1x.com/2020/12/08/rSuHMQ.png" alt="rSuHMQ.png"></a></p>
-<p>顺便把包也给一道创建了</p>
-<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSu5Pf"><img src="https://s3.ax1x.com/2020/12/08/rSu5Pf.png" alt="rSu5Pf.png"></a></p>
-<p>写个main方法，这里有个快捷输入输入main或者psvm就可以了</p>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000124770.png" alt="image-20201204000124770"></p>
-<p>写点大家暂时看不懂的代码测试一下，不用纠结哈，Java就是这样的，涉及到的东西比较多，想一次性完全搞明白很难，先会用</p>
-<p>这里有提示说明导包没问题</p>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000531153.png" alt="image-20201204000531153"></p>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000723701.png" alt="image-20201204000723701"></p>
-<p>鼠标悬停在红色下划线的地方按 alt + enter 就可以快速解决代码中的问题了</p>
-<p>这里选择加上try-catch</p>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000824226.png" alt="image-20201204000824226"></p>
-<p>加上一行输出语句</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zz;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestJDBC</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Class.forName去加载 mysql-connector-java-5.0.8-bin.jar</span></span><br><span class="line">        <span class="comment">// 中的  com.mysql.jdbc.Driver 这个驱动类</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;数据库驱动加载成功 ！&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果没问题，就会输出如下的一段话</p>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000948285.png" alt="image-20201204000948285"></p>
-<p>加载有问题就会报错啦</p>
-<p>输出红色的一串<code>ClassNotFoundException</code></p>
-<h2 id="实现向数据库插入一条语句"><a href="#实现向数据库插入一条语句" class="headerlink" title="实现向数据库插入一条语句"></a>实现向数据库插入一条语句</h2><p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204001209091.png" alt="image-20201204001209091"></p>
-<p>出现红色的就alt+enter解决一下哈</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zz;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestJDBC</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 1.测试驱动包的加载</span></span><br><span class="line">        <span class="comment">// Class.forName去加载 mysql-connector-java-5.0.8-bin.jar</span></span><br><span class="line">        <span class="comment">// 中的  com.mysql.jdbc.Driver 这个驱动类</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;数据库驱动加载成功 ！&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2.测试数据库连接</span></span><br><span class="line">            <span class="comment">// 建立与数据库的Connection连接</span></span><br><span class="line">            <span class="comment">// 这里需要提供：</span></span><br><span class="line">            <span class="comment">// 数据库所处于的ip:127.0.0.1 (本机)</span></span><br><span class="line">            <span class="comment">// 数据库的端口号： 3306 （mysql专用端口号）</span></span><br><span class="line">            <span class="comment">// 数据库名称 sugon666</span></span><br><span class="line">            <span class="comment">// 编码方式 UTF-8</span></span><br><span class="line">            <span class="comment">// 账号 root</span></span><br><span class="line">            <span class="comment">// 密码 root123 改成自己的密码哈</span></span><br><span class="line"></span><br><span class="line">            Connection c = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                c = DriverManager</span><br><span class="line">                        .getConnection(</span><br><span class="line">                                <span class="string">&quot;jdbc:mysql://127.0.0.1:3306/sugon666?characterEncoding=UTF-8&quot;</span>,</span><br><span class="line">                                <span class="string">&quot;root&quot;</span>, <span class="string">&quot;root123&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException throwables) &#123;</span><br><span class="line">                throwables.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">&quot;连接成功，获取连接对象： &quot;</span> + c);</span><br><span class="line">            </span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204001439292.png" alt="image-20201204001439292"></p>
-<p>比较常见的问题是连接不上，一般有两种，数据库连接url没有填写对，再就是密码，强调！自己测试就搞一个自己记得住的</p>
-<p>创建Statement</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3.创建指定Sql的Statement</span></span><br><span class="line">            <span class="comment">// 注意：使用的是 java.sql.Statement</span></span><br><span class="line">            <span class="comment">// 不要不小心使用到： com.mysql.jdbc.Statement;</span></span><br><span class="line">            Statement s = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                s = c.createStatement();</span><br><span class="line">                </span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException throwables) &#123;</span><br><span class="line">                throwables.printStackTrace();</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
-<p>写SQL之前，先复制到我们的数据库连接工具里面测试一下，其实不论是写jdbc，还是mybatis，还是jpa什么的，再高端的框架底层也是执行SQL</p>
-<p>SQl如下：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">user</span> (username, <span class="keyword">password</span>) <span class="keyword">values</span> (<span class="string">&#x27;zz&#x27;</span>, <span class="string">&#x27;password&#x27;</span>);</span><br></pre></td></tr></table></figure>
+{% extends '_layout.swig' %}
+{% import '_macro/post.swig' as post_template %}
+{% import '_macro/sidebar.swig' as sidebar_template %}
 
 
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002407128.png" alt="image-20201204002407128"></p>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002420032.png" alt="image-20201204002420032"></p>
-<p>显示不出来记得刷新</p>
-<p>我们把记录删掉，然后改成放到java代码中执行</p>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002454854.png" alt="image-20201204002454854"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zz;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"><span class="keyword">import</span> java.sql.Statement;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestJDBC</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 1.测试驱动包的加载</span></span><br><span class="line">        <span class="comment">// Class.forName去加载 mysql-connector-java-5.0.8-bin.jar</span></span><br><span class="line">        <span class="comment">// 中的  com.mysql.jdbc.Driver 这个驱动类</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);</span><br><span class="line">            <span class="comment">// 2.测试数据库连接</span></span><br><span class="line">            <span class="comment">// 建立与数据库的Connection连接</span></span><br><span class="line">            <span class="comment">// 这里需要提供：</span></span><br><span class="line">            <span class="comment">// 数据库所处于的ip:127.0.0.1 (本机)</span></span><br><span class="line">            <span class="comment">// 数据库的端口号： 3306 （mysql专用端口号）</span></span><br><span class="line">            <span class="comment">// 数据库名称 sugon666</span></span><br><span class="line">            <span class="comment">// 编码方式 UTF-8</span></span><br><span class="line">            <span class="comment">// 账号 root</span></span><br><span class="line">            <span class="comment">// 密码 root123 改成自己的密码哈</span></span><br><span class="line"></span><br><span class="line">            Connection c = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                c = DriverManager</span><br><span class="line">                        .getConnection(</span><br><span class="line">                                <span class="string">&quot;jdbc:mysql://127.0.0.1:3306/sugon666?characterEncoding=UTF-8&quot;</span>,</span><br><span class="line">                                <span class="string">&quot;root&quot;</span>, <span class="string">&quot;root123&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException throwables) &#123;</span><br><span class="line">                throwables.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 3.创建指定Sql的Statement</span></span><br><span class="line">            <span class="comment">// 注意：使用的是 java.sql.Statement</span></span><br><span class="line">            <span class="comment">// 不要不小心使用到： com.mysql.jdbc.Statement;</span></span><br><span class="line">            Statement s = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                s = c.createStatement();</span><br><span class="line">                <span class="comment">// 4.准备sql语句</span></span><br><span class="line">                <span class="comment">// 注意： 字符串要用单引号&#x27;</span></span><br><span class="line">                String sql = <span class="string">&quot;insert into user (username, password) values (&#x27;zz&#x27;, &#x27;password&#x27;)&quot;</span>;</span><br><span class="line">                <span class="comment">// 5.执行</span></span><br><span class="line">                s.execute(sql);</span><br><span class="line"></span><br><span class="line">                System.out.println(<span class="string">&quot;执行插入语句成功&quot;</span>);</span><br><span class="line">                <span class="comment">// 6.</span></span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException throwables) &#123;</span><br><span class="line">                throwables.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                <span class="comment">// 6.数据库的连接时有限资源，相关操作结束后，养成关闭数据库的好习惯</span></span><br><span class="line">                <span class="comment">// 先关闭Statement</span></span><br><span class="line">                <span class="keyword">if</span> (s != <span class="keyword">null</span>)</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        s.close();</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                        <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                <span class="comment">// 后关闭Connection</span></span><br><span class="line">                <span class="keyword">if</span> (c != <span class="keyword">null</span>)</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        c.close();</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                        <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>再次去检查数据库</p>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002758419.png" alt="image-20201204002758419"></p>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002742588.png" alt="image-20201204002742588"></p>
-<p>效果是一样的</p>
-<p>下面来把代码结构再整理一下，用更加规范的方式去写一下哈</p>
-<p>再新建个class，过程一样的哈</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zz;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"><span class="keyword">import</span> java.sql.Statement;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestJDBCWell</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> (</span><br><span class="line">                Connection c = DriverManager</span><br><span class="line">                        .getConnection(<span class="string">&quot;jdbc:mysql://127.0.0.1:3306/sugon666?charaterEncoding=UTF-8&quot;</span>,</span><br><span class="line">                                <span class="string">&quot;root&quot;</span>, <span class="string">&quot;root123&quot;</span>);</span><br><span class="line">                <span class="keyword">final</span> Statement statement = c.createStatement();</span><br><span class="line">        )&#123;</span><br><span class="line">            String sql = <span class="string">&quot;insert into user (username, password) values (&#x27;zz1&#x27;, &#x27;password&#x27;)&quot;</span>;</span><br><span class="line">            statement.execute(sql);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="依葫芦画瓢"><a href="#依葫芦画瓢" class="headerlink" title="依葫芦画瓢"></a>依葫芦画瓢</h2><p>其实想要增删查改的其他操作，就是把sql改一下就可以了哈，说到这里，是不是该补一下Sql的只是了，推荐&lt;&lt;Mysql必知必会&gt;&gt;这本书，或者菜鸟教程sql<a target="_blank" rel="noopener" href="https://www.runoob.com/sql/sql-tutorial.html">https://www.runoob.com/sql/sql-tutorial.html</a>，how2j也可以<a target="_blank" rel="noopener" href="https://how2j.cn/k/mysql/mysql-install/377.html">https://how2j.cn/k/mysql/mysql-install/377.html</a>，我就是参考的how2j，😊，练习SQL的方法就是在那个MYSQL连接工具里面写SQL哈，但是貌似没有语法提示，navicate是有的，还是建议大家装一个</p>
-<p>写个删除</p>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204004306882.png" alt="image-20201204004306882"></p>
-<p>把id为3的记录删掉把</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">3</span>;</span><br></pre></td></tr></table></figure>
-<p>大家自己创建新方法替换sql里面的字段哈</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zz;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"><span class="keyword">import</span> java.sql.Statement;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestJDBCDelete</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> (</span><br><span class="line">                Connection c = DriverManager</span><br><span class="line">                        .getConnection(<span class="string">&quot;jdbc:mysql://127.0.0.1:3306/sugon666?charaterEncoding=UTF-8&quot;</span>,</span><br><span class="line">                                <span class="string">&quot;root&quot;</span>, <span class="string">&quot;root123&quot;</span>);</span><br><span class="line">                <span class="keyword">final</span> Statement statement = c.createStatement();</span><br><span class="line">        )&#123;</span><br><span class="line">            String sql = <span class="string">&quot;delete from user where id=3;&quot;</span>;</span><br><span class="line">            statement.execute(sql);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>写个更改</p>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204004420912.png" alt="image-20201204004420912"></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> <span class="keyword">password</span> = <span class="string">&#x27;newpassword&#x27;</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204004624469.png" alt="image-20201204004624469"></p>
-<p>这个自己替换执行哈</p>
-<p>写个查询所有</p>
-<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204004839028.png"></p>
-<p>这个就有点变化了</p>
-<p>下次再讲把</p>
-<p>晚安😊</p>
+{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/12/19/Java%E6%97%A5%E8%AE%B0/" data-id="ckiuh8uqu0001kkuo9pkm6knk" data-title="Java日记" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-  
-    <a href="/2020/12/19/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
-
-  
-</article>
+{% block page_class %}page-post-detail{% endblock %}
 
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
+{% block content %}
 
-  
-    
+  <div id="posts" class="posts-expand">
+    {{ post_template.render(page) }}
 
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li></ul>
+    <div class="post-spread">
+      {% if theme.jiathis %}
+        {% include '_partials/share/jiathis.swig' %}
+      {% elseif theme.baidushare %}
+        {% include '_partials/share/baidushare.swig' %}
+      {% elseif theme.add_this_id %}
+        {% include '_partials/share/add-this.swig' %}
+      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
+        {% include '_partials/share/duoshuo_share.swig' %}
+      {% endif %}
     </div>
   </div>
 
+{% endblock %}
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/12/19/Java%E6%97%A5%E8%AE%B0/">Java日记</a>
-          </li>
-        
-          <li>
-            <a href="/2020/12/19/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+{% block sidebar %}
+  {{ sidebar_template.render(true) }}
+{% endblock %}
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2020 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
-</body>
-</html>
+{% block script_extra %}
+  {% include '_scripts/pages/post-details.swig' %}
+{% endblock %}
