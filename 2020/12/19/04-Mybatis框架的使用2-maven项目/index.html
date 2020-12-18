@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>archive_a: 2020   | Hexo</title>
+  <title>跟着zz学Java 04-Mybatis框架的使用2-maven项目   | Hexo</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -85,114 +85,125 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-    
-      
-        <!-- 第一篇文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2020</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="跟着zz学Java 09-SpringMVC3-MVC架构整合2">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/09-SpringMVC3-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%882/">
-            <span>跟着zz学Java 09-SpringMVC3-MVC架构整合2</span>
-          </a>
-        </div>
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">跟着zz学Java 04-Mybatis框架的使用2-maven项目</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2020-12-19
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" title="跟着zz学Java">
+                    <b>#</b> 跟着zz学Java
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
-    
-      
-      <div class="post-item" title="跟着zz学Java 08-SpringMVC2-MVC架构整合">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/08-SpringMVC2-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%88/">
-            <span>跟着zz学Java 08-SpringMVC2-MVC架构整合</span>
-          </a>
-        </div>
+      <div class="markdown-body">
+        <h1 id="04-Mybatis框架的使用2-maven项目"><a href="#04-Mybatis框架的使用2-maven项目" class="headerlink" title="04-Mybatis框架的使用2-maven项目"></a>04-Mybatis框架的使用2-maven项目</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面两节讲解了<code>JDBC</code>的基本使用，下面我们使用我们的框架来实现我们对数据库的操作，不要怕，也不难</p>
+<p>关于<code>Mybatis</code>我的思路是这样的，先采用jar包，然后我们采用maven工程的方式，引入一点maven这个神器，最后我们再去使用<code>SpringBoot</code>整合</p>
+<h2 id="Maven的配置"><a href="#Maven的配置" class="headerlink" title="Maven的配置"></a>Maven的配置</h2><p>去官网下载maven的zip包，注意对应版本<code>X64</code></p>
+<p><a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">https://maven.apache.org/download.cgi</a></p>
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSZj3Q"><img src="https://s3.ax1x.com/2020/12/08/rSZj3Q.png" alt="rSZj3Q.png"></a></p>
+<p>选择bin包，而不是source源码包，bin是编译好可以直接拿来用的</p>
+<p>下载之后配置环境变量</p>
+<p>把maven所在的根目录配置一个环境变量<code>MAVEN_HOME</code>，然后在Path中加入<code>%MAVEN_HOME%\bin</code></p>
+<p>打开<code>cmd</code>测试</p>
+<p><code> mvn -v</code></p>
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSZX9g"><img src="https://s3.ax1x.com/2020/12/08/rSZX9g.png" alt="rSZX9g.png"></a></p>
+<p>就对了</p>
+<p>然后配置镜像加速和本地仓库地址，建议用<code>vscode</code>打开</p>
+<p><code>conf</code>目录下的<code>settings.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">settings</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/SETTINGS/1.0.0&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>D:/program_software/repository<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>alimaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/repositories/central/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后在idea中配置maven</p>
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSZbAf"><img src="https://s3.ax1x.com/2020/12/08/rSZbAf.png" alt="rSZbAf.png"></a></p>
+
       </div>
-    
       
-      <div class="post-item" title="跟着zz学Java 07-SpringMVC1-一个最简单的例子">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/07-SpringMVC1-%E4%B8%80%E4%B8%AA%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90/">
-            <span>跟着zz学Java 07-SpringMVC1-一个最简单的例子</span>
-          </a>
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2020/12/19/03-Mybatis%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A81-jar%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E9%A1%B9%E7%9B%AE/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2020-12-19
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" title="跟着zz学Java">
+                        <b>#</b> 跟着zz学Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2020/12/19/05-Mybatis%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A83-SpringBoot%E6%95%B4%E5%90%88/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
         </div>
-      </div>
-    
       
-      <div class="post-item" title="跟着zz学Java 06-·MyBatis-Plus框架的使用">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/06-%C2%B7MyBatis-Plus%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A8/">
-            <span>跟着zz学Java 06-·MyBatis-Plus框架的使用</span>
-          </a>
-        </div>
-      </div>
+    </div>
     
-      
-      <div class="post-item" title="跟着zz学Java 05-Mybatis框架的使用3-SpringBoot整合">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/05-Mybatis%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A83-SpringBoot%E6%95%B4%E5%90%88/">
-            <span>跟着zz学Java 05-Mybatis框架的使用3-SpringBoot整合</span>
-          </a>
-        </div>
-      </div>
+  <div class="post-catalog" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#04-Mybatis%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A82-maven%E9%A1%B9%E7%9B%AE"><span class="toc-text">04-Mybatis框架的使用2-maven项目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Maven%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-text">Maven的配置</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      
-      <div class="post-item" title="跟着zz学Java 04-Mybatis框架的使用2-maven项目">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/04-Mybatis%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A82-maven%E9%A1%B9%E7%9B%AE/">
-            <span>跟着zz学Java 04-Mybatis框架的使用2-maven项目</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="跟着zz学Java 03-Mybatis框架的使用1-jar构建一个简单项目">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/03-Mybatis%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A81-jar%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E9%A1%B9%E7%9B%AE/">
-            <span>跟着zz学Java 03-Mybatis框架的使用1-jar构建一个简单项目</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="跟着zz学Java 02-JDBC执行查询">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/02-JDBC%E6%89%A7%E8%A1%8C%E6%9F%A5%E8%AF%A2/">
-            <span>跟着zz学Java 02-JDBC执行查询</span>
-          </a>
-        </div>
-      </div>
-    
-      
-      <div class="post-item" title="跟着zz学Java 01-JDBC的使用">
-        <div class="time-m-d">12-19</div>
-        <div class="title">
-          <a href="/2020/12/19/01-JDBC%E7%9A%84%E4%BD%BF%E7%94%A8/">
-            <span>跟着zz学Java 01-JDBC的使用</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         <div class="footer">
   <div class="social">

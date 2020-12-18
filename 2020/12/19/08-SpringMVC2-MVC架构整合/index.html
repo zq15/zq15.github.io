@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="author" content="zchengsite, 1451426471@qq.com" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  
+  <title>跟着zz学Java 08-SpringMVC2-MVC架构整合   | Hexo</title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">zz</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">跟着zz学Java 08-SpringMVC2-MVC架构整合</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2020-12-19
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" title="跟着zz学Java">
+                    <b>#</b> 跟着zz学Java
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="08-SpringMVC2-MVC架构整合"><a href="#08-SpringMVC2-MVC架构整合" class="headerlink" title="08-SpringMVC2-MVC架构整合"></a>08-SpringMVC2-MVC架构整合</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们前面只用SpringMVC完成了一个根据id模拟查询返回一个用户的例子，现在我们把之前的例子串联起来</p>
+<p>这里呢我考虑了一下，我们暂时不用<code>MyBatis-Plus</code>，还是只用<code>MyBatis</code>，但是呢，我们之前不是看<code>MyBatis-plus</code>官网说，对程序无侵入么，那我们就来试试，在<code>MyBatis-Plus</code>中使用<code>Mybatis</code>，哈哈，不要怕，就是要敢于尝试</p>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>我们先来复习一下，跟<code>MyBatis</code>相关的文件的位置配置主要有三个</p>
+<ul>
+<li><code>Mybatis-config.xml</code>: 全局配置文件，在引入了MyBatis-Plus之后，这个可以放在了appplication.yml当中</li>
+<li><code>xxxMapper.java</code> 接口：Mapper接口，我们在主配置类配置了<code>@MapperScan(basePackages = &quot;com.example.demo.mapper&quot;)</code>，指定了扫描的Mapper包，然后在类上加上<code>@Repository</code>就可以了</li>
+<li><code>xxxMapper.xml</code> Mapper接口配置文件，这个文件我们查看<code>application.yml</code></li>
+</ul>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210115424230.png" alt="image-20201210115424230" style="zoom:50%;" />
+
+<p>这一行配置了<code>xxxMapper.xml</code>文件的地址，所以我们需要在<code>resources</code>下面新建一个文件夹<code>mapper</code>，并且新建mapper配置文件，<code>UserMapper.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span> <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="meta-string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--名称空间指定为mapper接口对应的相对路径--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.example.demo.mapper.UserMapper&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span> </span><br></pre></td></tr></table></figure>
+<p>引入约束和名称空间，约束就是相当于一个写<code>xml</code>的模板，会有提示还有lint功能，名称空间可以隔离和识别这里的实体类</p>
+<p><code>MyBatis</code>的相关结构就完成了，哈哈，其实都是一回事儿</p>
+<p>下面我们来引入<code>Service</code>层</p>
+<p>比较好的设计规范是，有一个接口类，和一个Service实现类</p>
+<p><code>service</code>包下面放接口(<code>UserService</code>)，<code>impl</code>子包下面放实现类(<code>UserServiceImpl</code>)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.service;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接口只用来定义行为，所有的实现（包括注入<code>UserMapper</code>），都是在实现类里面完成的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.demo.mapper.UserMapper;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    UserMapper userMapper;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完成的项目结构如下</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210120249234.png" alt="image-20201210120249234" style="zoom:50%;" />
+
+<h2 id="编写Mapper"><a href="#编写Mapper" class="headerlink" title="编写Mapper"></a>编写Mapper</h2><p>这里就先想起来陆大佬之前在B站视频里写这个<code>SpringBoot</code>的CRUD的时候很有意思的一个问题了，是从Controller写到Mapper还是反过来，哈哈，我们先把Mapper写好，复习一下之前的知识，然后使用测试类去测试，后面再去写Service把这两个连起来</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.mapper.BaseMapper;</span><br><span class="line"><span class="keyword">import</span> com.example.demo.dataobject.UserDO;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Param;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Repository;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> <span class="keyword">extends</span> <span class="title">BaseMapper</span>&lt;<span class="title">UserDO</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> UserDO <span class="title">selectById</span><span class="params">(<span class="meta">@Param(&quot;id&quot;)</span> Integer id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper PUBLIC <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span><br><span class="line">&lt;!--名称空间指定为mapper接口对应的相对路径--&gt;</span><br><span class="line">&lt;mapper namespace=<span class="string">&quot;com.example.demo.mapper.UserMapper&quot;</span>&gt;</span><br><span class="line">    &lt;select id=<span class="string">&quot;selectById&quot;</span> parameterType=<span class="string">&quot;Integer&quot;</span> resultType=<span class="string">&quot;UserDO&quot;</span>&gt;</span><br><span class="line">        select * from user where id=#&#123;id&#125;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210120829770.png" alt="image-20201210120829770" style="zoom:50%;" />
+
+<p>可以发现一个很有意思的现象，这里爆红了，是为什么呢，哈哈，不是说好的无侵入么</p>
+<p>我们翻一下之前在完成<code>MyBatis-plus</code>的测试代码的时候，根据id查询用户是不是也是用的这个<code>selectById</code>这个方法称，然后可以看到，我们的<code>UserMapper.xml</code>继承了我们的<code>BaseMapper&lt;UserDO&gt;</code>，很容易联想到，是不是我们的<code>BaseMapper</code>里面已经自带了这个方法呢</p>
+<p>我们很容易想到，两个方法只有在名称，返回类型，参数相同的情况下才会冲突，那么我们自己写的<code>selectById</code>和<code>BaseMapper&lt;UserDO&gt;</code>的<code>selectById</code>，除了名称以外，返回类型和参数这两个是否也是相同的呢</p>
+<p>实践才是检验真理的唯一标准，我们打开源码看看，按住<code>ctrl</code>，就可以进入idea的进入源码的模式了，然后点击<code>BaseMapper</code>，<code>ctrl+f</code>打开搜索模式，输入方法名<code>selectById</code></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210121351849.png" alt="image-20201210121351849" style="zoom:50%;" />
+
+<p>这里用了泛型T，我们在继承<code>BaseMapper</code>的时候传入了<code>UserDO</code>，这里的T就是相当于我们的<code>UserDO</code>，所以方法的返回参数是一致的</p>
+<p>然后参数类型 <code>Serializable</code>，我们传入的是<code>Integer</code>，我们同样的方法打开<code>Integer</code>的源码</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210121856756.png" alt="image-20201210121856756" style="zoom:50%;" />
+
+<p>并没有看到直接继承<code>Serializable</code>，只看到继承<code>Number</code>和<code>Comparable</code>，要是这样一层一层找下去也太麻烦了</p>
+<p>这里idea有一个很强大的工具，可以轻松查看类之间的继承关系</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210122038536.png" alt="image-20201210122038536" style="zoom:50%;" />
+
+<p>我们在Interger界面右键，依次选择如图，点开</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210122126858.png" alt="image-20201210122126858" style="zoom:50%;" />
+
+<p>哈哈，果不其然，Integer是实现了这个接口的，根据向上转型，就真相大白了，源码其实也没有那么难对吧</p>
+<p>所以咋办呢，咱们命名的时候就加个<code>my</code>前缀标识一下吧，有更好的办法也可以评论区留言哈</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> UserDO <span class="title">mySelectById</span><span class="params">(<span class="meta">@Param(&quot;id&quot;)</span> Integer id)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;mySelectById&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Integer&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;UserDO&quot;</span>&gt;</span></span><br><span class="line">    select * from user where id=#&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>写个测试类测试一下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试根据id查询用户 mybatis</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMySelectById</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    UserDO userDO = userMapper.mySelectById(<span class="number">6</span>);</span><br><span class="line">    System.out.println(userDO.getUsername());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210122829139.png" alt="image-20201210122829139" style="zoom:50%;" />
+
+<p>这样，我们就在<code>Mybatis-Plus</code>里面使用了<code>MyBatis</code>了，哈哈，是不是有种<code>5g</code>回到了<code>2g</code>时代的感觉</p>
+<p>但小周同学还是秉持着一个观点的：只要能解决问题的技术，就是好技术</p>
+<p>这节太长了，就暂时到这里吧</p>
+<p>下次我们把Service接进来</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2020/12/19/07-SpringMVC1-%E4%B8%80%E4%B8%AA%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2020-12-19
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" title="跟着zz学Java">
+                        <b>#</b> 跟着zz学Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2020/12/19/09-SpringMVC3-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%882/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div class="post-catalog" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#08-SpringMVC2-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%88"><span class="toc-text">08-SpringMVC2-MVC架构整合</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-text">项目结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E5%86%99Mapper"><span class="toc-text">编写Mapper</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        <div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="email" href="">
+            <i class="iconfont icon-envelope"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="facebook" href="">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="twitter" href="">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="wechat" href="">
+            <i class="iconfont icon-wechat"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="weibo" href="">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="rss" href="/atom.xml">
+            <i class="iconfont icon-rss"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    <div class="footer-more">
+      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © Oranges 2020</a>
+    </div>
+  
+    <div class="footer-more">
+      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="back-to-top hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+      
+  <div class="search-icon" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+    </div>
+  </body>
+</html>

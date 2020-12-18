@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="author" content="zchengsite, 1451426471@qq.com" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  
+  <title>跟着zz学Java 07-SpringMVC1-一个最简单的例子   | Hexo</title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">zz</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">跟着zz学Java 07-SpringMVC1-一个最简单的例子</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2020-12-19
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" title="跟着zz学Java">
+                    <b>#</b> 跟着zz学Java
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="07-SpringMVC1-一个最简单的例子"><a href="#07-SpringMVC1-一个最简单的例子" class="headerlink" title="07-SpringMVC1-一个最简单的例子"></a>07-SpringMVC1-一个最简单的例子</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面我们把Java对MYSQL数据库的操作除了jpa以外都尝试了一遍，但是一直都是用测试类去测试功能，但是一直都没有跟web有啥关系，哈哈，别着急嘛，开始学习就要把知识先拆开，分而治之，后面我们再来串联起来，所以从这小节开始，我也打算换个思路，从顶层开始，直接用SpringBoot整合SpringMVC，然后先用postman，再上Swagger，再就转向前端了，前端写个基本的界面加上一个增删改查，然后回头来配置一个拦截器，再上redis，做完之后，把整个项目用容器部署一下，差不多整个是这样个安排。</p>
+<p>反正就是一个思路，用最小的切面，让大家对整个技术栈有个完整的认识。</p>
+<h2 id="康康官网"><a href="#康康官网" class="headerlink" title="康康官网"></a>康康官网</h2><p>先把<code>Spring</code>官网带大家看看吧</p>
+<p><a target="_blank" rel="noopener" href="https://spring.io/">https://spring.io/</a></p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210102006810.png" alt="image-20201210102006810"></p>
+<p><code>Spring makes Java cloud-ready</code>这是最新的口号，看来Spring为了云原生这一块的应用，下了不少功夫，这个我们后面再讲，毕竟之前博客搭建<code>rocketMQ</code>的时候就看到了，一个单机部署的消息队列都是起步8 g内存的，哈哈，所以咱目前还是以单体应用为主，一般项目最多上个<code>redis</code>，消息队列都用得少，<code>Redis</code>肯定会讲的</p>
+<p>官网没事多逛逛哈，养成习惯就好了</p>
+<h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><p>咱们在之前的<code>mybatis-plus</code>项目的基础上进行开发</p>
+<p>加上web starter就好了</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>记得点一下刷新依赖哈</p>
+<h2 id="仅仅使用Controller来返回测试"><a href="#仅仅使用Controller来返回测试" class="headerlink" title="仅仅使用Controller来返回测试"></a>仅仅使用Controller来返回测试</h2><p>新建一个Controller<br><code>com.example.demo.controller</code>包下创建<code>UserController</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.demo.dataobject.UserDO;</span><br><span class="line"><span class="keyword">import</span> com.example.demo.utils.MD5Util;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 表示这是控制器类 直接使用接口方法返回结果，就是直接返回json哈</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="comment">// 表示我们请求的路径 我们请求这个 controller 的时候就需要加上 /user 这个前缀</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// GetMapping 标识请求是发送 GET 请求 路径匹配 &#123;id&#125; 表示id是请求参数</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="comment">// @PathVariable标识这里用的是前端请求过来的 路径参数 就是方法可以把待会儿传过来的路径中的id 传入这个方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> UserDO <span class="title">get</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 模拟一个返回用户</span></span><br><span class="line">        UserDO userDO = <span class="keyword">new</span> UserDO();</span><br><span class="line">        userDO.setId(id); <span class="comment">// 传入我们在请求中给出的 id</span></span><br><span class="line">        userDO.setUsername(<span class="string">&quot;SpringMVC&quot;</span>);</span><br><span class="line">        userDO.setPassword(MD5Util.getMD5(<span class="string">&quot;123&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> userDO; <span class="comment">// 由于由我们的 @RestController 所以我们会把返回的 userDO 对象 解析成json串</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行我们的主方法</p>
+<p>打开Postman测试接口(后面用我们炫酷的 swagger)</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210104246788.png" alt="image-20201210104246788" style="zoom:50%;" />
+
+<p>点击这里新建一个测试请求</p>
+<p><img src="C:\Users\15292\AppData\Roaming\Typora\typora-user-images\image-20201210104316543.png" alt="image-20201210104316543"></p>
+<p>从我们的Console中可以看到我们应用启动（其实就是Tomcat）的端口</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210104616114.png" alt="image-20201210104616114" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210111744434.png" alt="image-20201210111744434" style="zoom:50%;" />
+
+<p>我们在路径中直接传入参数</p>
+<p>路径前面可以勾选请求方法 </p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210112021298.png" alt="image-20201210112021298" style="zoom:50%;" />
+
+<p>然后 Send</p>
+<p>上面那个匹配的路径是<code>localhost:8080/user</code> ,没有涉及到参数传递</p>
+<p>后面还有一些例子，大家自己练习把，就是把请求方法改变了，这里还涉及到一个知识点，<code>Restful API</code>规范</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GetMapping 标识请求是发送 GET 请求</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/get&quot;)</span> <span class="comment">// 修改URL为这个</span></span><br><span class="line"><span class="comment">// 传入的时候 用请求参数 ?id=xxx 的形式</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> UserDO <span class="title">get</span><span class="params">(<span class="meta">@RequestParam(&quot;id&quot;)</span> Integer id)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 模拟一个返回用户</span></span><br><span class="line">    UserDO userDO = <span class="keyword">new</span> UserDO();</span><br><span class="line">    userDO.setId(id); <span class="comment">// 传入我们在请求中给出的 id</span></span><br><span class="line">    userDO.setUsername(<span class="string">&quot;SpringMVC&quot;</span>);</span><br><span class="line">    userDO.setPassword(MD5Util.getMD5(<span class="string">&quot;123&quot;</span>));</span><br><span class="line">    <span class="keyword">return</span> userDO; <span class="comment">// 由于由我们的 @RestController 所以我们会把返回的 userDO 对象 解析成json串</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210112705619.png" alt="image-20201210112705619" style="zoom:50%;" />
+
+
+
+<h2 id="暂时废弃的例子"><a href="#暂时废弃的例子" class="headerlink" title="暂时废弃的例子"></a>暂时废弃的例子</h2><p>不太推荐用这种请求形式哈</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.demo.dataobject.UserDO;</span><br><span class="line"><span class="keyword">import</span> com.example.demo.utils.MD5Util;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 表示这是控制器类 直接使用接口方法返回结果，就是直接返回json哈</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="comment">// 表示我们请求的路径 我们请求这个 controller 的时候就需要加上 /user 这个前缀</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;UserDO&gt; <span class="title">list</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;UserDO&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++) &#123;</span><br><span class="line">            UserDO userDO = <span class="keyword">new</span> UserDO();</span><br><span class="line">            userDO.setId(i);</span><br><span class="line">            userDO.setUsername(UUID.randomUUID().toString());</span><br><span class="line">            userDO.setPassword(MD5Util.getMD5(String.valueOf(i)));</span><br><span class="line">            result.add(userDO);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// GetMapping 标识请求是发送 GET 请求 路径匹配 &#123;id&#125; 表示id是请求参数</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="comment">// @PathVariable标识这里用的是前端请求过来的 路径参数 就是方法可以把待会儿传过来的路径中的id 传入这个方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> UserDO <span class="title">get</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> <span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 模拟一个返回用户</span></span><br><span class="line">        UserDO userDO = <span class="keyword">new</span> UserDO();</span><br><span class="line">        userDO.setId(id); <span class="comment">// 传入我们在请求中给出的 id</span></span><br><span class="line">        userDO.setUsername(<span class="string">&quot;SpringMVC&quot;</span>);</span><br><span class="line">        userDO.setPassword(MD5Util.getMD5(<span class="string">&quot;123&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> userDO; <span class="comment">// 由于由我们的 @RestController 所以我们会把返回的 userDO 对象 解析成json串</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里有个坑，参数不能用<code>Integer</code>，要用<code>int</code>，否则会404</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210112920342.png" alt="image-20201210112920342" style="zoom:50%;" />
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2020/12/19/06-%C2%B7MyBatis-Plus%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2020-12-19
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" title="跟着zz学Java">
+                        <b>#</b> 跟着zz学Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2020/12/19/08-SpringMVC2-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%88/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div class="post-catalog" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#07-SpringMVC1-%E4%B8%80%E4%B8%AA%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">07-SpringMVC1-一个最简单的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%B7%E5%BA%B7%E5%AE%98%E7%BD%91"><span class="toc-text">康康官网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96"><span class="toc-text">引入依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%85%E4%BB%85%E4%BD%BF%E7%94%A8Controller%E6%9D%A5%E8%BF%94%E5%9B%9E%E6%B5%8B%E8%AF%95"><span class="toc-text">仅仅使用Controller来返回测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9A%82%E6%97%B6%E5%BA%9F%E5%BC%83%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">暂时废弃的例子</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        <div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="email" href="">
+            <i class="iconfont icon-envelope"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="facebook" href="">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="twitter" href="">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="wechat" href="">
+            <i class="iconfont icon-wechat"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="weibo" href="">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="rss" href="/atom.xml">
+            <i class="iconfont icon-rss"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    <div class="footer-more">
+      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © Oranges 2020</a>
+    </div>
+  
+    <div class="footer-more">
+      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="back-to-top hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+      
+  <div class="search-icon" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+    </div>
+  </body>
+</html>
