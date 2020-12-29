@@ -1,125 +1,107 @@
+
 <!DOCTYPE html>
-<html lang="zh-CN">
-
-  <head>
+<html>
+<head>
   <meta charset="utf-8">
-  <meta name="author" content="zchengsite, 1451426471@qq.com" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <title>跟着zz学Java 07-SpringMVC1-一个最简单的例子 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="07-SpringMVC1-一个最简单的例子前言前面我们把Java对MYSQL数据库的操作除了jpa以外都尝试了一遍，但是一直都是用测试类去测试功能，但是一直都没有跟web有啥关系，哈哈，别着急嘛，开始学习就要把知识先拆开，分而治之，后面我们再来串联起来，所以从这小节开始，我也打算换个思路，从顶层开始，直接用SpringBoot整合SpringMVC，然后先用postman，再上Swagger，再">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跟着zz学Java 07-SpringMVC1-一个最简单的例子">
+<meta property="og:url" content="http://example.com/2020/12/19/07-SpringMVC1-%E4%B8%80%E4%B8%AA%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="07-SpringMVC1-一个最简单的例子前言前面我们把Java对MYSQL数据库的操作除了jpa以外都尝试了一遍，但是一直都是用测试类去测试功能，但是一直都没有跟web有啥关系，哈哈，别着急嘛，开始学习就要把知识先拆开，分而治之，后面我们再来串联起来，所以从这小节开始，我也打算换个思路，从顶层开始，直接用SpringBoot整合SpringMVC，然后先用postman，再上Swagger，再">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210102006810.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210104246788.png">
+<meta property="og:image" content="c:/Users/15292/AppData/Roaming/Typora/typora-user-images/image-20201210104316543.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210104616114.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210111744434.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210112021298.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210112705619.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210112920342.png">
+<meta property="article:published_time" content="2020-12-18T18:11:22.000Z">
+<meta property="article:modified_time" content="2020-12-18T18:13:32.946Z">
+<meta property="article:author" content="zhouzhou">
+<meta property="article:tag" content="跟着zz学Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210102006810.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
   
-  <title>跟着zz学Java 07-SpringMVC1-一个最简单的例子   | Hexo</title>
-
+    <link rel="icon" href="/favicon.png">
   
-    <link rel="apple-touch-icon" href="/images/favicon.png">
-    <link rel="icon" href="/images/favicon.png">
   
+<link rel="stylesheet" href="/css/style.css">
 
-  <!-- Raleway-Font -->
-  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-
-  <!-- hexo site css -->
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
   
-<link rel="stylesheet" href="/css/base.css">
-<link rel="stylesheet" href="/iconfont/iconfont.css">
-<link rel="stylesheet" href="/css/github-markdown.css">
-<link rel="stylesheet" href="/css/highlight.css">
-
-
-  <!-- jquery3.3.1 -->
-  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-  <!-- fancybox -->
-  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
-  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
-  
-<script src="/js/fancybox.js"></script>
-
-
-  
-
 <meta name="generator" content="Hexo 5.3.0"></head>
-
-
-  <body>
-    <div id="app">
-      <div class="header">
-  <div class="avatar">
-    <a href="/">
-      <!-- 头像取消懒加载，添加no-lazy -->
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
       
-        <img src="/images/avatar.png" alt="">
-      
-    </a>
-    <div class="nickname"><a href="/">zz</a></div>
-  </div>
-  <div class="navbar">
-    <ul>
-      
-        <li class="nav-item" data-path="/">
-          <a href="/">Home</a>
-        </li>
-      
-        <li class="nav-item" data-path="/archives/">
-          <a href="/archives/">Archives</a>
-        </li>
-      
-        <li class="nav-item" data-path="/tags/">
-          <a href="/tags/">Tags</a>
-        </li>
-      
-        <li class="nav-item" data-path="/friends/">
-          <a href="/friends/">Friends</a>
-        </li>
-      
-        <li class="nav-item" data-path="/about/">
-          <a href="/about/">About</a>
-        </li>
-      
-    </ul>
-  </div>
-</div>
-
-
-<script src="/js/activeNav.js"></script>
-
-
-
-      <div class="flex-container">
-        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
-<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
-
-
-
-  
-
-  
-
-  
-
-  
-  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
-  <div class="container post-details" id="post-details">
-    <div class="post-content">
-      <div class="post-title">跟着zz学Java 07-SpringMVC1-一个最简单的例子</div>
-      <div class="post-attach">
-        <span class="post-pubtime">
-          <i class="iconfont icon-updatetime" title="更新时间"></i>
-          2020-12-19
-        </span>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
         
-              <span class="post-tags">
-                <i class="iconfont icon-tags" title="标签"></i>
-                
-                <span class="span--tag">
-                  <a href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" title="跟着zz学Java">
-                    <b>#</b> 跟着zz学Java
-                  </a>
-                </span>
-                
-              </span>
-          
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="example.com">
+        </form>
       </div>
-      <div class="markdown-body">
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-07-SpringMVC1-一个最简单的例子" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/12/19/07-SpringMVC1-%E4%B8%80%E4%B8%AA%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90/" class="article-date">
+  <time datetime="2020-12-18T18:11:22.000Z" itemprop="datePublished">2020-12-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      跟着zz学Java 07-SpringMVC1-一个最简单的例子
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
         <h1 id="07-SpringMVC1-一个最简单的例子"><a href="#07-SpringMVC1-一个最简单的例子" class="headerlink" title="07-SpringMVC1-一个最简单的例子"></a>07-SpringMVC1-一个最简单的例子</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面我们把Java对MYSQL数据库的操作除了jpa以外都尝试了一遍，但是一直都是用测试类去测试功能，但是一直都没有跟web有啥关系，哈哈，别着急嘛，开始学习就要把知识先拆开，分而治之，后面我们再来串联起来，所以从这小节开始，我也打算换个思路，从顶层开始，直接用SpringBoot整合SpringMVC，然后先用postman，再上Swagger，再就转向前端了，前端写个基本的界面加上一个增删改查，然后回头来配置一个拦截器，再上redis，做完之后，把整个项目用容器部署一下，差不多整个是这样个安排。</p>
 <p>反正就是一个思路，用最小的切面，让大家对整个技术栈有个完整的认识。</p>
 <h2 id="康康官网"><a href="#康康官网" class="headerlink" title="康康官网"></a>康康官网</h2><p>先把<code>Spring</code>官网带大家看看吧</p>
@@ -162,341 +144,218 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.demo.dataobject.UserDO;</span><br><span class="line"><span class="keyword">import</span> com.example.demo.utils.MD5Util;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 表示这是控制器类 直接使用接口方法返回结果，就是直接返回json哈</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="comment">// 表示我们请求的路径 我们请求这个 controller 的时候就需要加上 /user 这个前缀</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;UserDO&gt; <span class="title">list</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;UserDO&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++) &#123;</span><br><span class="line">            UserDO userDO = <span class="keyword">new</span> UserDO();</span><br><span class="line">            userDO.setId(i);</span><br><span class="line">            userDO.setUsername(UUID.randomUUID().toString());</span><br><span class="line">            userDO.setPassword(MD5Util.getMD5(String.valueOf(i)));</span><br><span class="line">            result.add(userDO);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// GetMapping 标识请求是发送 GET 请求 路径匹配 &#123;id&#125; 表示id是请求参数</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="comment">// @PathVariable标识这里用的是前端请求过来的 路径参数 就是方法可以把待会儿传过来的路径中的id 传入这个方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> UserDO <span class="title">get</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> <span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 模拟一个返回用户</span></span><br><span class="line">        UserDO userDO = <span class="keyword">new</span> UserDO();</span><br><span class="line">        userDO.setId(id); <span class="comment">// 传入我们在请求中给出的 id</span></span><br><span class="line">        userDO.setUsername(<span class="string">&quot;SpringMVC&quot;</span>);</span><br><span class="line">        userDO.setPassword(MD5Util.getMD5(<span class="string">&quot;123&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> userDO; <span class="comment">// 由于由我们的 @RestController 所以我们会把返回的 userDO 对象 解析成json串</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里有个坑，参数不能用<code>Integer</code>，要用<code>int</code>，否则会404</p>
 <img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210112920342.png" alt="image-20201210112920342" style="zoom:50%;" />
-      </div>
-      
-        <div class="prev-or-next">
-          <div class="post-foot-next">
-            
-              <a href="/2020/12/19/06-%C2%B7MyBatis-Plus%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
-                <i class="iconfont icon-chevronleft"></i>
-                <span>上一页</span>
-              </a>
-            
-          </div>
-          <div class="post-attach">
-            <span class="post-pubtime">
-              <i class="iconfont icon-updatetime" title="更新时间"></i>
-              2020-12-19
-            </span>
-            
-                  <span class="post-tags">
-                    <i class="iconfont icon-tags" title="标签"></i>
-                    
-                    <span class="span--tag">
-                      <a href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" title="跟着zz学Java">
-                        <b>#</b> 跟着zz学Java
-                      </a>
-                    </span>
-                    
-                  </span>
-              
-          </div>
-          <div class="post-foot-prev">
-            
-              <a href="/2020/12/19/08-SpringMVC2-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%88/" target="_self">
-                <span>下一页</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
-            
-          </div>
-        </div>
       
     </div>
-    
-  <div class="post-catalog" id="catalog">
-    <div class="title">目录</div>
-    <div class="catalog-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#07-SpringMVC1-%E4%B8%80%E4%B8%AA%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">07-SpringMVC1-一个最简单的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%B7%E5%BA%B7%E5%AE%98%E7%BD%91"><span class="toc-text">康康官网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96"><span class="toc-text">引入依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%85%E4%BB%85%E4%BD%BF%E7%94%A8Controller%E6%9D%A5%E8%BF%94%E5%9B%9E%E6%B5%8B%E8%AF%95"><span class="toc-text">仅仅使用Controller来返回测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9A%82%E6%97%B6%E5%BA%9F%E5%BC%83%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">暂时废弃的例子</span></a></li></ol></li></ol>
-    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://example.com/2020/12/19/07-SpringMVC1-%E4%B8%80%E4%B8%AA%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90/" data-id="ckj4jered0009aouoa1f3e4hl" class="article-share-link" data-share="baidu" data-title="跟着zz学Java 07-SpringMVC1-一个最简单的例子">分享到</a>
+      
+
+      
+        <a href="http://example.com/2020/12/19/07-SpringMVC1-%E4%B8%80%E4%B8%AA%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" rel="tag">跟着zz学Java</a></li></ul>
+
+    </footer>
   </div>
-
   
-<script src="/js/catalog.js"></script>
-
-
-
-
     
-      <div class="comments-container">
+<nav id="article-nav">
+  
+    <a href="/2020/12/19/08-SpringMVC2-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%88/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
         
-
-
-
-
-
+          跟着zz学Java 08-SpringMVC2-MVC架构整合
+        
       </div>
-    
-  </div>
-
-
-        <div class="footer">
-  <div class="social">
-    <ul>
-      
-        <li>
-          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
-            <i class="iconfont icon-github"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="email" href="">
-            <i class="iconfont icon-envelope"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="facebook" href="">
-            <i class="iconfont icon-facebooksquare"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="twitter" href="">
-            <i class="iconfont icon-twitter"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="wechat" href="">
-            <i class="iconfont icon-wechat"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="weibo" href="">
-            <i class="iconfont icon-weibo"></i>
-          </a>
-        </li>
-      
-        <li>
-          <a title="rss" href="/atom.xml">
-            <i class="iconfont icon-rss"></i>
-          </a>
-        </li>
-      
-    </ul>
-    <div style="text-align: center;">
-      <a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn">鄂ICP备2020022919号</a>
-    </div>
-  </div>
-  
-    <div class="footer-more">
-      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © Oranges 2020</a>
-    </div>
-  
-    <div class="footer-more">
-      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
-    </div>
-  
-</div>
-
-      </div>
-
-      <div class="back-to-top hidden">
-  <a href="javascript: void(0)">
-    <i class="iconfont icon-chevronup"></i>
-  </a>
-</div>
-
-
-<script src="/js/backtotop.js"></script>
-
-
-
-      
-  <div class="search-icon" id="search-icon">
-    <a href="javascript: void(0)">
-      <i class="iconfont icon-search"></i>
     </a>
-  </div>
+  
+  
+    <a href="/2020/12/19/06-%C2%B7MyBatis-Plus%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">跟着zz学Java 06-·MyBatis-Plus框架的使用</div>
+    </a>
+  
+</nav>
 
-  <div class="search-overlay hidden">
-    <div class="search-content" tabindex="0">
-      <div class="search-title">
-        <span class="search-icon-input">
-          <a href="javascript: void(0)">
-            <i class="iconfont icon-search"></i>
-          </a>
-        </span>
-        
-          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
-        
-        <span class="search-close-icon" id="search-close-icon">
-          <a href="javascript: void(0)">
-            <i class="iconfont icon-close"></i>
-          </a>
-        </span>
-      </div>
-      <div class="search-result" id="search-result"></div>
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2020/12/19/07-SpringMVC1-一个最简单的例子/" data-title="跟着zz学Java 07-SpringMVC1-一个最简单的例子" data-url="http://example.com/2020/12/19/07-SpringMVC1-%E4%B8%80%E4%B8%AA%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%99%A8%E7%BB%83/" rel="tag">晨练</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" rel="tag">跟着zz学Java</a><span class="tag-list-count">9</span></li></ul>
     </div>
   </div>
 
-  <script type="text/javascript">
-    var inputArea = document.querySelector("#search-input")
-    var searchOverlayArea = document.querySelector(".search-overlay")
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E6%99%A8%E7%BB%83/" style="font-size: 10px;">晨练</a> <a href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" style="font-size: 20px;">跟着zz学Java</a>
+    </div>
+  </div>
 
-    inputArea.onclick = function() {
-      getSearchFile()
-      this.onclick = null
-    }
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+  </div>
 
-    inputArea.onkeydown = function() {
-      if(event.keyCode == 13)
-        return false
-    }
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/29/odoo/">odoo01-windows环境下的尝试安装</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/19/09-SpringMVC3-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%882/">跟着zz学Java 09-SpringMVC3-MVC架构整合2</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/19/08-SpringMVC2-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%88/">跟着zz学Java 08-SpringMVC2-MVC架构整合</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/19/07-SpringMVC1-%E4%B8%80%E4%B8%AA%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90/">跟着zz学Java 07-SpringMVC1-一个最简单的例子</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/19/06-%C2%B7MyBatis-Plus%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A8/">跟着zz学Java 06-·MyBatis-Plus框架的使用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
 
-    function openOrHideSearchContent() {
-      let isHidden = searchOverlayArea.classList.contains('hidden')
-      if (isHidden) {
-        searchOverlayArea.classList.remove('hidden')
-        document.body.classList.add('hidden')
-        // inputArea.focus()
-      } else {
-        searchOverlayArea.classList.add('hidden')
-        document.body.classList.remove('hidden')
-      }
-    }
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://arvinxiang.com" target="_blank">主题作者</a>
+          </li>
+        
+          <li>
+            <a href="http://reqianduan.com" target="_blank">热前端</a>
+          </li>
+        
+          <li>
+            <a href="http://yuancheng.work" target="_blank">远程.work</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
 
-    function blurSearchContent(e) {
-      if (e.target === searchOverlayArea) {
-        openOrHideSearchContent()
-      }
-    }
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 zhouzhou<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
 
-    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
-    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
-    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+<!-- totop end -->
 
-    var searchFunc = function (path, search_id, content_id) {
-      'use strict';
-      var $input = document.getElementById(search_id);
-      var $resultContent = document.getElementById(content_id);
-      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
-      $.ajax({
-        // 0x01. load xml file
-        url: path,
-        dataType: "xml",
-        success: function (xmlResponse) {
-          // 0x02. parse xml file
-          var datas = $("entry", xmlResponse).map(function () {
-            return {
-              title: $("title", this).text(),
-              content: $("content", this).text(),
-              url: $("url", this).text()
-            };
-          }).get();
-          $resultContent.innerHTML = "";
-
-          $input.addEventListener('input', function () {
-            // 0x03. parse query to keywords list
-            var str = '<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length <= 0) {
-              return;
-            }
-            // 0x04. perform local searching
-            datas.forEach(function (data) {
-              var isMatch = true;
-              var content_index = [];
-              if (!data.title || data.title.trim() === '') {
-                data.title = "Untitled";
-              }
-              var orig_data_title = data.title.trim();
-              var data_title = orig_data_title.toLowerCase();
-              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
-              var data_content = orig_data_content.toLowerCase();
-              var data_url = data.url;
-              var index_title = -1;
-              var index_content = -1;
-              var first_occur = -1;
-              // only match artiles with not empty contents
-              if (data_content !== '') {
-                keywords.forEach(function (keyword, i) {
-                  index_title = data_title.indexOf(keyword);
-                  index_content = data_content.indexOf(keyword);
-
-                  if (index_title < 0 && index_content < 0) {
-                    isMatch = false;
-                  } else {
-                    if (index_content < 0) {
-                      index_content = 0;
-                    }
-                    if (i == 0) {
-                      first_occur = index_content;
-                    }
-                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
-                  }
-                });
-              } else {
-                isMatch = false;
-              }
-              // 0x05. show search results
-              if (isMatch) {
-                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
-                var content = orig_data_content;
-                if (first_occur >= 0) {
-                  // cut out 100 characters
-                  var start = first_occur - 20;
-                  var end = first_occur + 80;
-
-                  if (start < 0) {
-                    start = 0;
-                  }
-
-                  if (start == 0) {
-                    end = 100;
-                  }
-
-                  if (end > content.length) {
-                    end = content.length;
-                  }
-
-                  var match_content = content.substr(start, end);
-
-                  // highlight all keywords
-                  keywords.forEach(function (keyword) {
-                    var regS = new RegExp(keyword, "gi");
-                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
-                  });
-
-                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
-                }
-                str += "</li>";
-              }
-            });
-            str += "</ul>";
-            if (str.indexOf('<li>') === -1) {
-              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
-            }
-            $resultContent.innerHTML = str;
-          });
-        },
-        error: function(xhr, status, error) {
-          $resultContent.innerHTML = ""
-          if (xhr.status === 404) {
-            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
-          } else {
-            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
-          }
-        }
-      });
-      $(document).on('click', '#search-close-icon', function() {
-        $('#search-input').val('');
-        $('#search-result').html('');
-      });
-    }
-
-    var getSearchFile = function() {
-        var path = "/search.xml";
-        searchFunc(path, 'search-input', 'search-result');
-    }
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"reqianduan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
   </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 
 
 
-    </div>
-  </body>
+
+<script src="/js/script.js"></script>
+
+
+</div>
+</body>
 </html>

@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>odoo01-windows环境下的尝试安装 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Odoo12 windows环境搭建需要的软件和安装如果缺少vc环境需要先安装     然后到 http:&#x2F;&#x2F;nightly.odoo.com&#x2F;12.0&#x2F;nightly&#x2F;exe&#x2F; 下载 odoo安装包 安装并设置potgres的账号密码 这一步比较重要 安装好之后，需要把odoo12服务设置成手动，并且确认一起安装的postgres数据库服务正常启动   打开PyCharm用PyCharm打开安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="odoo01-windows环境下的尝试安装">
+<meta property="og:url" content="http://example.com/2020/12/29/odoo/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Odoo12 windows环境搭建需要的软件和安装如果缺少vc环境需要先安装     然后到 http:&#x2F;&#x2F;nightly.odoo.com&#x2F;12.0&#x2F;nightly&#x2F;exe&#x2F; 下载 odoo安装包 安装并设置potgres的账号密码 这一步比较重要 安装好之后，需要把odoo12服务设置成手动，并且确认一起安装的postgres数据库服务正常启动   打开PyCharm用PyCharm打开安装">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201228212046520.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229065613107.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229065817977.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229071209224.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229100925652.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229101010316.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229101138356.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102405334.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102427707.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102446568.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102511783.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102548527.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102601722.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229071633280.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229071927647.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229072259232.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229100203145.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229075710977.png">
+<meta property="article:published_time" content="2020-12-28T23:58:56.000Z">
+<meta property="article:modified_time" content="2020-12-29T02:28:22.573Z">
+<meta property="article:author" content="zhouzhou">
+<meta property="article:tag" content="晨练">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201228212046520.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="example.com">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-odoo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/12/29/odoo/" class="article-date">
+  <time datetime="2020-12-28T23:58:56.000Z" itemprop="datePublished">2020-12-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      odoo01-windows环境下的尝试安装
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Odoo12-windows环境搭建"><a href="#Odoo12-windows环境搭建" class="headerlink" title="Odoo12 windows环境搭建"></a>Odoo12 windows环境搭建</h1><h2 id="需要的软件和安装"><a href="#需要的软件和安装" class="headerlink" title="需要的软件和安装"></a>需要的软件和安装</h2><p>如果缺少vc环境需要先安装</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201228212046520.png" alt="image-20201228212046520" style="zoom:33%;" />
+
+
+
+<p>然后到 <a target="_blank" rel="noopener" href="http://nightly.odoo.com/12.0/nightly/exe/">http://nightly.odoo.com/12.0/nightly/exe/</a> 下载 odoo安装包</p>
+<p>安装并设置potgres的账号密码</p>
+<p>这一步比较重要</p>
+<p>安装好之后，需要把odoo12服务设置成手动，并且确认一起安装的postgres数据库服务正常启动</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229065613107.png" alt="image-20201229065613107" style="zoom:50%;" />
+
+<h2 id="打开PyCharm"><a href="#打开PyCharm" class="headerlink" title="打开PyCharm"></a>打开PyCharm</h2><p>用PyCharm打开安装好的odoo 12.0的server文件夹，并使用该文件夹上一个文件夹的python文件夹下的python.exe作为此项目的<code>interpreter</code>，这个过程会比较慢，需要等待index完，也就是加载完文件，因为odoo下面的文件比较多</p>
+<p>注：这里可能存在的一个问题是加入虚拟环境没反应，那么就在第三行<code>System Intercepter</code>中加入即可</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229065817977.png" alt="image-20201229065817977"></p>
+<p>然后修改odoo.conf文件，这个是odoo启动的配置文件</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229071209224.png" alt="image-20201229071209224"></p>
+<p>在这一行前面加一个<code>;</code>，注释掉，让log日志能够在pycharm下面的console显示</p>
+<p>然后运行 odoo-bin</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229100925652.png" alt="image-20201229100925652"></p>
+<p>访问 <a target="_blank" rel="noopener" href="http://localhost:8069/">http://localhost:8069</a> 自动跳转到 odoo 数据库创建页面</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229101010316.png" alt="image-20201229101010316"></p>
+<p>创建完成</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229101138356.png" alt="image-20201229101138356"></p>
+<p>查看我们的conf文件发现默认的addons目录是在 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addons_path &#x3D; D:\project\Odoo 12.0\server\odoo\addons</span><br></pre></td></tr></table></figure>
+<p>odoo系统自带的addons也在这个目录下，我们把我们自己写好的一个模块放进去试试</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102405334.png" alt="image-20201229102405334" style="zoom:50%;" />
+
+<p>重启</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102427707.png" alt="image-20201229102427707"></p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102446568.png" alt="image-20201229102446568"></p>
+<p>激活开发者模式</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102511783.png" alt="image-20201229102511783"></p>
+<p>然后刷新浏览器，就可以找到我们自己写好的模块了</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102548527.png" alt="image-20201229102548527"></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102601722.png" alt="image-20201229102601722" style="zoom:200%;" />
+
+<h2 id="花絮"><a href="#花絮" class="headerlink" title="花絮"></a>花絮</h2><p>一般配置到这里，然后启动odoo-bin，就没有问题了</p>
+<p>但是题主比较喜欢锻炼一下动(zuo)手(si)能力，因为这个我是晚上就装好了，为了写博客就把原来的删了，这个其实问题很大，因为windows下面的odoo这个包，会改系统的很多配置，postgres就是的，在用户下面加上一个，还在注册表中写了很多东西<br><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229071633280.png" alt="image-20201229071633280" style="zoom:50%;" /></p>
+<p>这个文件也不太好删除，所以就尝试一下改变默认的odoo server的配置，并且自己安装postgres</p>
+<p>先在官网下载windows 64位的postgres安装包</p>
+<p><a target="_blank" rel="noopener" href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads">https://www.enterprisedb.com/downloads/postgres-postgresql-downloads</a></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229071927647.png" alt="image-20201229071927647" style="zoom:50%;" />
+
+<p>我选择的是10版本</p>
+<p>然后安装数据库</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229072259232.png" alt="image-20201229072259232" style="zoom:50%;" />
+
+<p>选择时区这一步比较重要</p>
+<p>然后在conf中配置即可</p>
+<p>最后，题主也发现了注册表中删除的办法：</p>
+<p>也可以参考这一篇文章在注册表中删除，在注册表中操作一定要谨慎!!!</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Niceplay150928/article/details/78108124">https://blog.csdn.net/Niceplay150928/article/details/78108124</a></p>
+<p>然后需要重启一下机器，才会把注册表中删除的服务去掉</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229100203145.png" alt="image-20201229100203145" style="zoom:50%;" />
+
+<p>注意需要删除这个下面的postgres</p>
+<p>安装时，这个选项就会又出来了</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229075710977.png" alt="image-20201229075710977" style="zoom:50%;" />
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://example.com/2020/12/29/odoo/" data-id="ckj98490o0000ksuo60bmg8tm" class="article-share-link" data-share="baidu" data-title="odoo01-windows环境下的尝试安装">分享到</a>
+      
+
+      
+        <a href="http://example.com/2020/12/29/odoo/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%99%A8%E7%BB%83/" rel="tag">晨练</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/19/09-SpringMVC3-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%882/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">跟着zz学Java 09-SpringMVC3-MVC架构整合2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2020/12/29/odoo/" data-title="odoo01-windows环境下的尝试安装" data-url="http://example.com/2020/12/29/odoo/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%99%A8%E7%BB%83/" rel="tag">晨练</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" rel="tag">跟着zz学Java</a><span class="tag-list-count">9</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E6%99%A8%E7%BB%83/" style="font-size: 10px;">晨练</a> <a href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" style="font-size: 20px;">跟着zz学Java</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/29/odoo/">odoo01-windows环境下的尝试安装</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/19/09-SpringMVC3-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%882/">跟着zz学Java 09-SpringMVC3-MVC架构整合2</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/19/08-SpringMVC2-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%88/">跟着zz学Java 08-SpringMVC2-MVC架构整合</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/19/07-SpringMVC1-%E4%B8%80%E4%B8%AA%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90/">跟着zz学Java 07-SpringMVC1-一个最简单的例子</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/19/06-%C2%B7MyBatis-Plus%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A8/">跟着zz学Java 06-·MyBatis-Plus框架的使用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://arvinxiang.com" target="_blank">主题作者</a>
+          </li>
+        
+          <li>
+            <a href="http://reqianduan.com" target="_blank">热前端</a>
+          </li>
+        
+          <li>
+            <a href="http://yuancheng.work" target="_blank">远程.work</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 zhouzhou<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"reqianduan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+</div>
+</body>
+</html>
