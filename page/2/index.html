@@ -4,58 +4,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>跟着zz学Java 01-JDBC的使用 | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="01-JDBC的使用前言大家已经安装好了mysql，并且使用navicate数据库连接工具连接好了 如果navicate破解还存在问题，那这个小工具先过渡也可以，连接方式如下  这次我们使用Java 的JDBC，来连接我们的数据库，并且实现一下增删查改操作，ide是idea 2020.2.3，jdk是1.8版本，驱动包版本，5.0.8 创建表结构localhost上右键新建数据库 **** 字符集">
-<meta property="og:type" content="article">
-<meta property="og:title" content="跟着zz学Java 01-JDBC的使用">
-<meta property="og:url" content="http://example.com/2020/12/19/01-JDBC%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="01-JDBC的使用前言大家已经安装好了mysql，并且使用navicate数据库连接工具连接好了 如果navicate破解还存在问题，那这个小工具先过渡也可以，连接方式如下  这次我们使用Java 的JDBC，来连接我们的数据库，并且实现一下增删查改操作，ide是idea 2020.2.3，jdk是1.8版本，驱动包版本，5.0.8 创建表结构localhost上右键新建数据库 **** 字符集">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSmSRe.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSezGD.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSejIK.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSexPO.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSeXa6.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSmpxH.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSmCMd.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSmPsA.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSu88U.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuQU0.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSu3CT.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuMEq.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSul5V.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuG2F.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuJv4.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSutKJ.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuTxg.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuoRS.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuIG8.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSuHMQ.png">
-<meta property="og:image" content="https://s3.ax1x.com/2020/12/08/rSu5Pf.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000124770.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000531153.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000723701.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000824226.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204000948285.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204001209091.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204001439292.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002407128.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002420032.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002454854.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002758419.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204002742588.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204004306882.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204004420912.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204004624469.png">
-<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201204004839028.png">
-<meta property="article:published_time" content="2020-12-18T16:17:08.000Z">
-<meta property="article:modified_time" content="2020-12-18T18:12:33.157Z">
 <meta property="article:author" content="zhouzhou">
-<meta property="article:tag" content="跟着zz学Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s3.ax1x.com/2020/12/08/rSmSRe.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -109,7 +66,58 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main"><article id="post-01-JDBC的使用" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main">
+  
+    <article id="post-02-JDBC执行查询" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/12/19/02-JDBC%E6%89%A7%E8%A1%8C%E6%9F%A5%E8%AF%A2/" class="article-date">
+  <time datetime="2020-12-18T18:09:07.000Z" itemprop="datePublished">2020-12-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/19/02-JDBC%E6%89%A7%E8%A1%8C%E6%9F%A5%E8%AF%A2/">跟着zz学Java 02-JDBC执行查询</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="02-JDBC执行查询"><a href="#02-JDBC执行查询" class="headerlink" title="02-JDBC执行查询"></a>02-JDBC执行查询</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面一小节，我们练习了使用<code>jdbc</code>连接我们的<code>mysql</code>执行增删改的操作，查询的操作比较复杂，所以我们单独使用一小节来讲解。其实不论是使用<code>jdbc</code>, 还是后面的<code>mybatis</code>,<code>mybatisplus</code>, <code>jpa</code>，查询一直都是重难点，所以需要更加专注😊</p>
+<h2 id="查询所有用户"><a href="#查询所有用户" class="headerlink" title="查询所有用户"></a>查询所有用户</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zz.JDBC02;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSelectAll</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>(</span><br><span class="line">                <span class="keyword">final</span> Connection connection = DriverManager.getConnection(<span class="string">&quot;jdbc:mysql://127.0.0.1:3306/sugon666?charaterEncoding=UTF-8&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;root&quot;</span>, <span class="string">&quot;root123&quot;</span>);</span><br><span class="line">                Statement s = connection.createStatement();</span><br><span class="line">        ) &#123;</span><br><span class="line">            String sql = <span class="string">&quot;select * from user&quot;</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//执行查询语句, 并把结果集返回给ResultSet</span></span><br><span class="line">            <span class="keyword">final</span> ResultSet resultSet = s.executeQuery(sql);</span><br><span class="line">            <span class="keyword">while</span> (resultSet.next()) &#123;</span><br><span class="line">                <span class="keyword">int</span> id = resultSet.getInt(<span class="string">&quot;id&quot;</span>); <span class="comment">// 可以使用字段名</span></span><br><span class="line">                String username = resultSet.getString(<span class="number">2</span>); <span class="comment">// 也可以使用字段的顺序</span></span><br><span class="line">                String password = resultSet.getString(<span class="string">&quot;password&quot;</span>);</span><br><span class="line">                System.out.printf(<span class="string">&quot;%d\t%s\t%s\t&quot;</span>, id, username, password);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要就是调用<code>executeQuery</code>这个方法，之前是<code>execute</code></p>
+<p>然后就是查询出来的值，放在<code>ResultSet</code>，这个封装的查询对象里面，可以通过遍历对象然后调用对应的get函数去取出查询出来的值</p>
+<p>输出</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>	zz	newpassword	<span class="number">3</span>	zzz	<span class="number">123456</span>	</span><br><span class="line"><span class="keyword">Process</span> finished with <span class="keyword">exit</span> code <span class="number">0</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://example.com/2020/12/19/02-JDBC%E6%89%A7%E8%A1%8C%E6%9F%A5%E8%AF%A2/" data-id="ckk7nlzsa0006ncuo7ogw2wln" class="article-share-link" data-share="baidu" data-title="跟着zz学Java 02-JDBC执行查询">分享到</a>
+      
+
+      
+        <a href="http://example.com/2020/12/19/02-JDBC%E6%89%A7%E8%A1%8C%E6%9F%A5%E8%AF%A2/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B7%9F%E7%9D%80zz%E5%AD%A6Java/" rel="tag">跟着zz学Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-01-JDBC的使用" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/12/19/01-JDBC%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
   <time datetime="2020-12-18T16:17:08.000Z" itemprop="datePublished">2020-12-19</time>
@@ -122,8 +130,8 @@
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      跟着zz学Java 01-JDBC的使用
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/19/01-JDBC%E7%9A%84%E4%BD%BF%E7%94%A8/">跟着zz学Java 01-JDBC的使用</a>
     </h1>
   
 
@@ -248,28 +256,15 @@
     </footer>
   </div>
   
-    
-<nav id="article-nav">
-  
-    <a href="/2020/12/19/02-JDBC%E6%89%A7%E8%A1%8C%E6%9F%A5%E8%AF%A2/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">
-        
-          跟着zz学Java 02-JDBC执行查询
-        
-      </div>
-    </a>
-  
-  
-</nav>
-
-  
 </article>
 
 
-  <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2020/12/19/01-JDBC的使用/" data-title="跟着zz学Java 01-JDBC的使用" data-url="http://example.com/2020/12/19/01-JDBC%E7%9A%84%E4%BD%BF%E7%94%A8/"></div>
-  </section>
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 </section>
       
       <aside id="sidebar">
