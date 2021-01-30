@@ -22,12 +22,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
-  <meta name="description" content="08-SpringMVC2-MVC架构整合前言我们前面只用SpringMVC完成了一个根据id模拟查询返回一个用户的例子，现在我们把之前的例子串联起来 这里呢我考虑了一下，我们暂时不用MyBatis-Plus，还是只用MyBatis，但是呢，我们之前不是看MyBatis-plus官网说，对程序无侵入么，那我们就来试试，在MyBatis-Plus中使用Mybatis，哈哈，不要怕，就是要敢于尝试 项">
+  <meta name="description" content="前言我们前面只用SpringMVC完成了一个根据id模拟查询返回一个用户的例子，现在我们把之前的例子串联起来 这里呢我考虑了一下，我们暂时不用MyBatis-Plus，还是只用MyBatis，但是呢，我们之前不是看MyBatis-plus官网说，对程序无侵入么，那我们就来试试，在MyBatis-Plus中使用Mybatis，哈哈，不要怕，就是要敢于尝试 项目结构我们先来复习一下，跟MyBatis相">
 <meta property="og:type" content="article">
 <meta property="og:title" content="跟着zz学Java 08-SpringMVC2-MVC架构整合">
 <meta property="og:url" content="http://example.com/2020/12/19/08-SpringMVC2-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%88/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="08-SpringMVC2-MVC架构整合前言我们前面只用SpringMVC完成了一个根据id模拟查询返回一个用户的例子，现在我们把之前的例子串联起来 这里呢我考虑了一下，我们暂时不用MyBatis-Plus，还是只用MyBatis，但是呢，我们之前不是看MyBatis-plus官网说，对程序无侵入么，那我们就来试试，在MyBatis-Plus中使用Mybatis，哈哈，不要怕，就是要敢于尝试 项">
+<meta property="og:description" content="前言我们前面只用SpringMVC完成了一个根据id模拟查询返回一个用户的例子，现在我们把之前的例子串联起来 这里呢我考虑了一下，我们暂时不用MyBatis-Plus，还是只用MyBatis，但是呢，我们之前不是看MyBatis-plus官网说，对程序无侵入么，那我们就来试试，在MyBatis-Plus中使用Mybatis，哈哈，不要怕，就是要敢于尝试 项目结构我们先来复习一下，跟MyBatis相">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210115424230.png">
 <meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210120249234.png">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210122126858.png">
 <meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210122829139.png">
 <meta property="article:published_time" content="2020-12-18T18:11:40.000Z">
-<meta property="article:modified_time" content="2020-12-18T18:13:41.596Z">
+<meta property="article:modified_time" content="2021-01-30T17:33:12.767Z">
 <meta property="article:author" content="zhouzhou">
 <meta property="article:tag" content="跟着zz学Java">
 <meta name="twitter:card" content="summary">
@@ -158,7 +158,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#08-SpringMVC2-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%88"><span class="nav-number">1.</span> <span class="nav-text">08-SpringMVC2-MVC架构整合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99Mapper"><span class="nav-number">1.3.</span> <span class="nav-text">编写Mapper</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99Mapper"><span class="nav-number">3.</span> <span class="nav-text">编写Mapper</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -239,10 +239,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2020-12-19 02:11:40 / 修改时间：02:13:41" itemprop="dateCreated datePublished" datetime="2020-12-19T02:11:40+08:00">2020-12-19</time>
+      <time title="创建时间：2020-12-19 02:11:40" itemprop="dateCreated datePublished" datetime="2020-12-19T02:11:40+08:00">2020-12-19</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-01-31 01:33:12" itemprop="dateModified" datetime="2021-01-31T01:33:12+08:00">2021-01-31</time>
+      </span>
 
   
 </div>
@@ -254,7 +260,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="08-SpringMVC2-MVC架构整合"><a href="#08-SpringMVC2-MVC架构整合" class="headerlink" title="08-SpringMVC2-MVC架构整合"></a>08-SpringMVC2-MVC架构整合</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们前面只用SpringMVC完成了一个根据id模拟查询返回一个用户的例子，现在我们把之前的例子串联起来</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们前面只用SpringMVC完成了一个根据id模拟查询返回一个用户的例子，现在我们把之前的例子串联起来</p>
 <p>这里呢我考虑了一下，我们暂时不用<code>MyBatis-Plus</code>，还是只用<code>MyBatis</code>，但是呢，我们之前不是看<code>MyBatis-plus</code>官网说，对程序无侵入么，那我们就来试试，在<code>MyBatis-Plus</code>中使用<code>Mybatis</code>，哈哈，不要怕，就是要敢于尝试</p>
 <h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>我们先来复习一下，跟<code>MyBatis</code>相关的文件的位置配置主要有三个</p>
 <ul>
