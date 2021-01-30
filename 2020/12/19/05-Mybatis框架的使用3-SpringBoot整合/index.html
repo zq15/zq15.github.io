@@ -19,7 +19,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
   <meta name="description" content="原创出处 http:&#x2F;&#x2F;www.iocoder.cn&#x2F;Spring-Boot&#x2F;MyBatis&#x2F; 「芋道源码 前言前面几节，我们通过jar包的方式来了个mybatis的初体验，然后把maven给配置好了，现在万事俱备，也到了我们拥抱SpringBoot的时候 SpringBoot项目的创建新建项目  next  next  next   创建好的目录如下 我们的SpringBoot项目就新建好啦 最">
@@ -395,6 +395,13 @@
 
 
       
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -560,6 +567,23 @@
   
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments('#disqus_thread', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'gNlwaioY2xDszDJHZEStWCb3oSv46bPlZCSWVzJhspyIDsSTndyvIbJPOuzd7z7K',
+      shortname : 'zhouzhou',
+      url       : "http://example.com/2020/12/19/05-Mybatis%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A83-SpringBoot%E6%95%B4%E5%90%88/",
+      identifier: "2020/12/19/05-Mybatis框架的使用3-SpringBoot整合/",
+      title     : "跟着zz学Java 05-Mybatis框架的使用3-SpringBoot整合",
+    });
+  }, window.DisqusJS);
+});
+</script>
 
 </body>
 </html>
