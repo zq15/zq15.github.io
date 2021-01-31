@@ -190,7 +190,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -204,6 +204,16 @@
 </div>
 
 
+  <div class="links-of-blogroll animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://https//enchantedovo.cn/" title="http:&#x2F;&#x2F;https:&#x2F;&#x2F;enchantedovo.cn&#x2F;" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
 
       </section>
     </div>
@@ -228,6 +238,99 @@
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/19/04-Mybatis%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A82-maven%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/QQ%E5%9B%BE%E7%89%8720210131015413.jpg">
+      <meta itemprop="name" content="zhouzhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/19/04-Mybatis%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A82-maven%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">跟着zz学Java 04-Mybatis框架的使用2-maven项目</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-19 02:10:18" itemprop="dateCreated datePublished" datetime="2020-12-19T02:10:18+08:00">2020-12-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-01-31 01:32:58" itemprop="dateModified" datetime="2021-01-31T01:32:58+08:00">2021-01-31</time>
+      </span>
+
+  
+    <span id="/2020/12/19/04-Mybatis%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A82-maven%E9%A1%B9%E7%9B%AE/" class="post-meta-item leancloud_visitors" data-flag-title="跟着zz学Java 04-Mybatis框架的使用2-maven项目" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面两节讲解了<code>JDBC</code>的基本使用，下面我们使用我们的框架来实现我们对数据库的操作，不要怕，也不难</p>
+<p>关于<code>Mybatis</code>我的思路是这样的，先采用jar包，然后我们采用maven工程的方式，引入一点maven这个神器，最后我们再去使用<code>SpringBoot</code>整合</p>
+<h2 id="Maven的配置"><a href="#Maven的配置" class="headerlink" title="Maven的配置"></a>Maven的配置</h2><p>去官网下载maven的zip包，注意对应版本<code>X64</code></p>
+<p><a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">https://maven.apache.org/download.cgi</a></p>
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSZj3Q"><img src="https://s3.ax1x.com/2020/12/08/rSZj3Q.png" alt="rSZj3Q.png"></a></p>
+<p>选择bin包，而不是source源码包，bin是编译好可以直接拿来用的</p>
+<p>下载之后配置环境变量</p>
+<p>把maven所在的根目录配置一个环境变量<code>MAVEN_HOME</code>，然后在Path中加入<code>%MAVEN_HOME%\bin</code></p>
+<p>打开<code>cmd</code>测试</p>
+<p><code> mvn -v</code></p>
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSZX9g"><img src="https://s3.ax1x.com/2020/12/08/rSZX9g.png" alt="rSZX9g.png"></a></p>
+<p>就对了</p>
+<p>然后配置镜像加速和本地仓库地址，建议用<code>vscode</code>打开</p>
+<p><code>conf</code>目录下的<code>settings.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">settings</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/SETTINGS/1.0.0&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>D:/program_software/repository<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>alimaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/repositories/central/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后在idea中配置maven</p>
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/rSZbAf"><img src="https://s3.ax1x.com/2020/12/08/rSZbAf.png" alt="rSZbAf.png"></a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+  
+  
+  
+
       
   
   
