@@ -181,7 +181,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -238,6 +238,133 @@
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/29/odoo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhouzhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/29/odoo/" class="post-title-link" itemprop="url">odoo01-windows环境下的安装(不使用容器易上手版本)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-29 07:58:56" itemprop="dateCreated datePublished" datetime="2020-12-29T07:58:56+08:00">2020-12-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-01-31 01:33:26" itemprop="dateModified" datetime="2021-01-31T01:33:26+08:00">2021-01-31</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="需要的软件和安装"><a href="#需要的软件和安装" class="headerlink" title="需要的软件和安装"></a>需要的软件和安装</h2><p>如果缺少vc环境需要先安装</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201228212046520.png" alt="image-20201228212046520" style="zoom:33%;" />
+
+
+
+<p>然后到 <a target="_blank" rel="noopener" href="http://nightly.odoo.com/12.0/nightly/exe/">http://nightly.odoo.com/12.0/nightly/exe/</a> 下载 odoo安装包</p>
+<p>安装并设置potgres的账号密码</p>
+<p>这一步比较重要</p>
+<p>安装好之后，需要把odoo12服务设置成手动，并且确认一起安装的postgres数据库服务正常启动</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229065613107.png" alt="image-20201229065613107" style="zoom:50%;" />
+
+<h2 id="打开PyCharm"><a href="#打开PyCharm" class="headerlink" title="打开PyCharm"></a>打开PyCharm</h2><p>用PyCharm打开安装好的odoo 12.0的server文件夹，并使用该文件夹上一个文件夹的python文件夹下的python.exe作为此项目的<code>interpreter</code>，这个过程会比较慢，需要等待index完，也就是加载完文件，因为odoo下面的文件比较多</p>
+<p>注：这里可能存在的一个问题是加入虚拟环境没反应，那么就在第三行<code>System Intercepter</code>中加入即可</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229065817977.png" alt="image-20201229065817977"></p>
+<p>然后修改odoo.conf文件，这个是odoo启动的配置文件</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229071209224.png" alt="image-20201229071209224"></p>
+<p>在这一行前面加一个<code>;</code>，注释掉，让log日志能够在pycharm下面的console显示</p>
+<p>然后运行 odoo-bin</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229100925652.png" alt="image-20201229100925652"></p>
+<p>访问 <a target="_blank" rel="noopener" href="http://localhost:8069/">http://localhost:8069</a> 自动跳转到 odoo 数据库创建页面</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229101010316.png" alt="image-20201229101010316"></p>
+<p>创建完成</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229101138356.png" alt="image-20201229101138356"></p>
+<p>查看我们的conf文件发现默认的addons目录是在 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addons_path &#x3D; D:\project\Odoo 12.0\server\odoo\addons</span><br></pre></td></tr></table></figure>
+<p>odoo系统自带的addons也在这个目录下，我们把我们自己写好的一个模块放进去试试</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102405334.png" alt="image-20201229102405334" style="zoom:50%;" />
+
+<p>重启</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102427707.png" alt="image-20201229102427707"></p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102446568.png" alt="image-20201229102446568"></p>
+<p>激活开发者模式</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102511783.png" alt="image-20201229102511783"></p>
+<p>然后刷新浏览器，就可以找到我们自己写好的模块了</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102548527.png" alt="image-20201229102548527"></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229102601722.png" alt="image-20201229102601722" style="zoom:200%;" />
+
+<h2 id="花絮"><a href="#花絮" class="headerlink" title="花絮"></a>花絮</h2><p>一般配置到这里，然后启动odoo-bin，就没有问题了</p>
+<p>但是题主比较喜欢锻炼一下动(zuo)手(si)能力，因为这个我是晚上就装好了，为了写博客就把原来的删了，这个其实问题很大，因为windows下面的odoo这个包，会改系统的很多配置，postgres就是的，在用户下面加上一个，还在注册表中写了很多东西<br><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229071633280.png" alt="image-20201229071633280" style="zoom:50%;" /></p>
+<p>这个文件也不太好删除，所以就尝试一下改变默认的odoo server的配置，并且自己安装postgres</p>
+<p>先在官网下载windows 64位的postgres安装包</p>
+<p><a target="_blank" rel="noopener" href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads">https://www.enterprisedb.com/downloads/postgres-postgresql-downloads</a></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229071927647.png" alt="image-20201229071927647" style="zoom:50%;" />
+
+<p>我选择的是10版本</p>
+<p>然后安装数据库</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229072259232.png" alt="image-20201229072259232" style="zoom:50%;" />
+
+<p>选择时区这一步比较重要</p>
+<p>然后在conf中配置即可</p>
+<p>最后，题主也发现了注册表中删除的办法：</p>
+<p>也可以参考这一篇文章在注册表中删除，在注册表中操作一定要谨慎!!!</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Niceplay150928/article/details/78108124">https://blog.csdn.net/Niceplay150928/article/details/78108124</a></p>
+<p>然后需要重启一下机器，才会把注册表中删除的服务去掉</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229100203145.png" alt="image-20201229100203145" style="zoom:50%;" />
+
+<p>注意需要删除这个下面的postgres</p>
+<p>安装时，这个选项就会又出来了</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201229075710977.png" alt="image-20201229075710977" style="zoom:50%;" />
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+  
+  
+  
+
       
   
   
