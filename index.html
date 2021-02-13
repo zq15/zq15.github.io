@@ -181,7 +181,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -238,6 +238,109 @@
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/13/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-day04-%E5%AE%8C%E6%88%90%E9%80%92%E5%BD%92%E6%9F%A5%E8%AF%A2%E5%88%86%E7%B1%BB%E5%92%8Cgateway%E8%BD%AC%E5%8F%91%E5%AE%9E%E6%88%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhouzhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/13/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-day04-%E5%AE%8C%E6%88%90%E9%80%92%E5%BD%92%E6%9F%A5%E8%AF%A2%E5%88%86%E7%B1%BB%E5%92%8Cgateway%E8%BD%AC%E5%8F%91%E5%AE%9E%E6%88%98/" class="post-title-link" itemprop="url">谷粒商城-day04-完成递归查询分类和gateway转发实战</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-02-13 23:40:56 / 修改时间：23:44:33" itemprop="dateCreated datePublished" datetime="2021-02-13T23:40:56+08:00">2021-02-13</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>相关表：pms_category </p>
+<p>使用sql脚本去初始化这张分类表</p>
+<h2 id="递归树形结构数据获取"><a href="#递归树形结构数据获取" class="headerlink" title="递归树形结构数据获取"></a>递归树形结构数据获取</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查出所有分类以及子分类，以树形结构组装起来列表</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/list/tree&quot;)</span></span><br><span class="line"><span class="comment">//    @RequiresPermissions(&quot;product:category:list&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">list</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;CategoryEntity&gt; entities =  categoryService.listWithTree();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> R.ok().put(<span class="string">&quot;data&quot;</span>, entities);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;CategoryEntity&gt; <span class="title">listWithTree</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//1. 查出所有分类</span></span><br><span class="line">    List&lt;CategoryEntity&gt; entities = baseMapper.selectList(<span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2. 组装成父子的树形结构</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//2.1) 找到所有的一级分类</span></span><br><span class="line">    List&lt;CategoryEntity&gt; level1Menus = entities.stream().filter(categoryEntity -&gt;</span><br><span class="line">        categoryEntity.getParentCid() == <span class="number">0</span></span><br><span class="line">    ).map((menu)-&gt;&#123;</span><br><span class="line">        menu.setChildren(getChildrens(menu, entities));</span><br><span class="line">        <span class="keyword">return</span> menu;</span><br><span class="line">    &#125;).sorted((menu1,menu2)-&gt;&#123;</span><br><span class="line">        <span class="keyword">return</span> (menu1.getSort()==<span class="keyword">null</span>?<span class="number">0</span>:menu1.getSort()) - (menu2.getSort()==<span class="keyword">null</span>?<span class="number">0</span>:menu2.getSort());</span><br><span class="line">    &#125;).collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> level1Menus;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 递归查找所有菜单的子菜单</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> List&lt;CategoryEntity&gt; <span class="title">getChildrens</span><span class="params">(CategoryEntity root, List&lt;CategoryEntity&gt; all)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    List&lt;CategoryEntity&gt; children = all.stream().filter(categoryEntity -&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> categoryEntity.getParentCid() == root.getCatId();</span><br><span class="line">    &#125;).map(categoryEntity -&gt; &#123;</span><br><span class="line">        <span class="comment">// 1. 找到子菜单</span></span><br><span class="line">        categoryEntity.setChildren(getChildrens(categoryEntity, all));</span><br><span class="line">        <span class="keyword">return</span> categoryEntity;</span><br><span class="line">    &#125;).sorted((menu1, menu2)-&gt; &#123;</span><br><span class="line">        <span class="comment">// 2.菜单的排序</span></span><br><span class="line">        <span class="keyword">return</span> (menu1.getSort()==<span class="keyword">null</span>?<span class="number">0</span>:menu1.getSort()) - (menu2.getSort()==<span class="keyword">null</span>?<span class="number">0</span>:menu2.getSort());</span><br><span class="line">    &#125;).collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> children;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后能够返回递归后的树形结构的分类</p>
+<p>涉及的遗漏知识点，集合的各种操作，结合lambda表达式</p>
+<h2 id="配置网关路由与路径重写"><a href="#配置网关路由与路径重写" class="headerlink" title="配置网关路由与路径重写"></a>配置网关路由与路径重写</h2><p>新增菜单</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210211110002859.png" alt="image-20210211110002859" style="zoom:33%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210211110310497.png" alt="image-20210211110310497" style="zoom:33%;" />
+
+<p>子菜单</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210211110456891.png" alt="image-20210211110456891" style="zoom:33%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210211110528018.png" alt="image-20210211110528018" style="zoom:50%;" />
+
+<p>路由规则</p>
+<p>/product/category 会变成 /product-category</p>
+<p>alt+shift+f 代码格式化</p>
+<p>引入elementui树形组件</p>
+<p>添加网关</p>
+<p>开启renren-fast的服务注册功能</p>
+<p>renren-fast模块添加 commons 依赖</p>
+<p>application.yml中添加</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">renren-fast</span></span><br></pre></td></tr></table></figure>
+<p>主启动类添加 @EnableDiscoveryClient 注解</p>
+<p>会提示缺少配置中心，暂时忽略</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210213232224871.png" alt="image-20210213232224871"></p>
+<p>更改路由配置</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">admin_role</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">lb://renren-fast</span></span><br><span class="line">          <span class="attr">predicates:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Path=/api/**</span></span><br><span class="line"><span class="comment">#   前端项目，/api</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// api接口请求地址</span></span><br><span class="line"><span class="built_in">window</span>.SITE_CONFIG[<span class="string">&#x27;baseUrl&#x27;</span>] = <span class="string">&#x27;http://localhost:88/api&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>目前发到 <a target="_blank" rel="noopener" href="http://localhost:88/api/captcha.jpg?uuid=c8f73fbc-36b5-47be-84d5-0fa4bb976f5b">http://localhost:88/api/captcha.jpg?uuid=c8f73fbc-36b5-47be-84d5-0fa4bb976f5b</a></p>
+<p>实际是 <a target="_blank" rel="noopener" href="http://localhost:8080/renren-fast/captcha.jpg?uuid=c8f73fbc-36b5-47be-84d5-0fa4bb976f5b">http://localhost:8080/renren-fast/captcha.jpg?uuid=c8f73fbc-36b5-47be-84d5-0fa4bb976f5b</a></p>
+<p>需要路径重写</p>
+<p>完整版本：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">id:</span> <span class="string">admin_role</span></span><br><span class="line">   <span class="attr">uri:</span> <span class="string">lb://renren-fast</span></span><br><span class="line">   <span class="attr">predicates:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">Path=/api/**</span></span><br><span class="line">   <span class="attr">filters:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">RewritePath=/api/(?&lt;segment&gt;/?.*),</span> <span class="string">/renren-fast/$\&#123;segment&#125;</span></span><br></pre></td></tr></table></figure>
+<p>现在验证码可以看到了，但是返回 403</p>
+<p>下面一小节处理跨域请求问题</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1121,84 +1224,6 @@
 
 
 <p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210203112449359.png" alt="image-20210203112449359"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/02/java%E6%8B%BE%E9%81%972-renren%E6%A1%86%E6%9E%B6%E8%87%AA%E5%AE%9A%E4%B9%89aop%E6%97%A5%E5%BF%97%E6%B3%A8%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="zhouzhou">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/02/java%E6%8B%BE%E9%81%972-renren%E6%A1%86%E6%9E%B6%E8%87%AA%E5%AE%9A%E4%B9%89aop%E6%97%A5%E5%BF%97%E6%B3%A8%E8%A7%A3/" class="post-title-link" itemprop="url">java拾遗2-renren框架自定义aop日志注解</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-02-02 14:44:04 / 修改时间：14:44:21" itemprop="dateCreated datePublished" datetime="2021-02-02T14:44:04+08:00">2021-02-02</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一节我们学习了spring里面aop的基本使用，正好最近在研究renren-fast这个快速开发框架，这里很典型的一个aop的应用就是自定义注解，实现很方便的日志记录</p>
-<h2 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h2><p>先来看看如何自定义一个注解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Copyright (c) 2016-2019 人人开源 All rights reserved.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * https://www.renren.io</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 版权所有，侵权必究！</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> io.renren.common.annotation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 系统日志注解</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Mark sunlightcs@gmail.com</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">// 元注解</span></span><br><span class="line"><span class="comment">// 表示这个注解可以用到方法上</span></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="comment">// 运行时注解</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="comment">// javadoc文档</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SysLog &#123;</span><br><span class="line"><span class="comment">// 注解元素：用于存放注解信息，在解析的时候取出来</span></span><br><span class="line">	<span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里用@interface声明我们自定义的注解，其他部分的注释很清楚就不用我去解释了</p>
-<p>在使用的时候</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 保存配置</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SysLog(&quot;保存配置&quot;)</span> </span><br><span class="line"><span class="meta">@PostMapping(&quot;/save&quot;)</span></span><br><span class="line"><span class="meta">@RequiresPermissions(&quot;sys:config:save&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> R <span class="title">save</span><span class="params">(<span class="meta">@RequestBody</span> SysConfigEntity config)</span></span>&#123;</span><br><span class="line">	ValidatorUtils.validateEntity(config);</span><br><span class="line">	sysConfigService.saveConfig(config);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> R.ok();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在controller的接口方法前面加上这个注解并且给出value的信息就可以了，java会通过反射的机制取出这里的<code>“保存配置”</code>放到<code>value</code>里面</p>
-<h2 id="定义切面"><a href="#定义切面" class="headerlink" title="定义切面"></a>定义切面</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Copyright (c) 2016-2019 人人开源 All rights reserved.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * https://www.renren.io</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 版权所有，侵权必究！</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> io.renren.common.aspect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.gson.Gson;</span><br><span class="line"><span class="keyword">import</span> io.renren.common.annotation.SysLog;</span><br><span class="line"><span class="keyword">import</span> io.renren.common.utils.HttpContextUtils;</span><br><span class="line"><span class="keyword">import</span> io.renren.common.utils.IPUtils;</span><br><span class="line"><span class="keyword">import</span> io.renren.modules.sys.entity.SysLogEntity;</span><br><span class="line"><span class="keyword">import</span> io.renren.modules.sys.entity.SysUserEntity;</span><br><span class="line"><span class="keyword">import</span> io.renren.modules.sys.service.SysLogService;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.SecurityUtils;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Around;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Pointcut;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.reflect.MethodSignature;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 系统日志，切面处理类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Mark sunlightcs@gmail.com</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SysLogAspect</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> SysLogService sysLogService;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Pointcut(&quot;@annotation(io.renren.common.annotation.SysLog)&quot;)</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">logPointCut</span><span class="params">()</span> </span>&#123; </span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Around(&quot;logPointCut()&quot;)</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint point)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> beginTime = System.currentTimeMillis();</span><br><span class="line">		<span class="comment">//执行方法</span></span><br><span class="line">		Object result = point.proceed();</span><br><span class="line">		<span class="comment">//执行时长(毫秒)</span></span><br><span class="line">		<span class="keyword">long</span> time = System.currentTimeMillis() - beginTime;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//保存日志</span></span><br><span class="line">		saveSysLog(point, time);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">saveSysLog</span><span class="params">(ProceedingJoinPoint joinPoint, <span class="keyword">long</span> time)</span> </span>&#123;</span><br><span class="line">		MethodSignature signature = (MethodSignature) joinPoint.getSignature();</span><br><span class="line">		Method method = signature.getMethod();</span><br><span class="line"></span><br><span class="line">		SysLogEntity sysLog = <span class="keyword">new</span> SysLogEntity();</span><br><span class="line">		SysLog syslog = method.getAnnotation(SysLog.class);</span><br><span class="line">		<span class="keyword">if</span>(syslog != <span class="keyword">null</span>)&#123;</span><br><span class="line">			<span class="comment">//注解上的描述</span></span><br><span class="line">			sysLog.setOperation(syslog.value());</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//请求的方法名</span></span><br><span class="line">		String className = joinPoint.getTarget().getClass().getName();</span><br><span class="line">		String methodName = signature.getName();</span><br><span class="line">		sysLog.setMethod(className + <span class="string">&quot;.&quot;</span> + methodName + <span class="string">&quot;()&quot;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//请求的参数</span></span><br><span class="line">		Object[] args = joinPoint.getArgs();</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			String params = <span class="keyword">new</span> Gson().toJson(args);</span><br><span class="line">			sysLog.setParams(params);</span><br><span class="line">		&#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//获取request</span></span><br><span class="line">		HttpServletRequest request = HttpContextUtils.getHttpServletRequest();</span><br><span class="line">		<span class="comment">//设置IP地址</span></span><br><span class="line">		sysLog.setIp(IPUtils.getIpAddr(request));</span><br><span class="line"></span><br><span class="line">		<span class="comment">//用户名</span></span><br><span class="line">		String username = ((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername();</span><br><span class="line">		sysLog.setUsername(username);</span><br><span class="line"></span><br><span class="line">		sysLog.setTime(time);</span><br><span class="line">		sysLog.setCreateDate(<span class="keyword">new</span> Date());</span><br><span class="line">		<span class="comment">//保存系统日志</span></span><br><span class="line">		sysLogService.save(sysLog);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>是不是很熟悉，显示定义了切面的位置,，然后定义了一个环绕通知</p>
-<p>这里还得补充一下springboot一面引入aop还需要引入相关依赖</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Copyright (c) 2016-2019 人人开源 All rights reserved.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * https://www.renren.io</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 版权所有，侵权必究！</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> io.renren.modules.sys.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.metadata.IPage;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;</span><br><span class="line"><span class="keyword">import</span> io.renren.common.utils.PageUtils;</span><br><span class="line"><span class="keyword">import</span> io.renren.common.utils.Query;</span><br><span class="line"><span class="keyword">import</span> io.renren.modules.sys.dao.SysLogDao;</span><br><span class="line"><span class="keyword">import</span> io.renren.modules.sys.entity.SysLogEntity;</span><br><span class="line"><span class="keyword">import</span> io.renren.modules.sys.service.SysLogService;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Service(&quot;sysLogService&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SysLogServiceImpl</span> <span class="keyword">extends</span> <span class="title">ServiceImpl</span>&lt;<span class="title">SysLogDao</span>, <span class="title">SysLogEntity</span>&gt; <span class="keyword">implements</span> <span class="title">SysLogService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PageUtils <span class="title">queryPage</span><span class="params">(Map&lt;String, Object&gt; params)</span> </span>&#123;</span><br><span class="line">        String key = (String)params.get(<span class="string">&quot;key&quot;</span>);</span><br><span class="line"></span><br><span class="line">        IPage&lt;SysLogEntity&gt; page = <span class="keyword">this</span>.page(</span><br><span class="line">            <span class="keyword">new</span> Query&lt;SysLogEntity&gt;().getPage(params),</span><br><span class="line">            <span class="keyword">new</span> QueryWrapper&lt;SysLogEntity&gt;().like(StringUtils.isNotBlank(key),<span class="string">&quot;username&quot;</span>, key)</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PageUtils(page);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里的<code>SysLogServiceImpl</code>就是用来吧收集到的数据放到存储日志的数据库</p>
-<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210202144109913.png" alt="image-20210202144109913" style="zoom: 67%;" />
-
 
       
     </div>
