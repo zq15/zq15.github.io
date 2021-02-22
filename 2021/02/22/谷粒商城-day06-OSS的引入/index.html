@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="使用逆向的前后端代码这里的图片地址用的是 oss url  新建一个菜单 这里使用逆向生成的模块文件，展示基本的列表和 crud  复制到我们的 modules&#x2F;product 目录下面 重启项目  这是展示的效果，可以看到没有删除和新增按钮，这里需要权限判断才会 显示   这里让它默认返回 true  可以看到我们的新增和批量删除都有了     测试一下 这里的细节还需要自己完善 效果优化和快速">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谷粒商城-day06-OSS的引入">
+<meta property="og:url" content="http://example.com/2021/02/22/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-day06-OSS%E7%9A%84%E5%BC%95%E5%85%A5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="使用逆向的前后端代码这里的图片地址用的是 oss url  新建一个菜单 这里使用逆向生成的模块文件，展示基本的列表和 crud  复制到我们的 modules&#x2F;product 目录下面 重启项目  这是展示的效果，可以看到没有删除和新增按钮，这里需要权限判断才会 显示   这里让它默认返回 true  可以看到我们的新增和批量删除都有了     测试一下 这里的细节还需要自己完善 效果优化和快速">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222095101242.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222095436357.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222095612256.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222095730020.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222100435790.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222100548067.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222100726147.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222100737625.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222101111689.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222102213044.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222104106233.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222104411899.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222110101875.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222112200540.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222112408791.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222112604775.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222112904379.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222113102671.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222113214157.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222113302272.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222113411325.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222114623465.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222114519738.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222135154404.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222135833621.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222140126018.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222141952362.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222142242063.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222151055553.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222152801064.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222153253821.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222154405040.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222154528719.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222154638525.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222154720761.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222154922138.png">
+<meta property="article:published_time" content="2021-02-22T08:01:46.000Z">
+<meta property="article:modified_time" content="2021-02-22T08:02:20.596Z">
+<meta property="article:author" content="zhouzhou">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222095101242.png">
+
+
+<link rel="canonical" href="http://example.com/2021/02/22/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-day06-OSS%E7%9A%84%E5%BC%95%E5%85%A5/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>谷粒商城-day06-OSS的引入 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%80%86%E5%90%91%E7%9A%84%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">使用逆向的前后端代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E4%BC%98%E5%8C%96%E5%92%8C%E5%BF%AB%E9%80%9F%E6%98%BE%E7%A4%BA%E5%BC%80%E5%85%B3"><span class="nav-number">2.</span> <span class="nav-text">效果优化和快速显示开关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E6%8E%89-eslint"><span class="nav-number">2.1.</span> <span class="nav-text">关掉 eslint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E6%98%BE%E7%A4%BA%E7%8A%B6%E6%80%81%E7%9A%84%E9%A1%B5%E9%9D%A2%E6%8E%A7%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">更改显示状态的页面控件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSS"><span class="nav-number">3.</span> <span class="nav-text">OSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E8%81%94%E8%B0%83"><span class="nav-number">4.</span> <span class="nav-text">前后端联调</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhouzhou"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">zhouzhou</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://enchantedovo.cn/" title="https:&#x2F;&#x2F;enchantedovo.cn&#x2F;" rel="noopener" target="_blank">butterfly</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://objectkaz.cn/" title="https:&#x2F;&#x2F;objectkaz.cn&#x2F;" rel="noopener" target="_blank">objectkaz</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://qingbo1011.top/" title="https:&#x2F;&#x2F;qingbo1011.top&#x2F;" rel="noopener" target="_blank">qingbo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://xiaoshuang20.github.io/" title="https:&#x2F;&#x2F;xiaoshuang20.github.io&#x2F;" rel="noopener" target="_blank">xiaoshuang</a>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/22/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-day06-OSS%E7%9A%84%E5%BC%95%E5%85%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhouzhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          谷粒商城-day06-OSS的引入
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-02-22 16:01:46 / 修改时间：16:02:20" itemprop="dateCreated datePublished" datetime="2021-02-22T16:01:46+08:00">2021-02-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="使用逆向的前后端代码"><a href="#使用逆向的前后端代码" class="headerlink" title="使用逆向的前后端代码"></a>使用逆向的前后端代码</h2><p>这里的图片地址用的是 oss url</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222095101242.png" alt="image-20210222095101242"></p>
+<p>新建一个菜单</p>
+<p>这里使用逆向生成的模块文件，展示基本的列表和 crud</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222095436357.png" alt="image-20210222095436357"></p>
+<p>复制到我们的 modules/product 目录下面</p>
+<p>重启项目</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222095612256.png" alt="image-20210222095612256"></p>
+<p>这是展示的效果，可以看到没有删除和新增按钮，这里需要权限判断才会 显示</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222095730020.png" alt="image-20210222095730020"></p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222100435790.png" alt="image-20210222100435790"></p>
+<p>这里让它默认返回 true</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222100548067.png" alt="image-20210222100548067"></p>
+<p>可以看到我们的新增和批量删除都有了</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222100726147.png" alt="image-20210222100726147" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222100737625.png" alt="image-20210222100737625" style="zoom:50%;" />
+
+<p>测试一下</p>
+<p>这里的细节还需要自己完善</p>
+<h2 id="效果优化和快速显示开关"><a href="#效果优化和快速显示开关" class="headerlink" title="效果优化和快速显示开关"></a>效果优化和快速显示开关</h2><h3 id="关掉-eslint"><a href="#关掉-eslint" class="headerlink" title="关掉 eslint"></a>关掉 eslint</h3><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222101111689.png" alt="image-20210222101111689" style="zoom:50%;" />
+
+
+
+<h3 id="更改显示状态的页面控件"><a href="#更改显示状态的页面控件" class="headerlink" title="更改显示状态的页面控件"></a>更改显示状态的页面控件</h3><p>自定义列模板</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222102213044.png" alt="image-20210222102213044" style="zoom:50%;" />
+
+<p>参考 <code>elementui</code>上面的资料，可以看出是基于插槽机制去实现的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-table-column</span><br><span class="line">  prop&#x3D;&quot;showStatus&quot;</span><br><span class="line">  header-align&#x3D;&quot;center&quot;</span><br><span class="line">  align&#x3D;&quot;center&quot;</span><br><span class="line">  label&#x3D;&quot;显示状态&quot;</span><br><span class="line">&gt;</span><br><span class="line">  &lt;template slot-scope&#x3D;&quot;scope&quot;&gt;</span><br><span class="line">    &lt;el-switch</span><br><span class="line">      v-model&#x3D;&quot;scope.row.showStatus&quot;</span><br><span class="line">      active-color&#x3D;&quot;#13ce66&quot;</span><br><span class="line">      inactive-color&#x3D;&quot;#ff4949&quot;</span><br><span class="line">    &gt;</span><br><span class="line">    &lt;&#x2F;el-switch&gt;</span><br><span class="line">  &lt;&#x2F;template&gt;</span><br><span class="line">&lt;&#x2F;el-table-column&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-form-item label&#x3D;&quot;显示状态&quot; prop&#x3D;&quot;showStatus&quot;&gt;</span><br><span class="line">  &lt;el-switch</span><br><span class="line">        v-model&#x3D;&quot;dataForm.showStatus&quot;</span><br><span class="line">        active-color&#x3D;&quot;#13ce66&quot;</span><br><span class="line">        inactive-color&#x3D;&quot;#ff4949&quot;</span><br><span class="line">      &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;el-form-item&gt;</span><br></pre></td></tr></table></figure>
+<p>对话框</p>
+<p>增加对话框输入左侧的距离</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-form :model&#x3D;&quot;dataForm&quot; :rules&#x3D;&quot;dataRule&quot; ref&#x3D;&quot;dataForm&quot; @keyup.enter.native&#x3D;&quot;dataFormSubmit()&quot; label-width&#x3D;&quot;140px&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><code>label-width=&quot;140px&quot;</code></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222104106233.png" alt="image-20210222104106233" style="zoom:50%;" />
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-switch</span><br><span class="line">  v-model&#x3D;&quot;scope.row.showStatus&quot;</span><br><span class="line">  active-color&#x3D;&quot;#13ce66&quot;</span><br><span class="line">  inactive-color&#x3D;&quot;#ff4949&quot;</span><br><span class="line">  @change&#x3D;&quot;updateBrandStatus&quot;</span><br><span class="line">&gt;</span><br><span class="line">&lt;&#x2F;el-switch&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">updateBrandStatus</span>(<span class="params">status</span>)</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;最新状态：&#x27;</span>  + status);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222104411899.png" alt="image-20210222104411899"></p>
+<p>测试接口</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222110101875.png" alt="image-20210222110101875" style="zoom:50%;" />
+
+<p>这里还需要自定义配置 switch 激活的值</p>
+<p><code> :active-value=&quot;1&quot;</code></p>
+<p><code> :inactive-value=&quot;0&quot;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-table-column</span><br><span class="line">  prop&#x3D;&quot;showStatus&quot;</span><br><span class="line">  header-align&#x3D;&quot;center&quot;</span><br><span class="line">  align&#x3D;&quot;center&quot;</span><br><span class="line">  label&#x3D;&quot;显示状态&quot;</span><br><span class="line">&gt;</span><br><span class="line">  &lt;template slot-scope&#x3D;&quot;scope&quot;&gt;</span><br><span class="line">    &lt;el-switch</span><br><span class="line">      v-model&#x3D;&quot;scope.row.showStatus&quot;</span><br><span class="line">      active-color&#x3D;&quot;#13ce66&quot;</span><br><span class="line">      inactive-color&#x3D;&quot;#ff4949&quot;</span><br><span class="line">      @change&#x3D;&quot;updateBrandStatus(scope.row)&quot;</span><br><span class="line">      :active-value&#x3D;&quot;1&quot;</span><br><span class="line">      :inactive-value&#x3D;&quot;0&quot;</span><br><span class="line">    &gt;</span><br><span class="line">    &lt;&#x2F;el-switch&gt;</span><br><span class="line">  &lt;&#x2F;template&gt;</span><br><span class="line">&lt;&#x2F;el-table-column&gt;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">updateBrandStatus</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&quot;最新信息：&quot;</span> + data.showStatus);</span><br><span class="line">      <span class="keyword">let</span> &#123; brandId, showStatus &#125; = data;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 发送修改</span></span><br><span class="line">      <span class="built_in">this</span>.$http(&#123;</span><br><span class="line">        url: <span class="built_in">this</span>.$http.adornUrl(<span class="string">&quot;/product/brand/update&quot;</span>),</span><br><span class="line">        method: <span class="string">&quot;post&quot;</span>,</span><br><span class="line">        data: <span class="built_in">this</span>.$http.adornData(&#123; brandId, showStatus &#125;, <span class="literal">false</span>)</span><br><span class="line">      &#125;).then(<span class="function">(<span class="params">&#123; data &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.$message(&#123;</span><br><span class="line">          type: <span class="string">&quot;success&quot;</span>,</span><br><span class="line">          message: <span class="string">&quot;状态更新成功&quot;</span></span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="OSS"><a href="#OSS" class="headerlink" title="OSS"></a>OSS</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222112200540.png" alt="image-20210222112200540" style="zoom:50%;" />
+
+<p>新建一个bucket</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222112408791.png" alt="image-20210222112408791" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222112604775.png" alt="image-20210222112604775" style="zoom:50%;" />
+
+<p>参考这个</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.aliyun.oss<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aliyun-sdk-oss<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.10.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222112904379.png" alt="image-20210222112904379"></p>
+<p>地域节点</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222113102671.png" alt="image-20210222113102671" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222113214157.png" alt="image-20210222113214157" style="zoom:50%;" />
+
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222113302272.png" alt="image-20210222113302272"></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222113411325.png" alt="image-20210222113411325" style="zoom:50%;" />
+
+<p>分配 oss 访问权限</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpload</span><span class="params">()</span> <span class="keyword">throws</span> FileNotFoundException </span>&#123;</span><br><span class="line">        <span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">        String endpoint = <span class="string">&quot;oss-cn-beijing.aliyuncs.com&quot;</span>;</span><br><span class="line">        <span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录RAM控制台创建RAM账号。</span></span><br><span class="line">        String accessKeyId = <span class="string">&quot;xxxxxxxxxxxxxx&quot;</span>;</span><br><span class="line">        String accessKeySecret = <span class="string">&quot;xxxxxxxxxxxxxxxx&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">        OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 上传文件到指定的存储空间（bucketName）并将其保存为指定的文件名称（objectName）。</span></span><br><span class="line">        FileInputStream fileInputStream = <span class="keyword">new</span> FileInputStream(<span class="string">&quot;C:\\Users\\15292\\Desktop\\zz.jpg&quot;</span>);</span><br><span class="line"></span><br><span class="line">        ossClient.putObject(<span class="string">&quot;gulimall-hello-zz&quot;</span>, <span class="string">&quot;zz.jpg&quot;</span>, fileInputStream);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 关闭OSSClient。</span></span><br><span class="line">        ossClient.shutdown();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;上传成功&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222114623465.png" alt="image-20210222114623465"></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222114519738.png" alt="image-20210222114519738" style="zoom: 33%;" />
+
+<p>demo 测试</p>
+<p>使用 starter 的方式</p>
+<p>在  common 里面引入 </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--ali oss--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alicloud-oss<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">    <span class="attr">alicloud:</span></span><br><span class="line">      <span class="attr">access-key:</span> <span class="string">LTAIxxxxxxxxx</span></span><br><span class="line">      <span class="attr">secret-key:</span> <span class="string">HFTxxxxxxxxxxxxxxx</span></span><br><span class="line">      <span class="attr">oss:</span></span><br><span class="line">        <span class="attr">endpoint:</span> <span class="string">oss-cn-beijing.aliyuncs.com</span></span><br></pre></td></tr></table></figure>
+<p>直接 注入 OssClient</p>
+<p>服务端签名</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222135154404.png" alt="image-20210222135154404" style="zoom:50%;" />
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.zhouzhou.gulimall<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>gulimall-third-party<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>gulimall-third-party<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>第三方服务<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">spring-cloud.version</span>&gt;</span>2020.0.1<span class="tag">&lt;/<span class="name">spring-cloud.version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--ali oss--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alicloud-oss<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.zhouzhou.gulimall<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>gulimall-common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring-cloud.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-alibaba-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.0.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222135833621.png" alt="image-20210222135833621" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222140126018.png" alt="image-20210222140126018" style="zoom:50%;" />
+
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.application.name</span>=<span class="string">gulimall-third-party</span></span><br><span class="line"><span class="meta">spring.cloud.nacos.config.server-addr</span>=<span class="string">127.0.0.1:8848</span></span><br><span class="line"><span class="meta">spring.cloud.nacos.config.namespace</span>=<span class="string">91736e2d-24ef-4a02-8d05-715377a82824</span></span><br><span class="line"></span><br><span class="line"><span class="meta">spring.cloud.nacos.config.ext-config[0].data-id</span>=<span class="string">oss.yml</span></span><br><span class="line"><span class="meta">spring.cloud.nacos.config.ext-config[0].group</span>=<span class="string">DEFAULT_GROUP</span></span><br><span class="line"><span class="meta">spring.cloud.nacos.config.ext-config[0].refresh</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
+<p>以上是配置中心</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.zhouzhou.gulimall<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>gulimall-common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--                排除掉数据库相关的配置--&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">gulimall-third-party</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">30000</span></span><br></pre></td></tr></table></figure>
+<p>注册中心</p>
+<p>然后加上注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zhouzhou.gulimall.thirdparty;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.discovery.EnableDiscoveryClient;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GulimallThirdPartyApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(GulimallThirdPartyApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>启动</p>
+<p>这里遇到了三个坑。第一个是 pom 里面指定  springcloud 版本的时候的问题</p>
+<p>第二个是，这里的配置需要新建在对应的名称空间下面</p>
+<p>第三个是，yml文件的格式</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222141952362.png" alt="image-20210222141952362"></p>
+<p>在我们抽离出来的第三方服务模块中再次测试</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222142242063.png" alt="image-20210222142242063" style="zoom:50%;" />
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zhouzhou.gulimall.thirdparty.controller;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.aliyun.oss.OSS;</span><br><span class="line"><span class="keyword">import</span> com.aliyun.oss.OSSClient;</span><br><span class="line"><span class="keyword">import</span> com.aliyun.oss.common.utils.BinaryUtil;</span><br><span class="line"><span class="keyword">import</span> com.aliyun.oss.model.MatchMode;</span><br><span class="line"><span class="keyword">import</span> com.aliyun.oss.model.PolicyConditions;</span><br><span class="line"><span class="keyword">import</span> com.zhouzhou.common.utils.R;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedHashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OssController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    OSS ossClient;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.cloud.alicloud.oss.endpoint&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String endpoint;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.cloud.alicloud.oss.bucket&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String bucket;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.cloud.alicloud.access-key&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String accessId;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/oss/policy&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">policy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// https://gulimall-hello-zz.oss-cn-beijing.aliyuncs.com/zz.jpg</span></span><br><span class="line">        String bucket = <span class="string">&quot;gulimall-hello-zz&quot;</span>;</span><br><span class="line">        String host = <span class="string">&quot;https://&quot;</span> + bucket + <span class="string">&quot;.&quot;</span> + endpoint; <span class="comment">// host的格式为 bucketname.endpoint</span></span><br><span class="line"></span><br><span class="line">        String format = <span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;yyyy-MM-dd&quot;</span>).format(<span class="keyword">new</span> Date());</span><br><span class="line">        String dir = format + <span class="string">&quot;/&quot;</span>; <span class="comment">// 用户上传文件时指定的前缀。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        Map&lt;String, String&gt; respMap = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">long</span> expireTime = <span class="number">30</span>;</span><br><span class="line">            <span class="keyword">long</span> expireEndTime = System.currentTimeMillis() + expireTime * <span class="number">1000</span>;</span><br><span class="line">            Date expiration = <span class="keyword">new</span> Date(expireEndTime);</span><br><span class="line">            PolicyConditions policyConds = <span class="keyword">new</span> PolicyConditions();</span><br><span class="line">            policyConds.addConditionItem(PolicyConditions.COND_CONTENT_LENGTH_RANGE, <span class="number">0</span>, <span class="number">1048576000</span>);</span><br><span class="line">            policyConds.addConditionItem(MatchMode.StartWith, PolicyConditions.COND_KEY, dir);</span><br><span class="line"></span><br><span class="line">            String postPolicy = ossClient.generatePostPolicy(expiration, policyConds);</span><br><span class="line">            <span class="keyword">byte</span>[] binaryData = postPolicy.getBytes(<span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">            String encodedPolicy = BinaryUtil.toBase64String(binaryData);</span><br><span class="line">            String postSignature = ossClient.calculatePostSignature(postPolicy);</span><br><span class="line"></span><br><span class="line">            respMap = <span class="keyword">new</span> LinkedHashMap&lt;String, String&gt;();</span><br><span class="line">            respMap.put(<span class="string">&quot;accessid&quot;</span>, accessId);</span><br><span class="line">            respMap.put(<span class="string">&quot;policy&quot;</span>, encodedPolicy);</span><br><span class="line">            respMap.put(<span class="string">&quot;signature&quot;</span>, postSignature);</span><br><span class="line">            respMap.put(<span class="string">&quot;dir&quot;</span>, dir);</span><br><span class="line">            respMap.put(<span class="string">&quot;host&quot;</span>, host);</span><br><span class="line">            respMap.put(<span class="string">&quot;expire&quot;</span>, String.valueOf(expireEndTime / <span class="number">1000</span>));</span><br><span class="line">            <span class="comment">// respMap.put(&quot;expire&quot;, formatISO8601Date(expiration));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="comment">// Assert.fail(e.getMessage());</span></span><br><span class="line">            System.out.println(e.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> R.ok().put(<span class="string">&quot;data&quot;</span>,respMap);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8848</span></span><br><span class="line">    <span class="attr">alicloud:</span></span><br><span class="line">      <span class="attr">access-key:</span> <span class="string">xxx</span></span><br><span class="line">      <span class="attr">secret-key:</span> <span class="string">xxx</span></span><br><span class="line">      <span class="attr">oss:</span></span><br><span class="line">        <span class="attr">endpoint:</span> <span class="string">oss-cn-beijing.aliyuncs.com</span></span><br><span class="line">        <span class="attr">bucket:</span> <span class="string">gulimall-hello-zz</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">gulimall-third-party</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">30000</span></span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222151055553.png" alt="image-20210222151055553" style="zoom:50%;" />
+
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">id:</span> <span class="string">third_party_route</span></span><br><span class="line">  <span class="attr">uri:</span> <span class="string">lb://gulimall-third-party</span></span><br><span class="line">  <span class="attr">predicates:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">Path=/api/thirdparty/**</span></span><br><span class="line">  <span class="attr">filters:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">RewritePath=/api/thirdparty/(?&lt;segment&gt;.*),/$\&#123;segment&#125;</span></span><br></pre></td></tr></table></figure>
+<p>网关的配置 <a target="_blank" rel="noopener" href="http://localhost:88/api/thirdparty/oss/policy">http://localhost:88/api/thirdparty/oss/policy</a> </p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222152801064.png" alt="image-20210222152801064" style="zoom:50%;" />
+
+<h2 id="前后端联调"><a href="#前后端联调" class="headerlink" title="前后端联调"></a>前后端联调</h2><p>把 upload 文件夹放到 components 文件夹下面</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222153253821.png" alt="image-20210222153253821" style="zoom:50%;" />
+
+<p>单文件和多文件都需要修改这个属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> singleUpload <span class="keyword">from</span> <span class="string">&quot;@/components/upload/singleUpload&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  components: &#123; singleUpload &#125;,</span><br></pre></td></tr></table></figure>
+<p>先引入组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-form-item label&#x3D;&quot;品牌logo地址&quot; prop&#x3D;&quot;logo&quot;&gt;</span><br><span class="line">  &lt;single-upload v-model&#x3D;&quot;dataForm.logo&quot;&gt;&lt;&#x2F;single-upload&gt;</span><br><span class="line">&lt;&#x2F;el-form-item&gt;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222154405040.png" alt="image-20210222154405040" style="zoom: 33%;" />
+
+<p>配置跨域</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222154528719.png" alt="image-20210222154528719" style="zoom:50%;" />
+
+<p>测试</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222154638525.png" alt="image-20210222154638525" style="zoom:50%;" />
+
+<p>去掉斜杠</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222154720761.png" alt="image-20210222154720761" style="zoom:50%;" />
+
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210222154922138.png" alt="image-20210222154922138"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/16/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-day05-%E7%BB%9F%E4%B8%80%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E5%92%8C%E4%B8%89%E7%BA%A7%E5%88%86%E7%B1%BB%E7%9A%84%E5%A2%9E%E5%88%A0%E6%9F%A5/" rel="prev" title="谷粒商城-day05-统一解决跨域和三级分类的增删查">
+                  <i class="fa fa-chevron-left"></i> 谷粒商城-day05-统一解决跨域和三级分类的增删查
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhouzhou</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
