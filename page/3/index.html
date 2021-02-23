@@ -181,7 +181,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -238,6 +238,132 @@
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/19/08-SpringMVC2-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhouzhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/19/08-SpringMVC2-MVC%E6%9E%B6%E6%9E%84%E6%95%B4%E5%90%88/" class="post-title-link" itemprop="url">跟着zz学Java 08-SpringMVC2-MVC架构整合</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-19 02:11:40" itemprop="dateCreated datePublished" datetime="2020-12-19T02:11:40+08:00">2020-12-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-01-31 01:33:12" itemprop="dateModified" datetime="2021-01-31T01:33:12+08:00">2021-01-31</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们前面只用SpringMVC完成了一个根据id模拟查询返回一个用户的例子，现在我们把之前的例子串联起来</p>
+<p>这里呢我考虑了一下，我们暂时不用<code>MyBatis-Plus</code>，还是只用<code>MyBatis</code>，但是呢，我们之前不是看<code>MyBatis-plus</code>官网说，对程序无侵入么，那我们就来试试，在<code>MyBatis-Plus</code>中使用<code>Mybatis</code>，哈哈，不要怕，就是要敢于尝试</p>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>我们先来复习一下，跟<code>MyBatis</code>相关的文件的位置配置主要有三个</p>
+<ul>
+<li><code>Mybatis-config.xml</code>: 全局配置文件，在引入了MyBatis-Plus之后，这个可以放在了appplication.yml当中</li>
+<li><code>xxxMapper.java</code> 接口：Mapper接口，我们在主配置类配置了<code>@MapperScan(basePackages = &quot;com.example.demo.mapper&quot;)</code>，指定了扫描的Mapper包，然后在类上加上<code>@Repository</code>就可以了</li>
+<li><code>xxxMapper.xml</code> Mapper接口配置文件，这个文件我们查看<code>application.yml</code></li>
+</ul>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210115424230.png" alt="image-20201210115424230" style="zoom:50%;" />
+
+<p>这一行配置了<code>xxxMapper.xml</code>文件的地址，所以我们需要在<code>resources</code>下面新建一个文件夹<code>mapper</code>，并且新建mapper配置文件，<code>UserMapper.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span> <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="meta-string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--名称空间指定为mapper接口对应的相对路径--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.example.demo.mapper.UserMapper&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span> </span><br></pre></td></tr></table></figure>
+<p>引入约束和名称空间，约束就是相当于一个写<code>xml</code>的模板，会有提示还有lint功能，名称空间可以隔离和识别这里的实体类</p>
+<p><code>MyBatis</code>的相关结构就完成了，哈哈，其实都是一回事儿</p>
+<p>下面我们来引入<code>Service</code>层</p>
+<p>比较好的设计规范是，有一个接口类，和一个Service实现类</p>
+<p><code>service</code>包下面放接口(<code>UserService</code>)，<code>impl</code>子包下面放实现类(<code>UserServiceImpl</code>)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.service;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接口只用来定义行为，所有的实现（包括注入<code>UserMapper</code>），都是在实现类里面完成的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.demo.mapper.UserMapper;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    UserMapper userMapper;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完成的项目结构如下</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210120249234.png" alt="image-20201210120249234" style="zoom:50%;" />
+
+<h2 id="编写Mapper"><a href="#编写Mapper" class="headerlink" title="编写Mapper"></a>编写Mapper</h2><p>这里就先想起来陆大佬之前在B站视频里写这个<code>SpringBoot</code>的CRUD的时候很有意思的一个问题了，是从Controller写到Mapper还是反过来，哈哈，我们先把Mapper写好，复习一下之前的知识，然后使用测试类去测试，后面再去写Service把这两个连起来</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.mapper.BaseMapper;</span><br><span class="line"><span class="keyword">import</span> com.example.demo.dataobject.UserDO;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Param;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Repository;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> <span class="keyword">extends</span> <span class="title">BaseMapper</span>&lt;<span class="title">UserDO</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> UserDO <span class="title">selectById</span><span class="params">(<span class="meta">@Param(&quot;id&quot;)</span> Integer id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper PUBLIC <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span><br><span class="line">&lt;!--名称空间指定为mapper接口对应的相对路径--&gt;</span><br><span class="line">&lt;mapper namespace=<span class="string">&quot;com.example.demo.mapper.UserMapper&quot;</span>&gt;</span><br><span class="line">    &lt;select id=<span class="string">&quot;selectById&quot;</span> parameterType=<span class="string">&quot;Integer&quot;</span> resultType=<span class="string">&quot;UserDO&quot;</span>&gt;</span><br><span class="line">        select * from user where id=#&#123;id&#125;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210120829770.png" alt="image-20201210120829770" style="zoom:50%;" />
+
+<p>可以发现一个很有意思的现象，这里爆红了，是为什么呢，哈哈，不是说好的无侵入么</p>
+<p>我们翻一下之前在完成<code>MyBatis-plus</code>的测试代码的时候，根据id查询用户是不是也是用的这个<code>selectById</code>这个方法称，然后可以看到，我们的<code>UserMapper.xml</code>继承了我们的<code>BaseMapper&lt;UserDO&gt;</code>，很容易联想到，是不是我们的<code>BaseMapper</code>里面已经自带了这个方法呢</p>
+<p>我们很容易想到，两个方法只有在名称，返回类型，参数相同的情况下才会冲突，那么我们自己写的<code>selectById</code>和<code>BaseMapper&lt;UserDO&gt;</code>的<code>selectById</code>，除了名称以外，返回类型和参数这两个是否也是相同的呢</p>
+<p>实践才是检验真理的唯一标准，我们打开源码看看，按住<code>ctrl</code>，就可以进入idea的进入源码的模式了，然后点击<code>BaseMapper</code>，<code>ctrl+f</code>打开搜索模式，输入方法名<code>selectById</code></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210121351849.png" alt="image-20201210121351849" style="zoom:50%;" />
+
+<p>这里用了泛型T，我们在继承<code>BaseMapper</code>的时候传入了<code>UserDO</code>，这里的T就是相当于我们的<code>UserDO</code>，所以方法的返回参数是一致的</p>
+<p>然后参数类型 <code>Serializable</code>，我们传入的是<code>Integer</code>，我们同样的方法打开<code>Integer</code>的源码</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210121856756.png" alt="image-20201210121856756" style="zoom:50%;" />
+
+<p>并没有看到直接继承<code>Serializable</code>，只看到继承<code>Number</code>和<code>Comparable</code>，要是这样一层一层找下去也太麻烦了</p>
+<p>这里idea有一个很强大的工具，可以轻松查看类之间的继承关系</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210122038536.png" alt="image-20201210122038536" style="zoom:50%;" />
+
+<p>我们在Interger界面右键，依次选择如图，点开</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210122126858.png" alt="image-20201210122126858" style="zoom:50%;" />
+
+<p>哈哈，果不其然，Integer是实现了这个接口的，根据向上转型，就真相大白了，源码其实也没有那么难对吧</p>
+<p>所以咋办呢，咱们命名的时候就加个<code>my</code>前缀标识一下吧，有更好的办法也可以评论区留言哈</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> UserDO <span class="title">mySelectById</span><span class="params">(<span class="meta">@Param(&quot;id&quot;)</span> Integer id)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;mySelectById&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Integer&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;UserDO&quot;</span>&gt;</span></span><br><span class="line">    select * from user where id=#&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>写个测试类测试一下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试根据id查询用户 mybatis</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMySelectById</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    UserDO userDO = userMapper.mySelectById(<span class="number">6</span>);</span><br><span class="line">    System.out.println(userDO.getUsername());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20201210122829139.png" alt="image-20201210122829139" style="zoom:50%;" />
+
+<p>这样，我们就在<code>Mybatis-Plus</code>里面使用了<code>MyBatis</code>了，哈哈，是不是有种<code>5g</code>回到了<code>2g</code>时代的感觉</p>
+<p>但小周同学还是秉持着一个观点的：只要能解决问题的技术，就是好技术</p>
+<p>这节太长了，就暂时到这里吧</p>
+<p>下次我们把Service接进来</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+  
+  
+  
+
       
   
   
