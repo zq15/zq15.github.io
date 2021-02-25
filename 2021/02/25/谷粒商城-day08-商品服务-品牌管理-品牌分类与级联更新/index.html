@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="获得与品牌关联的分类123456789101112&#x2F;**     * 获取当前品牌关联的所有分类列表     *&#x2F;&#x2F;&#x2F;    @RequestMapping(value &#x3D; &quot;&#x2F;catelog&#x2F;list&quot;, method &#x3D; RequestMethod.GET)    @GetMapping(&quot;&#x2F;catelog&#x2F;list&quot;)&#x2F;&#x2F;    @RequiresPe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谷粒商城-day08-商品服务-品牌管理-品牌分类与级联更新">
+<meta property="og:url" content="http://example.com/2021/02/25/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-day08-%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1-%E5%93%81%E7%89%8C%E7%AE%A1%E7%90%86-%E5%93%81%E7%89%8C%E5%88%86%E7%B1%BB%E4%B8%8E%E7%BA%A7%E8%81%94%E6%9B%B4%E6%96%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="获得与品牌关联的分类123456789101112&#x2F;**     * 获取当前品牌关联的所有分类列表     *&#x2F;&#x2F;&#x2F;    @RequestMapping(value &#x3D; &quot;&#x2F;catelog&#x2F;list&quot;, method &#x3D; RequestMethod.GET)    @GetMapping(&quot;&#x2F;catelog&#x2F;list&quot;)&#x2F;&#x2F;    @RequiresPe">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225150950036.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225151212281.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225151741391.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225151757865.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225154212945.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225154153849.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225164641276.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225164649288.png">
+<meta property="article:published_time" content="2021-02-25T09:23:25.000Z">
+<meta property="article:modified_time" content="2021-02-25T09:23:46.814Z">
+<meta property="article:author" content="zhouzhou">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225150950036.png">
+
+
+<link rel="canonical" href="http://example.com/2021/02/25/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-day08-%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1-%E5%93%81%E7%89%8C%E7%AE%A1%E7%90%86-%E5%93%81%E7%89%8C%E5%88%86%E7%B1%BB%E4%B8%8E%E7%BA%A7%E8%81%94%E6%9B%B4%E6%96%B0/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>谷粒商城-day08-商品服务-品牌管理-品牌分类与级联更新 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%BE%97%E4%B8%8E%E5%93%81%E7%89%8C%E5%85%B3%E8%81%94%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">获得与品牌关联的分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E5%93%81%E7%89%8C%E4%B8%8E%E5%88%86%E7%B1%BB%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">新增品牌与分类关联关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%97%E4%BD%99%E6%95%B0%E6%8D%AE%E7%9A%84%E7%BA%A7%E8%81%94%E6%9B%B4%E6%96%B0"><span class="nav-number">3.</span> <span class="nav-text">冗余数据的级联更新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#brand"><span class="nav-number">3.1.</span> <span class="nav-text">brand</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#category"><span class="nav-number">3.2.</span> <span class="nav-text">category</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhouzhou"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">zhouzhou</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://enchantedovo.cn/" title="https:&#x2F;&#x2F;enchantedovo.cn&#x2F;" rel="noopener" target="_blank">butterfly</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://objectkaz.cn/" title="https:&#x2F;&#x2F;objectkaz.cn&#x2F;" rel="noopener" target="_blank">objectkaz</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://qingbo1011.top/" title="https:&#x2F;&#x2F;qingbo1011.top&#x2F;" rel="noopener" target="_blank">qingbo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://xiaoshuang20.github.io/" title="https:&#x2F;&#x2F;xiaoshuang20.github.io&#x2F;" rel="noopener" target="_blank">xiaoshuang</a>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/25/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-day08-%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1-%E5%93%81%E7%89%8C%E7%AE%A1%E7%90%86-%E5%93%81%E7%89%8C%E5%88%86%E7%B1%BB%E4%B8%8E%E7%BA%A7%E8%81%94%E6%9B%B4%E6%96%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhouzhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          谷粒商城-day08-商品服务-品牌管理-品牌分类与级联更新
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-02-25 17:23:25 / 修改时间：17:23:46" itemprop="dateCreated datePublished" datetime="2021-02-25T17:23:25+08:00">2021-02-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="获得与品牌关联的分类"><a href="#获得与品牌关联的分类" class="headerlink" title="获得与品牌关联的分类"></a>获得与品牌关联的分类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取当前品牌关联的所有分类列表</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="comment">//    @RequestMapping(value = &quot;/catelog/list&quot;, method = RequestMethod.GET)</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/catelog/list&quot;)</span></span><br><span class="line"><span class="comment">//    @RequiresPermissions(&quot;product:categorybrandrelation:list&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">list</span><span class="params">(<span class="meta">@RequestParam(&quot;brandId&quot;)</span> Long brandId)</span></span>&#123;</span><br><span class="line">        List&lt;CategoryBrandRelationEntity&gt; data = categoryBrandRelationService.list(</span><br><span class="line">                <span class="keyword">new</span> QueryWrapper&lt;CategoryBrandRelationEntity&gt;().eq(<span class="string">&quot;brand_id&quot;</span>, brandId));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> R.ok().put(<span class="string">&quot;data&quot;</span>, data);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225150950036.png" alt="image-20210225150950036" style="zoom:50%;" />
+
+<h2 id="新增品牌与分类关联关系"><a href="#新增品牌与分类关联关系" class="headerlink" title="新增品牌与分类关联关系"></a>新增品牌与分类关联关系</h2><p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225151212281.png" alt="image-20210225151212281"></p>
+<p>考虑到电商系统，没有设计外键，这里在存放id的时候也存放了名字，生成的代码中没有名字，需要重写</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: CategoryBrandRelationController</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 保存</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/save&quot;)</span></span><br><span class="line"><span class="comment">//     @RequiresPermissions(&quot;product:categorybrandrelation:save&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">save</span><span class="params">(<span class="meta">@RequestBody</span> CategoryBrandRelationEntity categoryBrandRelation)</span></span>&#123;</span><br><span class="line">		categoryBrandRelationService.saveDetail(categoryBrandRelation);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> R.ok();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// file: CategoryBrandRelationServiceImpl</span></span><br><span class="line"> <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveDetail</span><span class="params">(CategoryBrandRelationEntity categoryBrandRelation)</span> </span>&#123;</span><br><span class="line">        Long brandId = categoryBrandRelation.getBrandId();</span><br><span class="line">        Long catelogId = categoryBrandRelation.getCatelogId();</span><br><span class="line"><span class="comment">//        1.查询详细名字</span></span><br><span class="line">        BrandEntity brandEntity = brandDao.selectById(brandId);</span><br><span class="line">        CategoryEntity categoryEntity = categoryDao.selectById(catelogId);</span><br><span class="line"></span><br><span class="line">        categoryBrandRelation.setBrandName(brandEntity.getName());</span><br><span class="line">        categoryBrandRelation.setCatelogName(categoryEntity.getName());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.save(categoryBrandRelation);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225151741391.png" alt="image-20210225151741391" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225151757865.png" alt="image-20210225151757865" style="zoom:50%;" />
+
+<h2 id="冗余数据的级联更新"><a href="#冗余数据的级联更新" class="headerlink" title="冗余数据的级联更新"></a>冗余数据的级联更新</h2><p>冗余设计需要实时更新</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225154212945.png" alt="image-20210225154212945" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225154153849.png" alt="image-20210225154153849" style="zoom:50%;" />
+
+
+
+<h3 id="brand"><a href="#brand" class="headerlink" title="brand"></a>brand</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: BrandController</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 修改</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/update&quot;)</span></span><br><span class="line"><span class="comment">//     @RequiresPermissions(&quot;product:brand:update&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">update</span><span class="params">(<span class="meta">@Validated(UpdateGroup.class)</span> <span class="meta">@RequestBody</span> BrandEntity brand)</span> </span>&#123;</span><br><span class="line">        brandService.updateDeatil(brand);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> R.ok();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// file: BrandServiceImpl</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateDeatil</span><span class="params">(BrandEntity brand)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 保证冗余字段的数据一致</span></span><br><span class="line">    <span class="keyword">this</span>.updateById(brand);</span><br><span class="line">    <span class="keyword">if</span> (!StringUtils.isEmpty(brand.getName())) &#123;</span><br><span class="line">        <span class="comment">// 同步更新其他关联表中的数据</span></span><br><span class="line">        categoryBrandRelationService.updateBrand(brand.getBrandId(), brand.getName());</span><br><span class="line">        <span class="comment">//TODO 更新其他关联</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// file: CategoryBrandRelationServiceImpl</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateBrand</span><span class="params">(Long brandId, String name)</span> </span>&#123;</span><br><span class="line">    CategoryBrandRelationEntity relationEntity = <span class="keyword">new</span> CategoryBrandRelationEntity();</span><br><span class="line">    relationEntity.setBrandId(brandId);</span><br><span class="line">    relationEntity.setBrandName(name);</span><br><span class="line">    <span class="keyword">this</span>.update(relationEntity, <span class="keyword">new</span> QueryWrapper&lt;CategoryBrandRelationEntity&gt;().eq(<span class="string">&quot;brand_id&quot;</span>, brandId));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="category"><a href="#category" class="headerlink" title="category"></a>category</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: CategoryController</span></span><br><span class="line"><span class="comment">// 这里前面都一样，但是到了CategoryBrandRelationServiceImpl 的时候，在mapper层进行重写</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateCategory</span><span class="params">(Long catId, String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.baseMapper.updateCategory(catId, name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CategoryBrandRelationDao</span> <span class="keyword">extends</span> <span class="title">BaseMapper</span>&lt;<span class="title">CategoryBrandRelationEntity</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">updateCategory</span><span class="params">(<span class="meta">@Param(&quot;catId&quot;)</span> Long catId, <span class="meta">@Param(&quot;name&quot;)</span> String name)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">&quot;updateCategory&quot;</span>&gt;</span></span><br><span class="line">    UPDATE `pms_category_brand_relation` SET catelog_name=#&#123;name&#125; where catelog_id=#&#123;catId&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>一个用的 <code>QueryWrapper</code> 一个用的 mapper </p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225164641276.png" alt="image-20210225164641276" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225164649288.png" alt="image-20210225164649288" style="zoom:50%;" />
+
+<p>最后 加上事务控制</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateDeatil</span><span class="params">(BrandEntity brand)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 保证冗余字段的数据一致</span></span><br><span class="line">    <span class="keyword">this</span>.updateById(brand);</span><br><span class="line">    <span class="keyword">if</span> (!StringUtils.isEmpty(brand.getName())) &#123;</span><br><span class="line">        <span class="comment">// 同步更新其他关联表中的数据</span></span><br><span class="line">        categoryBrandRelationService.updateBrand(brand.getBrandId(), brand.getName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//TODO 更新其他关联</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateCascade</span><span class="params">(CategoryEntity category)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.updateById(category);</span><br><span class="line">    categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也是由于 <code>MyabtisConfig</code> 里面添加了事务相关的配置</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/25/%E9%BB%91%E9%A9%ACvue%E5%95%86%E5%9F%8E-day01-%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/" rel="prev" title="黑马vue商城-day01-项目初始化登录功能开发">
+                  <i class="fa fa-chevron-left"></i> 黑马vue商城-day01-项目初始化登录功能开发
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhouzhou</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
