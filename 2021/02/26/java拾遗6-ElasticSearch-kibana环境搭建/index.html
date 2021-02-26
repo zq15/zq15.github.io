@@ -22,16 +22,27 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/tags/%E4%BB%8E%E9%9B%B6%E6%95%99%E4%BD%A0%E5%AD%A6iot/index.html">
+  <meta name="description" content="快速存储，搜索和分析 12345678docker pull elasticsearch:7.4.2 # 存储和检索数据docker pull kibana:7.4.2 # 可视化检索数据&#x2F;&#x2F;将es中配置文件挂载到外面的目录，通过修改虚拟机外面的文件夹es配置，进而修改docker中es的配置mkdir -p &#x2F;mydata&#x2F;elasticsearch&#x2F;configmkdir -p &#x2F;mydat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java拾遗6-ElasticSearch+kibana环境搭建">
+<meta property="og:url" content="http://example.com/2021/02/26/java%E6%8B%BE%E9%81%976-ElasticSearch-kibana%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="快速存储，搜索和分析 12345678docker pull elasticsearch:7.4.2 # 存储和检索数据docker pull kibana:7.4.2 # 可视化检索数据&#x2F;&#x2F;将es中配置文件挂载到外面的目录，通过修改虚拟机外面的文件夹es配置，进而修改docker中es的配置mkdir -p &#x2F;mydata&#x2F;elasticsearch&#x2F;configmkdir -p &#x2F;mydat">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226152302425.png">
+<meta property="og:image" content=" https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226154847658.png">
+<meta property="og:image" content=" https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226155904398.png">
+<meta property="og:image" content=" https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226160110103.png">
+<meta property="og:image" content=" https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226160455748.png">
+<meta property="article:published_time" content="2021-02-26T08:08:31.000Z">
+<meta property="article:modified_time" content="2021-02-26T08:08:57.723Z">
 <meta property="article:author" content="zhouzhou">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226152302425.png">
 
 
-<link rel="canonical" href="http://example.com/tags/%E4%BB%8E%E9%9B%B6%E6%95%99%E4%BD%A0%E5%AD%A6iot/">
+<link rel="canonical" href="http://example.com/2021/02/26/java%E6%8B%BE%E9%81%976-ElasticSearch-kibana%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
 
 
 <script class="page-configurations">
@@ -39,12 +50,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 从零教你学iot | Hexo</title>
+  <title>java拾遗6-ElasticSearch+kibana环境搭建 | Hexo</title>
   
 
 
@@ -234,73 +245,99 @@
 </noscript>
 
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
       
 
       
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h2 class="collection-header">从零教你学iot
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/26/java%E6%8B%BE%E9%81%976-ElasticSearch-kibana%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhouzhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java拾遗6-ElasticSearch+kibana环境搭建
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+
+      <time title="创建时间：2021-02-26 16:08:31 / 修改时间：16:08:57" itemprop="dateCreated datePublished" datetime="2021-02-26T16:08:31+08:00">2021-02-26</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226152302425.png" alt="image-20210226152302425"></p>
+<p>快速存储，搜索和分析</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch:7.4.2 # 存储和检索数据</span><br><span class="line">docker pull kibana:7.4.2 # 可视化检索数据</span><br><span class="line">//将es中配置文件挂载到外面的目录，通过修改虚拟机外面的文件夹es配置，进而修改docker中es的配置</span><br><span class="line">mkdir -p /mydata/elasticsearch/config</span><br><span class="line"></span><br><span class="line">mkdir -p /mydata/elasticsearch/data</span><br><span class="line">//写了一个配置  http.host:0.0.0.0 代表es可以被远程的任何机器访问，注意这里host：后需要有空格 </span><br><span class="line">echo &quot;http.host: 0.0.0.0&quot;&gt;&gt; /mydata/elasticsearch/config/elasticsearch.yml</span><br></pre></td></tr></table></figure>
+<img src=" https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226154847658.png" alt="image-20210226154847658" style="zoom:50%;" />
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 777 /mydata/elasticsearch/</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \</span><br><span class="line">-e &quot;discovery.type=single-node&quot; \</span><br><span class="line">-e ES_JAVA_OPTS=&quot;-Xms64m -Xmx128m&quot; \</span><br><span class="line">-v /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \</span><br><span class="line">-v /mydata/elasticsearch/data:/usr/share/elasticsearch/data \</span><br><span class="line">-v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \</span><br><span class="line">-d elasticsearch:7.4.2</span><br></pre></td></tr></table></figure>
+<img src=" https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226155904398.png" alt="image-20210226155904398" style="zoom:50%;" />
+
+<p>查看节点信息  <a target="_blank" rel="noopener" href="http://192.168.126.89:9200/_cat/nodes">http://192.168.126.89:9200/_cat/nodes</a></p>
+<img src=" https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226160110103.png" alt="image-20210226160110103" style="zoom:50%;" />
+
+<p>kibana</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name kibana -e ELASTICSEARCH_HOSTS=http://192.168.126.89:9200 -p 5601:5601 -d kibana:7.4.2</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="http://192.168.126.89:5601/">http://192.168.126.89:5601/</a></p>
+<img src=" https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226160455748.png" alt="image-20210226160455748" style="zoom:50%;" />
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-01-22T00:17:08+08:00"
-              content="2021-01-22">
-          01-22
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/01/22/02%20%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AD%A6iot%20%E5%A6%82%E4%BD%95%E5%9C%A8esp32esp8266%E4%B8%AD%E5%BC%80%E5%8F%91/" itemprop="url">
-            <span itemprop="name">从零教你学iot 02 如何在esp32/esp8266中开发</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/25/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-day08-%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1-%E5%93%81%E7%89%8C%E7%AE%A1%E7%90%86-%E5%93%81%E7%89%8C%E5%88%86%E7%B1%BB%E4%B8%8E%E7%BA%A7%E8%81%94%E6%9B%B4%E6%96%B0/" rel="prev" title="谷粒商城-day08-商品服务-品牌管理-品牌分类与级联更新">
+                  <i class="fa fa-chevron-left"></i> 谷粒商城-day08-商品服务-品牌管理-品牌分类与级联更新
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-01-22T00:13:08+08:00"
-              content="2021-01-22">
-          01-22
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/01/22/01%20%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AD%A6iot%20micropython%E7%B3%BB%E7%BB%9F%E7%83%A7%E5%BD%95/" itemprop="url">
-            <span itemprop="name">从零教你学iot 01 Micropython + esp8266 实现控制指示灯</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
