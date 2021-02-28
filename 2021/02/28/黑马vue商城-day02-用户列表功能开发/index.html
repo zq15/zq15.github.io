@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="主体布局开始  12345678910111213141516171819202122232425262728293031323334353637383940414243444546&lt;template&gt;  &lt;el-container class&#x3D;&quot;home-container&quot;&gt;    &lt;!-- 头部区域  --&gt;    &lt;e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="黑马vue商城-day02-用户列表功能开发">
+<meta property="og:url" content="http://example.com/2021/02/28/%E9%BB%91%E9%A9%ACvue%E5%95%86%E5%9F%8E-day02-%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="主体布局开始  12345678910111213141516171819202122232425262728293031323334353637383940414243444546&lt;template&gt;  &lt;el-container class&#x3D;&quot;home-container&quot;&gt;    &lt;!-- 头部区域  --&gt;    &lt;e">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225173237005.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225213355035.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225214242968.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225214335937.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225215337912.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225215551228.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225215831410.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225220237749.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225220524585.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225221232185.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225224917261.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225224901831.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225224953178.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225225012977.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225225849002.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225230220715.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225230419825.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225232523131.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225232813625.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225232825881.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226091445849.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226091514335.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226091710684.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226092038507.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226092055285.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226092002534.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226094914096.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226094928511.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226094857720.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226095023382.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226095225909.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226095236631.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226095758755.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226095816629.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226095746358.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226100050611.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226100109556.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226100239175.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226100848980.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226101256493.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226104929225.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226105058729.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226105109995.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226105534297.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226110619276.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226111246891.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226111312300.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226114606653.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226115552718.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226132552877.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226132754467.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226133119658.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226133657291.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226134104971.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226134130020.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226134752702.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226134828293.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226140028003.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226141455720.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226214022152.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226214447864.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226214500563.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226214521097.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226220542996.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226220612641.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226220700604.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210228214552730.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210228214634697.png">
+<meta property="article:published_time" content="2021-02-28T15:01:26.000Z">
+<meta property="article:modified_time" content="2021-02-28T15:01:53.338Z">
+<meta property="article:author" content="zhouzhou">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225173237005.png">
+
+
+<link rel="canonical" href="http://example.com/2021/02/28/%E9%BB%91%E9%A9%ACvue%E5%95%86%E5%9F%8E-day02-%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>黑马vue商城-day02-用户列表功能开发 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E4%BD%93%E5%B8%83%E5%B1%80%E5%BC%80%E5%A7%8B"><span class="nav-number">1.</span> <span class="nav-text">主体布局开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%B5-Header-%E5%B8%83%E5%B1%80"><span class="nav-number">2.</span> <span class="nav-text">主页 Header 布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%B5%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E5%B8%83%E5%B1%80"><span class="nav-number">3.</span> <span class="nav-text">主页左侧菜单布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E8%8F%9C%E5%8D%95%E6%95%B0%E6%8D%AE"><span class="nav-number">4.</span> <span class="nav-text">通过接口获取菜单数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E8%B5%B7%E8%AF%B7%E6%B1%82%E8%8E%B7%E5%8F%96%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E6%95%B0%E6%8D%AE"><span class="nav-number">5.</span> <span class="nav-text">发起请求获取左侧菜单数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95UI%E7%BB%98%E5%88%B6"><span class="nav-number">6.</span> <span class="nav-text">左侧菜单UI绘制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E6%A0%BC%E5%BC%8F%E7%BE%8E%E5%8C%96"><span class="nav-number">7.</span> <span class="nav-text">左侧菜单格式美化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E4%BC%98%E5%8C%96"><span class="nav-number">8.</span> <span class="nav-text">左侧菜单优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E7%9A%84%E6%8A%98%E5%8F%A0%E4%B8%8E%E5%B1%95%E5%BC%80%E5%8A%9F%E8%83%BD"><span class="nav-number">9.</span> <span class="nav-text">实现左侧菜单的折叠与展开功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E9%A6%96%E9%A1%B5%E7%9A%84%E8%B7%AF%E7%94%B1%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">10.</span> <span class="nav-text">实现首页的路由重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E6%94%B9%E9%80%A0%E4%B8%BA%E8%B7%AF%E7%94%B1%E9%93%BE%E6%8E%A5"><span class="nav-number">11.</span> <span class="nav-text">左侧菜单改造为路由链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%BC%80%E5%8F%91"><span class="nav-number">12.</span> <span class="nav-text">用户列表开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%B0%8F%E9%97%AE%E9%A2%98"><span class="nav-number">13.</span> <span class="nav-text">解决用户列表小问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%98%E5%88%B6%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%ACUI%E7%BB%93%E6%9E%84"><span class="nav-number">14.</span> <span class="nav-text">绘制用户列表的基本UI结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E6%95%B0%E6%8D%AE"><span class="nav-number">15.</span> <span class="nav-text">获取用户列表数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-number">16.</span> <span class="nav-text">渲染用户列表结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E6%B7%BB%E5%8A%A0%E7%B4%A2%E5%BC%95%E9%A1%B9"><span class="nav-number">17.</span> <span class="nav-text">为用户列表添加索引项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E9%80%A0%E7%8A%B6%E6%80%81%E6%A0%8F%E7%9A%84%E6%98%BE%E7%A4%BA%E6%95%88%E6%9E%9C"><span class="nav-number">18.</span> <span class="nav-text">改造状态栏的显示效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E6%A7%BD%E5%BD%A2%E5%BC%8F%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%97%E7%9A%84%E6%B8%B2%E6%9F%93"><span class="nav-number">19.</span> <span class="nav-text">插槽形式自定义列的渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%88%86%E9%A1%B5%E6%95%88%E6%9E%9C"><span class="nav-number">20.</span> <span class="nav-text">实现数据分页效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%94%A8%E6%88%B7%E7%8A%B6%E6%80%81%E7%9A%84%E6%9B%B4%E6%94%B9"><span class="nav-number">21.</span> <span class="nav-text">实现用户状态的更改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%90%9C%E7%B4%A2%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">22.</span> <span class="nav-text">实现搜索的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">23.</span> <span class="nav-text">实现添加用户的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E7%9A%84%E5%AF%B9%E8%AF%9D%E6%A1%86%E4%B8%AD%E6%B8%B2%E6%9F%93%E4%B8%80%E4%B8%AA%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E7%9A%84%E8%A1%A8%E5%8D%95"><span class="nav-number">24.</span> <span class="nav-text">添加用户的对话框中渲染一个添加用户的表单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%84%E5%88%99"><span class="nav-number">25.</span> <span class="nav-text">实现自定义规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E8%A1%A8%E5%8D%95%E7%9A%84%E9%87%8D%E7%BD%AE%E5%8A%9F%E8%83%BD"><span class="nav-number">26.</span> <span class="nav-text">实现添加用户表单的重置功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E7%9A%84%E9%A2%84%E9%AA%8C%E8%AF%81%E5%8A%9F%E8%83%BD"><span class="nav-number">27.</span> <span class="nav-text">添加用户的预验证功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E8%B5%B7%E8%AF%B7%E6%B1%82%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%96%B0%E7%94%A8%E6%88%B7"><span class="nav-number">28.</span> <span class="nav-text">发起请求添加一个新用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E7%9A%84%E4%BF%AE%E6%94%B9%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">29.</span> <span class="nav-text">添加用户的修改的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AEID%E6%9F%A5%E8%AF%A2%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-number">30.</span> <span class="nav-text">根据ID查询用户信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%98%E5%88%B6%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E7%9A%84%E8%A1%A8%E5%8D%95"><span class="nav-number">31.</span> <span class="nav-text">绘制修改用户的表单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%8D%95%E7%9A%84%E5%85%B3%E9%97%AD%E4%B9%8B%E5%90%8E%E7%9A%84%E9%87%8D%E7%BD%AE%E6%93%8D%E4%BD%9C"><span class="nav-number">32.</span> <span class="nav-text">实现修改表单的关闭之后的重置操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E4%BF%AE%E6%94%B9%E4%B9%8B%E5%89%8D%E8%A1%A8%E5%8D%95%E9%A2%84%E9%AA%8C%E8%AF%81%E6%93%8D%E4%BD%9C"><span class="nav-number">33.</span> <span class="nav-text">提交修改之前表单预验证操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">34.</span> <span class="nav-text">修改用户信息的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">35.</span> <span class="nav-text">实现删除用户的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%88%90%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">36.</span> <span class="nav-text">完成删除用户的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">37.</span> <span class="nav-text">问题</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhouzhou"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">zhouzhou</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://enchantedovo.cn/" title="https:&#x2F;&#x2F;enchantedovo.cn&#x2F;" rel="noopener" target="_blank">butterfly</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://objectkaz.cn/" title="https:&#x2F;&#x2F;objectkaz.cn&#x2F;" rel="noopener" target="_blank">objectkaz</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://qingbo1011.top/" title="https:&#x2F;&#x2F;qingbo1011.top&#x2F;" rel="noopener" target="_blank">qingbo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://xiaoshuang20.github.io/" title="https:&#x2F;&#x2F;xiaoshuang20.github.io&#x2F;" rel="noopener" target="_blank">xiaoshuang</a>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/28/%E9%BB%91%E9%A9%ACvue%E5%95%86%E5%9F%8E-day02-%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhouzhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          黑马vue商城-day02-用户列表功能开发
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-02-28 23:01:26 / 修改时间：23:01:53" itemprop="dateCreated datePublished" datetime="2021-02-28T23:01:26+08:00">2021-02-28</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="主体布局开始"><a href="#主体布局开始" class="headerlink" title="主体布局开始"></a>主体布局开始</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225173237005.png" alt="image-20210225173237005" style="zoom: 50%;" />
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;el-container class&#x3D;&quot;home-container&quot;&gt;</span><br><span class="line">    &lt;!-- 头部区域  --&gt;</span><br><span class="line">    &lt;el-header</span><br><span class="line">      &gt;&lt;el-button type&#x3D;&quot;info&quot; @click&#x3D;&quot;logout&quot;&gt;退出&lt;&#x2F;el-button&gt;&lt;&#x2F;el-header</span><br><span class="line">    &gt;</span><br><span class="line">    &lt;!-- 页面主体区域 --&gt;</span><br><span class="line">    &lt;el-container&gt;</span><br><span class="line">      &lt;!-- 侧边栏 --&gt;</span><br><span class="line">      &lt;el-aside width&#x3D;&quot;200px&quot;&gt;Aside&lt;&#x2F;el-aside&gt;</span><br><span class="line">      &lt;!-- 右侧内容主体 --&gt;</span><br><span class="line">      &lt;el-main&gt;Main&lt;&#x2F;el-main&gt;</span><br><span class="line">    &lt;&#x2F;el-container&gt;</span><br><span class="line">  &lt;&#x2F;el-container&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    logout() &#123;</span><br><span class="line">      window.sessionStorage.clear()</span><br><span class="line">      this.$router.push(&quot;&#x2F;login&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang&#x3D;&quot;less&quot; scoped&gt;</span><br><span class="line">.home-container &#123;</span><br><span class="line">  height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">.el-header &#123;</span><br><span class="line">  background-color: #373d41;</span><br><span class="line">&#125;</span><br><span class="line">.el-aside &#123;</span><br><span class="line">  background-color: #333744;</span><br><span class="line">&#125;</span><br><span class="line">.el-main &#123;</span><br><span class="line">background-color: #eaedf1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;style&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225213355035.png" alt="image-20210225213355035"></p>
+<h2 id="主页-Header-布局"><a href="#主页-Header-布局" class="headerlink" title="主页 Header 布局"></a>主页 Header 布局</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;el-container class&#x3D;&quot;home-container&quot;&gt;</span><br><span class="line">    &lt;!-- 头部区域  --&gt;</span><br><span class="line">    &lt;el-header&gt;</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;img src&#x3D;&quot;..&#x2F;assets&#x2F;heima.png&quot; alt&#x3D;&quot;&quot;&gt;</span><br><span class="line">        &lt;span&gt;电商后台管理系统&lt;&#x2F;span&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">        &lt;el-button type&#x3D;&quot;info&quot; @click&#x3D;&quot;logout&quot;&gt;退出&lt;&#x2F;el-button&gt;</span><br><span class="line">      &lt;&#x2F;el-header</span><br><span class="line">    &gt;</span><br><span class="line">    &lt;!-- 页面主体区域 --&gt;</span><br><span class="line">    &lt;el-container&gt;</span><br><span class="line">      &lt;!-- 侧边栏 --&gt;</span><br><span class="line">      &lt;el-aside width&#x3D;&quot;200px&quot;&gt;Aside&lt;&#x2F;el-aside&gt;</span><br><span class="line">      &lt;!-- 右侧内容主体 --&gt;</span><br><span class="line">      &lt;el-main&gt;Main&lt;&#x2F;el-main&gt;</span><br><span class="line">    &lt;&#x2F;el-container&gt;</span><br><span class="line">  &lt;&#x2F;el-container&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    logout() &#123;</span><br><span class="line">      window.sessionStorage.clear()</span><br><span class="line">      this.$router.push(&quot;&#x2F;login&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang&#x3D;&quot;less&quot; scoped&gt;</span><br><span class="line">.home-container &#123;</span><br><span class="line">  height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">.el-header &#123;</span><br><span class="line">  background-color: #373d41;</span><br><span class="line">  display: flex;</span><br><span class="line">  justify-content: space-between;</span><br><span class="line">  padding-left: 0px;</span><br><span class="line">  align-items: center;</span><br><span class="line">  color: #fff;</span><br><span class="line">  font-size: 20px;</span><br><span class="line">  &gt; div &#123;</span><br><span class="line">    display: flex;</span><br><span class="line">    align-items: center;</span><br><span class="line">    span &#123;</span><br><span class="line">      margin-left: 15px;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">.el-aside &#123;</span><br><span class="line">  background-color: #333744;</span><br><span class="line">&#125;</span><br><span class="line">.el-main &#123;</span><br><span class="line">  background-color: #eaedf1;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225214242968.png" alt="image-20210225214242968"></p>
+<p>主要是 flex 布局的一些使用</p>
+<h2 id="主页左侧菜单布局"><a href="#主页左侧菜单布局" class="headerlink" title="主页左侧菜单布局"></a>主页左侧菜单布局</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225214335937.png" alt="image-20210225214335937" style="zoom:50%;" />
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 侧边栏 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-aside</span> <span class="attr">width</span>=<span class="string">&quot;200px&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 侧边栏菜单区域 --&gt;</span></span><br><span class="line">  &lt;el-menu</span><br><span class="line">    background-color=&quot;#333744&quot;</span><br><span class="line">    text-color=&quot;#fff&quot;</span><br><span class="line">    active-text-color=&quot;#ffd04b&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    <span class="comment">&lt;!-- 一级菜单 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-submenu</span> <span class="attr">index</span>=<span class="string">&quot;1&quot;</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- 一级菜单模板区 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot</span>=<span class="string">&quot;title&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 图标 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-location&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 文本 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span>&gt;</span>导航一<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- 二级菜单 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-menu-item</span> <span class="attr">index</span>=<span class="string">&quot;1-4-1&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 一级菜单模板区 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot</span>=<span class="string">&quot;title&quot;</span>&gt;</span></span><br><span class="line">          <span class="comment">&lt;!-- 图标 --&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-location&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">          <span class="comment">&lt;!-- 文本 --&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">span</span>&gt;</span>导航一<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-menu-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-submenu</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-menu</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-aside</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225215337912.png" alt="image-20210225215337912" style="zoom:50%;" />
+
+<h2 id="通过接口获取菜单数据"><a href="#通过接口获取菜单数据" class="headerlink" title="通过接口获取菜单数据"></a>通过接口获取菜单数据</h2><p><code>\- 需要授权的 API ，必须在请求头中使用 </code>Authorization<code>字段提供</code>token<code> 令牌</code></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225215551228.png" alt="image-20210225215551228" style="zoom:50%;" />
+
+<p>打印出来 config</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225215831410.png" alt="image-20210225215831410" style="zoom:50%;" />
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入 axios</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&quot;axios&quot;</span></span><br><span class="line"><span class="comment">// 配置请求的根路径</span></span><br><span class="line">axios.defaults.baseURL = <span class="string">&quot;http://127.0.0.1:8888/api/private/v1/&quot;</span></span><br><span class="line">axios.interceptors.request.use(<span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// console.log(config)</span></span><br><span class="line">  config.headers.Authorization = <span class="built_in">window</span>.sessionStorage.getItem(<span class="string">&quot;token&quot;</span>)</span><br><span class="line">  <span class="comment">// 在最后必须 return config</span></span><br><span class="line">  <span class="keyword">return</span> config</span><br><span class="line">&#125;)</span><br><span class="line">Vue.prototype.$http = axios</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225220237749.png" alt="image-20210225220237749" style="zoom:50%;" />
+
+<h2 id="发起请求获取左侧菜单数据"><a href="#发起请求获取左侧菜单数据" class="headerlink" title="发起请求获取左侧菜单数据"></a>发起请求获取左侧菜单数据</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225220524585.png" alt="image-20210225220524585" style="zoom:50%;" />
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      &#x2F;&#x2F; 左侧菜单数据</span><br><span class="line">      menuList: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    logout() &#123;</span><br><span class="line">      window.sessionStorage.clear()</span><br><span class="line">      this.$router.push(&quot;&#x2F;login&quot;)</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x2F;&#x2F; 获取所有菜单</span><br><span class="line">    async getMenuList() &#123;</span><br><span class="line">      const &#123; data: res &#125; &#x3D; await this.$http.get(&quot;menus&quot;)</span><br><span class="line">      &#x2F;&#x2F; console.log(res);</span><br><span class="line">      if (res.meta.status !&#x3D;&#x3D; 200) return this.$message.error(res.meta.message)</span><br><span class="line">      this.menuList &#x3D; res.data</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created() &#123;</span><br><span class="line">    this.getMenuList()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225221232185.png" alt="image-20210225221232185" style="zoom:50%;" />
+
+<h2 id="左侧菜单UI绘制"><a href="#左侧菜单UI绘制" class="headerlink" title="左侧菜单UI绘制"></a>左侧菜单UI绘制</h2><p>两层 for 循环</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 侧边栏菜单区域 --&gt;</span><br><span class="line">&lt;el-menu</span><br><span class="line">  background-color&#x3D;&quot;#333744&quot;</span><br><span class="line">  text-color&#x3D;&quot;#fff&quot;</span><br><span class="line">  active-text-color&#x3D;&quot;#ffd04b&quot;</span><br><span class="line">&gt;</span><br><span class="line">  &lt;!-- 一级菜单 --&gt;</span><br><span class="line">  &lt;el-submenu :index&#x3D;&quot;item.id + &#39;&#39;&quot; v-for&#x3D;&quot;item in menuList&quot; :key&#x3D;&quot;item.id&quot;&gt;</span><br><span class="line">    &lt;!-- 一级菜单模板区 --&gt;</span><br><span class="line">    &lt;template slot&#x3D;&quot;title&quot;&gt;</span><br><span class="line">      &lt;!-- 图标 --&gt;</span><br><span class="line">      &lt;i class&#x3D;&quot;el-icon-location&quot;&gt;&lt;&#x2F;i&gt;</span><br><span class="line">      &lt;!-- 文本 --&gt;</span><br><span class="line">      &lt;span&gt;&#123;&#123;item.authName&#125;&#125;&lt;&#x2F;span&gt;</span><br><span class="line">    &lt;&#x2F;template&gt;</span><br><span class="line">    &lt;!-- 二级菜单 --&gt;</span><br><span class="line">    &lt;el-menu-item :index&#x3D;&quot;subItem.id + &#39;&#39;&quot; v-for&#x3D;&quot;subItem in item.children&quot; :key&#x3D;&quot;subItem.id&quot;&gt;</span><br><span class="line">      &lt;!-- 一级菜单模板区 --&gt;</span><br><span class="line">      &lt;template slot&#x3D;&quot;title&quot;&gt;</span><br><span class="line">        &lt;!-- 图标 --&gt;</span><br><span class="line">        &lt;i class&#x3D;&quot;el-icon-location&quot;&gt;&lt;&#x2F;i&gt;</span><br><span class="line">        &lt;!-- 文本 --&gt;</span><br><span class="line">        &lt;span&gt;&#123;&#123;subItem.authName&#125;&#125;&lt;&#x2F;span&gt;</span><br><span class="line">      &lt;&#x2F;template&gt;</span><br><span class="line">    &lt;&#x2F;el-menu-item&gt;</span><br><span class="line">  &lt;&#x2F;el-submenu&gt;</span><br><span class="line">&lt;&#x2F;el-menu&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="左侧菜单格式美化"><a href="#左侧菜单格式美化" class="headerlink" title="左侧菜单格式美化"></a>左侧菜单格式美化</h2><p>高亮颜色</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225224917261.png" alt="image-20210225224917261" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225224901831.png" alt="image-20210225224901831" style="zoom:50%;" />
+
+<p>子菜单图标</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225224953178.png" alt="image-20210225224953178" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225225012977.png" alt="image-20210225225012977" style="zoom:50%;" />
+
+<p>一级菜单图标</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 图标 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">:class</span>=<span class="string">&quot;iconsObj[item.id]&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">iconsObj: &#123;</span><br><span class="line">  <span class="string">&#x27;125&#x27;</span>: <span class="string">&#x27;iconfont icon-user&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;103&#x27;</span>: <span class="string">&#x27;iconfont icon-tijikongjian&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;101&#x27;</span>: <span class="string">&#x27;iconfont icon-shangpin&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;102&#x27;</span>: <span class="string">&#x27;iconfont icon-danju&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;145&#x27;</span>: <span class="string">&#x27;iconfont icon-baobiao&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225225849002.png" alt="image-20210225225849002" style="zoom:50%;" />
+
+<p>图标和文本之间的间距</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.iconfont</span> &#123;</span><br><span class="line">  <span class="attribute">margin-right</span>: <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="左侧菜单优化"><a href="#左侧菜单优化" class="headerlink" title="左侧菜单优化"></a>左侧菜单优化</h2><p>一次展示一个子菜单</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225230220715.png" alt="image-20210225230220715" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225230419825.png" alt="image-20210225230419825" style="zoom:50%;" />
+
+<p>解决对不齐的效果</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.el-main</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#eaedf1</span>;</span><br><span class="line">  <span class="selector-class">.el-menu</span> &#123;</span><br><span class="line">    <span class="attribute">border-right</span>: none;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="实现左侧菜单的折叠与展开功能"><a href="#实现左侧菜单的折叠与展开功能" class="headerlink" title="实现左侧菜单的折叠与展开功能"></a>实现左侧菜单的折叠与展开功能</h2><p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225232523131.png" alt="image-20210225232523131"></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225232813625.png" alt="image-20210225232813625" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225232825881.png" alt="image-20210225232825881" style="zoom:50%;" />
+
+<p>要能够动态改变宽度</p>
+<h2 id="实现首页的路由重定向"><a href="#实现首页的路由重定向" class="headerlink" title="实现首页的路由重定向"></a>实现首页的路由重定向</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  path: <span class="string">&quot;/home&quot;</span>,</span><br><span class="line">  component: Home,</span><br><span class="line">  redirect: <span class="string">&quot;/welcome&quot;</span>,</span><br><span class="line">  children: [</span><br><span class="line">    &#123;</span><br><span class="line">      path: <span class="string">&quot;/welcome&quot;</span>,</span><br><span class="line">      component: Welcome</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226091445849.png" alt="image-20210226091445849" style="zoom:50%;" />
+
+<p>添加一个 Welcome 组件</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226091514335.png" alt="image-20210226091514335" style="zoom:50%;" />
+
+<p>首页登录进来是一个欢迎页面</p>
+<h2 id="左侧菜单改造为路由链接"><a href="#左侧菜单改造为路由链接" class="headerlink" title="左侧菜单改造为路由链接"></a>左侧菜单改造为路由链接</h2><p><strong><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226091710684.png" alt="image-20210226091710684"></strong></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226092038507.png" alt="image-20210226092038507" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226092055285.png" alt="image-20210226092055285" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226092002534.png" alt="image-20210226092002534" style="zoom:50%;" />
+
+<h2 id="用户列表开发"><a href="#用户列表开发" class="headerlink" title="用户列表开发"></a>用户列表开发</h2><p>新建一个  组件</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226094914096.png" alt="image-20210226094914096" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226094928511.png" alt="image-20210226094928511" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226094857720.png" alt="image-20210226094857720" style="zoom:50%;" />
+
+<h2 id="解决用户列表小问题"><a href="#解决用户列表小问题" class="headerlink" title="解决用户列表小问题"></a>解决用户列表小问题</h2><p>高亮当前点击的子菜单</p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226095023382.png" alt="image-20210226095023382"></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226095225909.png" alt="image-20210226095225909" style="zoom:50%;" />
+
+<p>写死测试</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226095236631.png" alt="image-20210226095236631" style="zoom:50%;" />
+
+<p>把当前的页面的路由链接存放到<code>sessionStorage</code></p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226095758755.png" alt="image-20210226095758755" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226095816629.png" alt="image-20210226095816629" style="zoom:50%;" />
+
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226095746358.png" alt="image-20210226095746358"></p>
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226100050611.png" alt="image-20210226100050611"></p>
+<p>给菜单动态赋值</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226100109556.png" alt="image-20210226100109556" style="zoom:50%;" />
+
+<p>在页面刷新和点击二级菜单的时候刷新</p>
+<h2 id="绘制用户列表的基本UI结构"><a href="#绘制用户列表的基本UI结构" class="headerlink" title="绘制用户列表的基本UI结构"></a>绘制用户列表的基本UI结构</h2><p>对应的效果</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226100239175.png" alt="image-20210226100239175" style="zoom:50%;" />
+
+<p>面包屑</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 面包屑导航区域 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-breadcrumb</span> <span class="attr">separator</span>=<span class="string">&quot;/&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-breadcrumb-item</span> <span class="attr">:to</span>=<span class="string">&quot;&#123; path: &#x27;/home&#x27; &#125;&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">el-breadcrumb-item</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-breadcrumb-item</span>&gt;</span>用户管理<span class="tag">&lt;/<span class="name">el-breadcrumb-item</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-breadcrumb-item</span>&gt;</span>用户列表<span class="tag">&lt;/<span class="name">el-breadcrumb-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-breadcrumb</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226100848980.png" alt="image-20210226100848980" style="zoom:50%;" />
+
+<p>卡片</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;!-- 面包屑导航区域 --&gt;</span><br><span class="line">    &lt;el-breadcrumb separator&#x3D;&quot;&#x2F;&quot;&gt;</span><br><span class="line">      &lt;el-breadcrumb-item :to&#x3D;&quot;&#123; path: &#39;&#x2F;home&#39; &#125;&quot;&gt;首页&lt;&#x2F;el-breadcrumb-item&gt;</span><br><span class="line">      &lt;el-breadcrumb-item&gt;用户管理&lt;&#x2F;el-breadcrumb-item&gt;</span><br><span class="line">      &lt;el-breadcrumb-item&gt;用户列表&lt;&#x2F;el-breadcrumb-item&gt;</span><br><span class="line">    &lt;&#x2F;el-breadcrumb&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 卡片视图 --&gt;</span><br><span class="line">    &lt;el-card&gt;</span><br><span class="line">      123</span><br><span class="line">    &lt;&#x2F;el-card&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure>
+<p>添加全局样式</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226101256493.png" alt="image-20210226101256493" style="zoom:50%;" />
+
+<p>搜索和添加按钮</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 卡片视图 --&gt;</span><br><span class="line">&lt;el-card&gt;</span><br><span class="line">  &lt;el-row :gutter&#x3D;&quot;20&quot;&gt;</span><br><span class="line">    &lt;el-col :span&#x3D;&quot;9&quot;&gt;</span><br><span class="line">      &lt;!-- 搜索与添加区域   --&gt;</span><br><span class="line">      &lt;el-input placeholder&#x3D;&quot;请输入内容&quot;&gt;</span><br><span class="line">        &lt;el-button slot&#x3D;&quot;append&quot; icon&#x3D;&quot;el-icon-search&quot;&gt;&lt;&#x2F;el-button&gt;</span><br><span class="line">      &lt;&#x2F;el-input&gt;</span><br><span class="line">    &lt;&#x2F;el-col&gt;</span><br><span class="line">    &lt;el-col :span&#x3D;&quot;4&quot;&gt;</span><br><span class="line">      &lt;el-button type&#x3D;&quot;primary&quot;&gt;添加用户&lt;&#x2F;el-button&gt;</span><br><span class="line">    &lt;&#x2F;el-col&gt;</span><br><span class="line">  &lt;&#x2F;el-row&gt;</span><br><span class="line">&lt;&#x2F;el-card&gt;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226104929225.png" alt="image-20210226104929225" style="zoom:50%;" />
+
+
+
+<h2 id="获取用户列表数据"><a href="#获取用户列表数据" class="headerlink" title="获取用户列表数据"></a>获取用户列表数据</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226105058729.png" alt="image-20210226105058729" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226105109995.png" alt="image-20210226105109995" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226105534297.png" alt="image-20210226105534297" style="zoom:50%;" />
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      &#x2F;&#x2F; 获取用户列表的参数对象</span><br><span class="line">      queryInfo: &#123;</span><br><span class="line">        query: &quot;&quot;,</span><br><span class="line">        pagenum: 1,</span><br><span class="line">        pagesize: 2</span><br><span class="line">      &#125;,</span><br><span class="line">      userList: [],</span><br><span class="line">      total: 0</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    async getUserList() &#123;</span><br><span class="line">      const &#123; data: res &#125; &#x3D; await this.$http.get(&quot;users&quot;, &#123;</span><br><span class="line">        params: this.queryInfo</span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line">      if (res.meta.status !&#x3D;&#x3D; 200)</span><br><span class="line">        return this.$message.error(&quot;获取用户列表失败!&quot;)</span><br><span class="line">      console.log(res)</span><br><span class="line">      this.userList &#x3D; res.data.users</span><br><span class="line">      this.total &#x3D; res.data.total</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created() &#123;</span><br><span class="line">    this.getUserList()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="渲染用户列表结构"><a href="#渲染用户列表结构" class="headerlink" title="渲染用户列表结构"></a>渲染用户列表结构</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table</span> <span class="attr">:data</span>=<span class="string">&quot;userList&quot;</span> <span class="attr">border</span> <span class="attr">stripe</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;姓名&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;邮箱&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;电话&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;mobile&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;角色&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;role_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;状态&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;mg_state&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;操作&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.el-card</span> &#123;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">1px</span> <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.15</span>) <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.el-table</span> &#123;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">15px</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226110619276.png" alt="image-20210226110619276"></p>
+<h2 id="为用户列表添加索引项"><a href="#为用户列表添加索引项" class="headerlink" title="为用户列表添加索引项"></a>为用户列表添加索引项</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226111246891.png" alt="image-20210226111246891" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226111312300.png" alt="image-20210226111312300" style="zoom:50%;" />
+
+<h2 id="改造状态栏的显示效果"><a href="#改造状态栏的显示效果" class="headerlink" title="改造状态栏的显示效果"></a>改造状态栏的显示效果</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;状态&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot-scope</span>=<span class="string">&quot;scope&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-switch</span> <span class="attr">v-model</span>=<span class="string">&quot;scope.row.mg_state&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-switch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>使用作用域插槽</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226114606653.png" alt="image-20210226114606653" style="zoom:50%;" />
+
+
+
+<h2 id="插槽形式自定义列的渲染"><a href="#插槽形式自定义列的渲染" class="headerlink" title="插槽形式自定义列的渲染"></a>插槽形式自定义列的渲染</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;操作&quot;</span> <span class="attr">width</span>=<span class="string">&quot;180px&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot-scope</span>=<span class="string">&quot;scope&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 修改按钮 --&gt;</span></span><br><span class="line">    &lt;el-button</span><br><span class="line">      type=&quot;primary&quot;</span><br><span class="line">      icon=&quot;el-icon-edit&quot;</span><br><span class="line">      size=&quot;mini&quot;</span><br><span class="line">    &gt;<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 删除按钮 --&gt;</span></span><br><span class="line">    &lt;el-button</span><br><span class="line">      type=&quot;danger&quot;</span><br><span class="line">      icon=&quot;el-icon-delete&quot;</span><br><span class="line">      size=&quot;mini&quot;</span><br><span class="line">    &gt;<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    &lt;el-tooltip</span><br><span class="line">      effect=&quot;dark&quot;</span><br><span class="line">      content=&quot;分配角色&quot;</span><br><span class="line">      placement=&quot;top&quot;</span><br><span class="line">      :enterable=&quot;false&quot;</span><br><span class="line">    &gt;</span><br><span class="line">      <span class="comment">&lt;!-- 分配角色按钮 --&gt;</span></span><br><span class="line">      &lt;el-button</span><br><span class="line">        type=&quot;warning&quot;</span><br><span class="line">        icon=&quot;el-icon-warning&quot;</span><br><span class="line">        size=&quot;mini&quot;</span><br><span class="line">      &gt;<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-tooltip</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226115552718.png" alt="image-20210226115552718" style="zoom:50%;" />
+
+<h2 id="实现数据分页效果"><a href="#实现数据分页效果" class="headerlink" title="实现数据分页效果"></a>实现数据分页效果</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 分页区域 --&gt;</span></span><br><span class="line">&lt;el-pagination</span><br><span class="line">  @size-change=&quot;handleSizeChange&quot;</span><br><span class="line">  @current-change=&quot;handleCurrentChange&quot;</span><br><span class="line">  :current-page=&quot;queryInfo.pagenum&quot;</span><br><span class="line">  :page-sizes=&quot;[1, 2, 5, 10]&quot;</span><br><span class="line">  :page-size=&quot;queryInfo.pagesize&quot;</span><br><span class="line">  layout=&quot;total, sizes, prev, pager, next, jumper&quot;</span><br><span class="line">  :total=&quot;total&quot;</span><br><span class="line">&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">el-pagination</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 监听 pagesize 改变的事件</span></span><br><span class="line"><span class="function"><span class="title">handleSizeChange</span>(<span class="params">newSize</span>)</span> &#123;</span><br><span class="line"><span class="comment">//   console.log(newSize)</span></span><br><span class="line">  <span class="built_in">this</span>.queryInfo.pagesize = newSize</span><br><span class="line">  <span class="built_in">this</span>.getUserList()</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// 监听页码值改变的事件</span></span><br><span class="line"><span class="function"><span class="title">handleCurrentChange</span>(<span class="params">newPage</span>)</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(newPage)</span><br><span class="line">  <span class="built_in">this</span>.queryInfo.pagenum = newPage</span><br><span class="line">  <span class="built_in">this</span>.getUserList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.el-pagination</span> &#123;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">15px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226132552877.png" alt="image-20210226132552877" style="zoom:50%;" />
+
+<h2 id="实现用户状态的更改"><a href="#实现用户状态的更改" class="headerlink" title="实现用户状态的更改"></a>实现用户状态的更改</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226132754467.png" alt="image-20210226132754467" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226133119658.png" alt="image-20210226133119658" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226133657291.png" alt="image-20210226133657291" style="zoom:50%;" />
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 监听 switch 开关状态的改变</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">userStateChanged</span>(<span class="params">userInfo</span>)</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(userInfo)</span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> <span class="built_in">this</span>.$http.put(</span><br><span class="line">    <span class="string">`users/<span class="subst">$&#123;userInfo.id&#125;</span>/state/<span class="subst">$&#123;userInfo.mg_state&#125;</span>`</span></span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">if</span> (res.meta.status !== <span class="number">200</span>) &#123;</span><br><span class="line">    userInfo.mg_state = !userInfo</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.$message.error(res.meta.message)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">this</span>.$message.success(<span class="string">&#x27;更新用户状态成功!&#x27;</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(res)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="实现搜索的功能"><a href="#实现搜索的功能" class="headerlink" title="实现搜索的功能"></a>实现搜索的功能</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226134104971.png" alt="image-20210226134104971" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226134130020.png" alt="image-20210226134130020" style="zoom:50%;" />
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 搜索与添加区域   --&gt;</span></span><br><span class="line">&lt;el-input</span><br><span class="line">  placeholder=&quot;请输入内容&quot;</span><br><span class="line">  v-model=&quot;queryInfo.query&quot;</span><br><span class="line">  clearable</span><br><span class="line">&gt;</span><br><span class="line">  &lt;el-button</span><br><span class="line">    slot=&quot;append&quot;</span><br><span class="line">    icon=&quot;el-icon-search&quot;</span><br><span class="line">    @click=&quot;getUserList&quot;</span><br><span class="line">    @clear=&quot;getUserList&quot;</span><br><span class="line">  &gt;<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里的接口获取用户列表的接口定义的可以传入 query ，很巧妙</p>
+<h2 id="实现添加用户的功能"><a href="#实现添加用户的功能" class="headerlink" title="实现添加用户的功能"></a>实现添加用户的功能</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226134752702.png" alt="image-20210226134752702" style="zoom:50%;" />
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 添加用户的对话框 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">title</span>=<span class="string">&quot;提示&quot;</span> <span class="attr">:visible.sync</span>=<span class="string">&quot;addDialogVisible&quot;</span> <span class="attr">width</span>=<span class="string">&quot;50%&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 内容主体区 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span>&gt;</span>这是一段信息<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 底部区域 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">slot</span>=<span class="string">&quot;footer&quot;</span> <span class="attr">class</span>=<span class="string">&quot;dialog-footer&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-button</span> @<span class="attr">click</span>=<span class="string">&quot;addDialogVisible = false&quot;</span>&gt;</span>取 消<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;addDialogVisible = false&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span>确 定&lt;/el-button</span><br><span class="line">    &gt;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226134828293.png" alt="image-20210226134828293" style="zoom:50%;" />
+
+<h2 id="添加用户的对话框中渲染一个添加用户的表单"><a href="#添加用户的对话框中渲染一个添加用户的表单" class="headerlink" title="添加用户的对话框中渲染一个添加用户的表单"></a>添加用户的对话框中渲染一个添加用户的表单</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-form</span><br><span class="line">  :model=&quot;addForm&quot;</span><br><span class="line">  :rules=&quot;addFormRules&quot;</span><br><span class="line">  ref=&quot;=addFormRef&quot;</span><br><span class="line">  label-width=&quot;70px&quot;</span><br><span class="line">&gt;</span><br><span class="line">  <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;用户名&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;username&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;addForm.username&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;密码&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;password&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;addForm.password&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;邮箱&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;email&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;addForm.email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;手机&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;mobile&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;addForm.mobile&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">addForm: &#123;</span><br><span class="line">   username: <span class="string">&quot;&quot;</span>,</span><br><span class="line">   password: <span class="string">&quot;&quot;</span>,</span><br><span class="line">   email: <span class="string">&quot;&quot;</span>,</span><br><span class="line">   mobile: <span class="string">&quot;&quot;</span></span><br><span class="line"> &#125;,</span><br><span class="line"> <span class="comment">//   添加表单的验证规则对象</span></span><br><span class="line"> addFormRules: &#123;</span><br><span class="line">   username: [</span><br><span class="line">     &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请输入用户名&quot;</span>, <span class="attr">trigger</span>: <span class="string">&quot;blur&quot;</span> &#125;,</span><br><span class="line">     &#123;</span><br><span class="line">       min: <span class="number">3</span>,</span><br><span class="line">       max: <span class="number">10</span>,</span><br><span class="line">       message: <span class="string">&quot;用户名的长度在 3 到 10 个字符&quot;</span>,</span><br><span class="line">       trigger: <span class="string">&quot;blur&quot;</span></span><br><span class="line">     &#125;</span><br><span class="line">   ],</span><br><span class="line">   password: [</span><br><span class="line">     &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请输入密码&quot;</span>, <span class="attr">trigger</span>: <span class="string">&quot;blur&quot;</span> &#125;,</span><br><span class="line">     &#123;</span><br><span class="line">       min: <span class="number">6</span>,</span><br><span class="line">       max: <span class="number">15</span>,</span><br><span class="line">       message: <span class="string">&quot;用户名的长度在 6 到 15 个字符&quot;</span>,</span><br><span class="line">       trigger: <span class="string">&quot;blur&quot;</span></span><br><span class="line">     &#125;</span><br><span class="line">   ],</span><br><span class="line">   email: [&#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请输入邮箱&quot;</span>, <span class="attr">trigger</span>: <span class="string">&quot;blur&quot;</span> &#125;],</span><br><span class="line">   mobile: [&#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请输入邮箱&quot;</span>, <span class="attr">trigger</span>: <span class="string">&quot;blur&quot;</span> &#125;]</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226140028003.png" alt="image-20210226140028003" style="zoom:50%;" />
+
+<h2 id="实现自定义规则"><a href="#实现自定义规则" class="headerlink" title="实现自定义规则"></a>实现自定义规则</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//   验证邮箱的规则</span></span><br><span class="line"> <span class="keyword">var</span> checkEmail = <span class="function">(<span class="params">rule, value, cb</span>) =&gt;</span> &#123;</span><br><span class="line">   <span class="comment">// 验证邮箱的正则表达式</span></span><br><span class="line">   <span class="keyword">const</span> regEmail = <span class="regexp">/^\w+@\w+(\.\w+)+$/</span></span><br><span class="line">   <span class="keyword">if</span> (regEmail.test(value)) &#123;</span><br><span class="line">     <span class="comment">// 合法邮箱</span></span><br><span class="line">     <span class="keyword">return</span> cb()</span><br><span class="line">   &#125;</span><br><span class="line">   cb(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;请输入合法邮箱&quot;</span>))</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//   验证手机的规则</span></span><br><span class="line"> <span class="keyword">var</span> checkMobile = <span class="function">(<span class="params">rule, value, cb</span>) =&gt;</span> &#123;</span><br><span class="line">   <span class="comment">// 验证手机的正则表达式</span></span><br><span class="line">   <span class="keyword">const</span> regMobile = <span class="regexp">/^1[34578]\d&#123;9&#125;$/</span></span><br><span class="line">   <span class="keyword">if</span> (regMobile.test(value)) &#123;</span><br><span class="line">     <span class="comment">// 合法邮箱</span></span><br><span class="line">     <span class="keyword">return</span> cb()</span><br><span class="line">   &#125;</span><br><span class="line">   cb(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;请输入合法手机号&quot;</span>))</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> email: [</span><br><span class="line">   &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请输入邮箱&quot;</span>, <span class="attr">trigger</span>: <span class="string">&quot;blur&quot;</span> &#125;,</span><br><span class="line">   &#123; <span class="attr">validator</span>: checkEmail, <span class="attr">trigger</span>: <span class="string">&quot;blur&quot;</span> &#125;</span><br><span class="line"> ],</span><br><span class="line"> mobile: [</span><br><span class="line">   &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&quot;请输入手机号&quot;</span>, <span class="attr">trigger</span>: <span class="string">&quot;blur&quot;</span> &#125;,</span><br><span class="line">   &#123; <span class="attr">validator</span>: checkMobile, <span class="attr">trigger</span>: <span class="string">&quot;blur&quot;</span> &#125;</span><br><span class="line"> ]</span><br></pre></td></tr></table></figure>
+
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226141455720.png" alt="image-20210226141455720" style="zoom:50%;" />
+
+<h2 id="实现添加用户表单的重置功能"><a href="#实现添加用户表单的重置功能" class="headerlink" title="实现添加用户表单的重置功能"></a>实现添加用户表单的重置功能</h2><p>对话框关闭之后，重置表单</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226214022152.png" alt="image-20210226214022152" style="zoom:50%;" />
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 监听添加用户对话框的关闭事件</span></span><br><span class="line"><span class="function"><span class="title">addDialogClosed</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.$refs.addFormRef.resetFields();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="添加用户的预验证功能"><a href="#添加用户的预验证功能" class="headerlink" title="添加用户的预验证功能"></a>添加用户的预验证功能</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226214447864.png" alt="image-20210226214447864" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226214500563.png" alt="image-20210226214500563" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226214521097.png" alt="image-20210226214521097" style="zoom:50%;" />
+
+<h2 id="发起请求添加一个新用户"><a href="#发起请求添加一个新用户" class="headerlink" title="发起请求添加一个新用户"></a>发起请求添加一个新用户</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 点击按钮，添加新用户</span></span><br><span class="line"><span class="function"><span class="title">adduser</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.$refs.addFormRef.validate(<span class="keyword">async</span> valid =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(valid);</span><br><span class="line">    <span class="keyword">if</span> (!valid) <span class="keyword">return</span></span><br><span class="line">    <span class="comment">// 可以发起添加用户的网络请求</span></span><br><span class="line">    <span class="keyword">const</span> &#123;<span class="attr">data</span>: res&#125; = <span class="keyword">await</span> <span class="built_in">this</span>.$http.post(<span class="string">&#x27;users&#x27;</span>, <span class="built_in">this</span>.addForm)</span><br><span class="line">      <span class="keyword">if</span> (res.meta.status !== <span class="number">201</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.$message.Error(<span class="string">&quot;添加用户失败!&quot;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="built_in">this</span>.$message.success(<span class="string">&quot;添加用户成功!&quot;</span>)</span><br><span class="line">    <span class="comment">// 隐藏添加用户的对话框</span></span><br><span class="line">    <span class="built_in">this</span>.addDialogVisible = <span class="literal">false</span></span><br><span class="line">    <span class="comment">// 重新获取列表数据</span></span><br><span class="line">    <span class="built_in">this</span>.getUserList()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="添加用户的修改的操作"><a href="#添加用户的修改的操作" class="headerlink" title="添加用户的修改的操作"></a>添加用户的修改的操作</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226220542996.png" alt="image-20210226220542996" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226220612641.png" alt="image-20210226220612641" style="zoom:50%;" />
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226220700604.png" alt="image-20210226220700604" style="zoom:50%;" />
+
+<h2 id="根据ID查询用户信息"><a href="#根据ID查询用户信息" class="headerlink" title="根据ID查询用户信息"></a>根据ID查询用户信息</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 展示编辑用户的对话框</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">showEditDialog</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// console.log(id);</span></span><br><span class="line">  <span class="keyword">const</span> &#123;<span class="attr">data</span>: res&#125; = <span class="keyword">await</span> <span class="built_in">this</span>.$http.get(<span class="string">`/users/<span class="subst">$&#123;id&#125;</span>`</span>)</span><br><span class="line">  <span class="keyword">if</span> (res.meta.status !== <span class="number">200</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.$message.error(<span class="string">&#x27;查询用户信息失败!&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">this</span>.editForm = res.data    </span><br><span class="line">  <span class="built_in">this</span>.editDialogVisible = <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="绘制修改用户的表单"><a href="#绘制修改用户的表单" class="headerlink" title="绘制修改用户的表单"></a>绘制修改用户的表单</h2><p>这个没啥难度，就不说了</p>
+<h2 id="实现修改表单的关闭之后的重置操作"><a href="#实现修改表单的关闭之后的重置操作" class="headerlink" title="实现修改表单的关闭之后的重置操作"></a>实现修改表单的关闭之后的重置操作</h2><p>照葫芦画瓢</p>
+<h2 id="提交修改之前表单预验证操作"><a href="#提交修改之前表单预验证操作" class="headerlink" title="提交修改之前表单预验证操作"></a>提交修改之前表单预验证操作</h2><p>。。。</p>
+<h2 id="修改用户信息的操作"><a href="#修改用户信息的操作" class="headerlink" title="修改用户信息的操作"></a>修改用户信息的操作</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 修改用户的对话框 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">title</span>=<span class="string">&quot;修改用户&quot;</span> <span class="attr">:visible.sync</span>=<span class="string">&quot;editDialogVisible&quot;</span> <span class="attr">width</span>=<span class="string">&quot;50%&quot;</span>&gt;</span></span><br><span class="line">  &lt;el-form</span><br><span class="line">    :model=&quot;editForm&quot;</span><br><span class="line">    :rules=&quot;editFormRules&quot;</span><br><span class="line">    ref=&quot;editFormRef&quot;</span><br><span class="line">    label-width=&quot;70px&quot;</span><br><span class="line">    @close=&quot;editDialogClosed&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;用户名&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;editForm.username&quot;</span> <span class="attr">disabled</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;邮箱&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;email&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;editForm.email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;手机号&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;mobile&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;editForm.mobile&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">slot</span>=<span class="string">&quot;footer&quot;</span> <span class="attr">class</span>=<span class="string">&quot;dialog-footer&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-button</span> @<span class="attr">click</span>=<span class="string">&quot;editDialogVisible = false&quot;</span>&gt;</span>取 消<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;editUserInfo&quot;</span>&gt;</span>确 定<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 展示编辑用户的对话框</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">showEditDialog</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// console.log(id);</span></span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> <span class="built_in">this</span>.$http.get(<span class="string">`/users/<span class="subst">$&#123;id&#125;</span>`</span>)</span><br><span class="line">  <span class="keyword">if</span> (res.meta.status !== <span class="number">200</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.$message.error(<span class="string">&quot;查询用户信息失败!&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">this</span>.editForm = res.data</span><br><span class="line">  <span class="built_in">this</span>.editDialogVisible = <span class="literal">true</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// 监听用户修改框的关闭事件</span></span><br><span class="line"><span class="function"><span class="title">editDialogClosed</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.$refs.editFormRef.resetFields()</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// 修改用户信息并提交</span></span><br><span class="line"><span class="function"><span class="title">editUserInfo</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.$refs.editFormRef.validate(<span class="keyword">async</span> valid =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(valid)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.editForm)</span><br><span class="line">    <span class="keyword">if</span> (!valid) <span class="keyword">return</span></span><br><span class="line">    <span class="comment">// 可以发起修改用户的网络请求</span></span><br><span class="line">    <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> <span class="built_in">this</span>.$http.put(</span><br><span class="line">      <span class="string">&quot;users/&quot;</span> + <span class="built_in">this</span>.editForm.id,</span><br><span class="line">      &#123; <span class="attr">email</span>: <span class="built_in">this</span>.editForm.email, <span class="attr">mobile</span>: <span class="built_in">this</span>.editForm.mobile &#125;</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">if</span> (res.meta.status !== <span class="number">200</span>) &#123;</span><br><span class="line">      <span class="built_in">this</span>.$message.Error(<span class="string">&quot;更新用户信息失败!&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 隐藏用户的对话框</span></span><br><span class="line">    <span class="built_in">this</span>.editDialogVisible = <span class="literal">false</span></span><br><span class="line">    <span class="comment">// 重新获取列表数据</span></span><br><span class="line">    <span class="built_in">this</span>.getUserList()</span><br><span class="line">    <span class="comment">// 提示修改成功</span></span><br><span class="line">    <span class="built_in">this</span>.$message.success(<span class="string">&quot;更新用户信息成功!&quot;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完整版本</p>
+<h2 id="实现删除用户的操作"><a href="#实现删除用户的操作" class="headerlink" title="实现删除用户的操作"></a>实现删除用户的操作</h2><p>MessageBox 需要挂载</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210228214552730.png" alt="image-20210228214552730" style="zoom:50%;" />
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据 id 删除对应的用户信息</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">removeUserById</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// console.log(id);</span></span><br><span class="line">  <span class="comment">// 弹框询问用户是否删除数据</span></span><br><span class="line">  <span class="keyword">const</span> confirmResult = <span class="keyword">await</span> <span class="built_in">this</span>.$confirm(</span><br><span class="line">    <span class="string">&quot;此操作将永久删除该用户, 是否继续?&quot;</span>,</span><br><span class="line">    <span class="string">&quot;提示&quot;</span>,</span><br><span class="line">    &#123;</span><br><span class="line">      confirmButtonText: <span class="string">&quot;确定&quot;</span>,</span><br><span class="line">      cancelButtonText: <span class="string">&quot;取消&quot;</span>,</span><br><span class="line">      type: <span class="string">&quot;warning&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ).catch(<span class="function"><span class="params">err</span> =&gt;</span> err)</span><br><span class="line">  <span class="comment">// 如果用户确认删除，则返回字符串 confirm</span></span><br><span class="line">  <span class="comment">// 如果用户取消删除，则返回值为字符串 concel</span></span><br><span class="line">  <span class="built_in">console</span>.log(confirmResult)</span><br><span class="line">  <span class="keyword">if</span> (confirmResult !== <span class="string">&quot;confirm&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.$message.info(<span class="string">&#x27;已取消了删除&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;确认了删除&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210228214634697.png" alt="image-20210228214634697" style="zoom:50%;" />
+
+<h2 id="完成删除用户的操作"><a href="#完成删除用户的操作" class="headerlink" title="完成删除用户的操作"></a>完成删除用户的操作</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果用户确认删除，则返回字符串 confirm</span></span><br><span class="line"><span class="comment">// 如果用户取消删除，则返回值为字符串 concel</span></span><br><span class="line"><span class="comment">// console.log(confirmResult)</span></span><br><span class="line"><span class="keyword">if</span> (confirmResult !== <span class="string">&quot;confirm&quot;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">this</span>.$message.info(<span class="string">&#x27;已取消了删除&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// console.log(&#x27;确认了删除&#x27;);</span></span><br><span class="line"><span class="keyword">const</span> &#123;<span class="attr">data</span>: res&#125; = <span class="keyword">await</span> <span class="built_in">this</span>.$http.delete(<span class="string">&#x27;users/&#x27;</span> + id)</span><br><span class="line"><span class="keyword">if</span> (res.meta.status !== <span class="number">200</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">this</span>.$message.error(<span class="string">&#x27;删除用户失败!&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">this</span>.$message.success(<span class="string">&#x27;删除用户成功!&#x27;</span>)</span><br><span class="line"><span class="built_in">this</span>.getUserList()</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$refs.addFormRef.resetFields();</span><br></pre></td></tr></table></figure>
+<p>这种调用</p>
+<p>async 和 await</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># vue</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/26/java%E6%8B%BE%E9%81%976-ElasticSearch-kibana%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="prev" title="java拾遗6-ElasticSearch+kibana环境搭建">
+                  <i class="fa fa-chevron-left"></i> java拾遗6-ElasticSearch+kibana环境搭建
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhouzhou</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
