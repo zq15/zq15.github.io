@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="开发权限列表创建对应的组件和加载路由 权限列表的基本页面布局权限列表的获取1234567891011121314151617181920212223export default &amp;#123;  data() &amp;#123;    return &amp;#123;      &#x2F;&#x2F; 权限列表      rightList: []    &amp;#125;  &amp;#125;,  methods: &amp;#123;    &#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="黑马vue商城-day03-权限管理功能开发">
+<meta property="og:url" content="http://example.com/2021/03/01/%E9%BB%91%E9%A9%ACvue%E5%95%86%E5%9F%8E-day03-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="开发权限列表创建对应的组件和加载路由 权限列表的基本页面布局权限列表的获取1234567891011121314151617181920212223export default &amp;#123;  data() &amp;#123;    return &amp;#123;      &#x2F;&#x2F; 权限列表      rightList: []    &amp;#125;  &amp;#125;,  methods: &amp;#123;    &#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301092338553.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301094423729.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301094608520.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301100515007.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301101142694.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301101311761.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301103055296.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301103816095.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301104832999.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301111300136.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301111454775.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301113558762.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301141419854.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301143511849.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301144101859.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301144114552.png">
+<meta property="og:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301150742580.png">
+<meta property="article:published_time" content="2021-03-01T07:46:29.000Z">
+<meta property="article:modified_time" content="2021-03-01T07:49:48.235Z">
+<meta property="article:author" content="zhouzhou">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301092338553.png">
+
+
+<link rel="canonical" href="http://example.com/2021/03/01/%E9%BB%91%E9%A9%ACvue%E5%95%86%E5%9F%8E-day03-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>黑马vue商城-day03-权限管理功能开发 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%9D%83%E9%99%90%E5%88%97%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">开发权限列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E5%88%97%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80"><span class="nav-number">2.</span> <span class="nav-text">权限列表的基本页面布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E5%88%97%E8%A1%A8%E7%9A%84%E8%8E%B7%E5%8F%96"><span class="nav-number">3.</span> <span class="nav-text">权限列表的获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E5%88%97%E8%A1%A8%E8%A1%A8%E6%A0%BC%E7%9A%84%E6%B8%B2%E6%9F%93"><span class="nav-number">4.</span> <span class="nav-text">权限列表表格的渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B8%9A%E5%8A%A1%E5%88%86%E6%9E%90"><span class="nav-number">5.</span> <span class="nav-text">权限管理业务分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%92%E8%89%B2%E5%88%97%E8%A1%A8%E8%B7%AF%E7%94%B1%E7%9A%84%E5%88%87%E6%8D%A2"><span class="nav-number">6.</span> <span class="nav-text">角色列表路由的切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E4%B8%80%E7%BA%A7%E6%9D%83%E9%99%90"><span class="nav-number">7.</span> <span class="nav-text">渲染一级权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96"><span class="nav-number">8.</span> <span class="nav-text">界面美化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E4%BA%8C%E7%BA%A7%E8%8F%9C%E5%8D%95"><span class="nav-number">9.</span> <span class="nav-text">渲染二级菜单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E4%B8%89%E7%BA%A7%E8%8F%9C%E5%8D%95"><span class="nav-number">10.</span> <span class="nav-text">渲染三级菜单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BE%8E%E5%8C%96"><span class="nav-number">11.</span> <span class="nav-text">美化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A7%92%E8%89%B2%E4%B8%8B%E6%8C%87%E5%AE%9A%E6%9D%83%E9%99%90"><span class="nav-number">12.</span> <span class="nav-text">删除角色下指定权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E6%9D%83%E9%99%90-%E6%A0%91%E5%BD%A2%E7%BB%84%E4%BB%B6"><span class="nav-number">13.</span> <span class="nav-text">分配权限-树形组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3bug"><span class="nav-number">14.</span> <span class="nav-text">解决bug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%88%86%E9%85%8D%E6%9D%83%E9%99%90"><span class="nav-number">15.</span> <span class="nav-text">具体分配权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%88%86%E9%85%8D%E8%A7%92%E8%89%B2"><span class="nav-number">16.</span> <span class="nav-text">用户列表分配角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">17.</span> <span class="nav-text">问题</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhouzhou"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">zhouzhou</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://enchantedovo.cn/" title="https:&#x2F;&#x2F;enchantedovo.cn&#x2F;" rel="noopener" target="_blank">butterfly</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://objectkaz.cn/" title="https:&#x2F;&#x2F;objectkaz.cn&#x2F;" rel="noopener" target="_blank">objectkaz</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://qingbo1011.top/" title="https:&#x2F;&#x2F;qingbo1011.top&#x2F;" rel="noopener" target="_blank">qingbo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://xiaoshuang20.github.io/" title="https:&#x2F;&#x2F;xiaoshuang20.github.io&#x2F;" rel="noopener" target="_blank">xiaoshuang</a>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/01/%E9%BB%91%E9%A9%ACvue%E5%95%86%E5%9F%8E-day03-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhouzhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          黑马vue商城-day03-权限管理功能开发
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-03-01 15:46:29 / 修改时间：15:49:48" itemprop="dateCreated datePublished" datetime="2021-03-01T15:46:29+08:00">2021-03-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="开发权限列表"><a href="#开发权限列表" class="headerlink" title="开发权限列表"></a>开发权限列表</h2><p>创建对应的组件和加载路由</p>
+<h2 id="权限列表的基本页面布局"><a href="#权限列表的基本页面布局" class="headerlink" title="权限列表的基本页面布局"></a>权限列表的基本页面布局</h2><h2 id="权限列表的获取"><a href="#权限列表的获取" class="headerlink" title="权限列表的获取"></a>权限列表的获取</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="comment">// 权限列表</span></span><br><span class="line">      rightList: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    <span class="comment">// 获取权限列表</span></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="title">getRightLists</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> <span class="built_in">this</span>.$http.get(<span class="string">&quot;rights/list&quot;</span>)</span><br><span class="line">      <span class="keyword">if</span> (res.meta.status !== <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.$message.error(<span class="string">&quot;获取权限列表失败&quot;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">this</span>.rightList = res.data</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="built_in">this</span>.rightList)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">// 获得所有的权限</span></span><br><span class="line">    <span class="built_in">this</span>.getRightLists()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301092338553.png" alt="image-20210301092338553" style="zoom:50%;" />
+
+<h2 id="权限列表表格的渲染"><a href="#权限列表表格的渲染" class="headerlink" title="权限列表表格的渲染"></a>权限列表表格的渲染</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table</span> <span class="attr">:data</span>=<span class="string">&quot;rightList&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">type</span>=<span class="string">&quot;index&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;权限名称&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;authName&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;路径&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;path&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;权限等级&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;level&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot-scope</span>=<span class="string">&quot;scope&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-tag</span> <span class="attr">v-if</span>=<span class="string">&quot;scope.row.level === &#x27;0&#x27;&quot;</span>&gt;</span>一级<span class="tag">&lt;/<span class="name">el-tag</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-tag</span> <span class="attr">type</span>=<span class="string">&#x27;success&#x27;</span> <span class="attr">v-else-if</span>=<span class="string">&quot;scope.row.level ===&#x27;1&#x27;&quot;</span>&gt;</span>二级<span class="tag">&lt;/<span class="name">el-tag</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-tag</span> <span class="attr">type</span>=<span class="string">&#x27;warning&#x27;</span> <span class="attr">v-else</span>&gt;</span>三级<span class="tag">&lt;/<span class="name">el-tag</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>使用 v-if 等等去实现</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301094423729.png" alt="image-20210301094423729" style="zoom:50%;" />
+
+<h2 id="权限管理业务分析"><a href="#权限管理业务分析" class="headerlink" title="权限管理业务分析"></a>权限管理业务分析</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301094608520.png" alt="image-20210301094608520" style="zoom:50%;" />
+
+<h2 id="角色列表路由的切换"><a href="#角色列表路由的切换" class="headerlink" title="角色列表路由的切换"></a>角色列表路由的切换</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301100515007.png" alt="image-20210301100515007" style="zoom:50%;" />
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 面包屑导航区域 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-breadcrumb</span> <span class="attr">separator</span>=<span class="string">&quot;/&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-breadcrumb-item</span> <span class="attr">:to</span>=<span class="string">&quot;&#123; path: &#x27;/home&#x27; &#125;&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">el-breadcrumb-item</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-breadcrumb-item</span>&gt;</span>权限管理<span class="tag">&lt;/<span class="name">el-breadcrumb-item</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-breadcrumb-item</span>&gt;</span>角色列表<span class="tag">&lt;/<span class="name">el-breadcrumb-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-breadcrumb</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 卡片视图 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-card</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- 添加角色按钮区域 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-col</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span>&gt;</span>添加角色<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">&lt;!-- 角色列表区域 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-table</span> <span class="attr">:data</span>=<span class="string">&quot;roleList&quot;</span> <span class="attr">width</span>=<span class="string">&quot;300px&quot;</span> <span class="attr">border</span> <span class="attr">stripe</span>&gt;</span></span><br><span class="line">          <span class="comment">&lt;!-- 展开列 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">type</span>=<span class="string">&quot;expand&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">type</span>=<span class="string">&quot;index&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;角色名称&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;roleName&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;角色描述&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;roleDesc&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">&quot;操作&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot-scope</span>=<span class="string">&quot;scope&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">icon</span>=<span class="string">&quot;el-icon-edit&quot;</span></span></span><br><span class="line"><span class="tag">              &gt;</span>编辑&lt;/el-button</span><br><span class="line">            &gt;</span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;danger&quot;</span> <span class="attr">icon</span>=<span class="string">&quot;el-icon-delete&quot;</span></span></span><br><span class="line"><span class="tag">              &gt;</span>删除&lt;/el-button</span><br><span class="line">            &gt;</span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span> <span class="attr">type</span>=<span class="string">&quot;warning&quot;</span> <span class="attr">icon</span>=<span class="string">&quot;el-icon-setting&quot;</span></span></span><br><span class="line"><span class="tag">              &gt;</span>分配权限&lt;/el-button</span><br><span class="line">            &gt;</span><br><span class="line">          <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-table</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-card</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 所有角色列表数据</span></span></span><br><span class="line">      roleList: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line"><span class="javascript">    <span class="keyword">async</span> <span class="function"><span class="title">getRolesList</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> <span class="built_in">this</span>.$http.get(<span class="string">&quot;roles&quot;</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (res.meta.status !== <span class="number">200</span>) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="built_in">this</span>.$message.error(<span class="string">&quot;获取角色列表失败&quot;</span>)</span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="javascript">      <span class="built_in">this</span>.roleList = res.data</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="built_in">this</span>.roleList)</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"><span class="javascript">  <span class="function"><span class="title">created</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">this</span>.getRolesList()</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>基本页面</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301101142694.png" alt="image-20210301101142694" style="zoom:50%;" />
+
+<p>要实现这样一个效果</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301101311761.png" alt="image-20210301101311761" style="zoom:50%;" />
+
+<h2 id="渲染一级权限"><a href="#渲染一级权限" class="headerlink" title="渲染一级权限"></a>渲染一级权限</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 展开列 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">type</span>=<span class="string">&quot;expand&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot-scope</span>=<span class="string">&quot;scope&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">v-for</span>=<span class="string">&quot;(item1, i1) in scope.row.children&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item1.id&quot;</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- 渲染一级权限 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;5&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-tag</span>&gt;</span>&#123;&#123; item1.authName &#125;&#125;<span class="tag">&lt;/<span class="name">el-tag</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- 渲染二级和三级权限 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;19&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301103055296.png" alt="image-20210301103055296" style="zoom:50%;" />
+
+<h2 id="界面美化"><a href="#界面美化" class="headerlink" title="界面美化"></a>界面美化</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301103816095.png" alt="image-20210301103816095" style="zoom:50%;" />
+
+<p>加上边距</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.el-tag</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">7px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>加上边框</p>
+<p>每一个的下面加上下边框，第一个的上面加上上边框</p>
+<p>加上一个右箭头</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.bdtop</span> &#123;</span><br><span class="line">  <span class="attribute">border-top</span>: <span class="number">1px</span> solid <span class="number">#eee</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.bdboottom</span> &#123;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#eee</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">slot-scope</span>=<span class="string">&quot;scope&quot;</span>&gt;</span></span><br><span class="line">  &lt;el-row</span><br><span class="line">    :class=&quot;[&#x27;bdboottom&#x27;, i1 === 0 ? &#x27;bdtop&#x27; : &#x27;&#x27;]&quot;</span><br><span class="line">    v-for=&quot;(item1, i1) in scope.row.children&quot;</span><br><span class="line">    :key=&quot;item1.id&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    <span class="comment">&lt;!-- 渲染一级权限 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;5&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-tag</span>&gt;</span>&#123;&#123; item1.authName &#125;&#125;<span class="tag">&lt;/<span class="name">el-tag</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-caret-right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 渲染二级和三级权限 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;19&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="渲染二级菜单"><a href="#渲染二级菜单" class="headerlink" title="渲染二级菜单"></a>渲染二级菜单</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 渲染二级和三级权限 --&gt;</span></span><br><span class="line">el-col :span=&quot;19&quot;&gt;</span><br><span class="line"> <span class="comment">&lt;!-- 通过 for 循环 嵌套渲染二级权限 --&gt;</span></span><br><span class="line"> &lt;el-row</span><br><span class="line">   :class=&quot;[i2 === 0 ? &#x27;&#x27; : &#x27;bdtop&#x27;]&quot;</span><br><span class="line">   v-for=&quot;(item2, i2) in item1.children&quot;</span><br><span class="line">   :key=&quot;item2.id&quot;</span><br><span class="line"> &gt;</span><br><span class="line">   <span class="tag">&lt;<span class="name">el-col</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">el-tag</span> <span class="attr">type</span>=<span class="string">&quot;success&quot;</span>&gt;</span></span><br><span class="line">       &#123;&#123; item2.authName &#125;&#125;</span><br><span class="line">     <span class="tag">&lt;/<span class="name">el-tag</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-caret-right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">/el-col&gt;</span><br></pre></td></tr></table></figure>
+<p>这里的 css 选择器的思路是。如果是第一个就不加上边框，如果是，就加</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301104832999.png" alt="image-20210301104832999" style="zoom:50%;" />
+
+<h2 id="渲染三级菜单"><a href="#渲染三级菜单" class="headerlink" title="渲染三级菜单"></a>渲染三级菜单</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 渲染一级权限 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;5&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-tag</span>&gt;</span>&#123;&#123; item1.authName &#125;&#125;<span class="tag">&lt;/<span class="name">el-tag</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-caret-right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 渲染二级和三级权限 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;19&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 通过 for 循环 嵌套渲染二级权限 --&gt;</span></span><br><span class="line">  &lt;el-row</span><br><span class="line">    :class=&quot;[i2 === 0 ? &#x27;&#x27; : &#x27;bdtop&#x27;]&quot;</span><br><span class="line">    v-for=&quot;(item2, i2) in item1.children&quot;</span><br><span class="line">    :key=&quot;item2.id&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;6&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-tag</span> <span class="attr">type</span>=<span class="string">&quot;success&quot;</span>&gt;</span></span><br><span class="line">        &#123;&#123; item2.authName &#125;&#125;</span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-tag</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-caret-right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;18&quot;</span>&gt;</span></span><br><span class="line">      &lt;el-tag</span><br><span class="line">        type=&quot;warning&quot;</span><br><span class="line">        v-for=&quot;(item3, i3) in item2.children&quot;</span><br><span class="line">        :key=&quot;item3.id&quot;</span><br><span class="line">        &gt;&#123;&#123; item3.authName &#125;&#125;&lt;/el-tag</span><br><span class="line">      &gt;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301111300136.png" alt="image-20210301111300136" style="zoom:50%;" />
+
+<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301111454775.png" alt="image-20210301111454775" style="zoom:50%;" />
+
+<p>加上最小宽度</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">min-width</span>: 1366<span class="selector-tag">px</span>;</span><br></pre></td></tr></table></figure>
+
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301113558762.png" alt="image-20210301113558762" style="zoom:50%;" />
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.vcenter</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>给 el-row 加上居中对齐</p>
+<h2 id="删除角色下指定权限"><a href="#删除角色下指定权限" class="headerlink" title="删除角色下指定权限"></a>删除角色下指定权限</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">removeRightById</span>(<span class="params">role, rightId</span>)</span> &#123;</span><br><span class="line">      <span class="comment">// 弹框提示用户是否删除</span></span><br><span class="line">      <span class="keyword">const</span> confirmResult = <span class="keyword">await</span> <span class="built_in">this</span>.$confirm(<span class="string">&#x27;此操作会永久删除该文件，是否继续?&#x27;</span>,<span class="string">&#x27;提示&#x27;</span>,&#123;</span><br><span class="line">        confirmButtonText: <span class="string">&#x27;确定&#x27;</span>,</span><br><span class="line">        cancelButtonText: <span class="string">&#x27;取消&#x27;</span>,</span><br><span class="line">        type: <span class="string">&#x27;warning&#x27;</span></span><br><span class="line">      &#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> err)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (confirmResult !== <span class="string">&#x27;confirm&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.$message.info(<span class="string">&#x27;取消了删除&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;确认了删除&#x27;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">const</span> &#123;<span class="attr">data</span>: res&#125; = <span class="keyword">await</span> <span class="built_in">this</span>.$http.delete(<span class="string">`roles/<span class="subst">$&#123;role.id&#125;</span>/rights/<span class="subst">$&#123;rightId&#125;</span>`</span>)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (res.meta.status !== <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.$message.error(<span class="string">&#x27;删除权限失效！&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// this.getRolesList()</span></span><br><span class="line">      <span class="comment">// 不要刷新整个页面</span></span><br><span class="line">      role.children = res.data</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-row</span><br><span class="line">  :class=&quot;[&#x27;bdboottom&#x27;, i1 === 0 ? &#x27;bdtop&#x27; : &#x27;&#x27;, &#x27;vcenter&#x27;]&quot;</span><br><span class="line">  v-for=&quot;(item1, i1) in scope.row.children&quot;</span><br><span class="line">  :key=&quot;item1.id&quot;</span><br><span class="line">&gt;</span><br><span class="line">  <span class="comment">&lt;!-- 渲染一级权限 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;5&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-tag</span> <span class="attr">closable</span></span></span><br><span class="line"><span class="tag">          @<span class="attr">close</span>=<span class="string">&quot;removeRightById(scope.row, item1.id)&quot;</span>&gt;</span>&#123;&#123; item1.authName &#125;&#125;<span class="tag">&lt;/<span class="name">el-tag</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-caret-right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 渲染二级和三级权限 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;19&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 通过 for 循环 嵌套渲染二级权限 --&gt;</span></span><br><span class="line">    &lt;el-row</span><br><span class="line">      :class=&quot;[i2 === 0 ? &#x27;&#x27; : &#x27;bdtop&#x27;, &#x27;vcenter&#x27;]&quot;</span><br><span class="line">      v-for=&quot;(item2, i2) in item1.children&quot;</span><br><span class="line">      :key=&quot;item2.id&quot;</span><br><span class="line">    &gt;</span><br><span class="line">      <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;6&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-tag</span> <span class="attr">type</span>=<span class="string">&quot;success&quot;</span> <span class="attr">closable</span></span></span><br><span class="line"><span class="tag">          @<span class="attr">close</span>=<span class="string">&quot;removeRightById(scope.row, item2.id)&quot;</span>&gt;</span></span><br><span class="line">          &#123;&#123; item2.authName &#125;&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-tag</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;el-icon-caret-right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;18&quot;</span>&gt;</span></span><br><span class="line">        &lt;el-tag</span><br><span class="line">          type=&quot;warning&quot;</span><br><span class="line">          v-for=&quot;(item3, i3) in item2.children&quot;</span><br><span class="line">          :key=&quot;item3.id&quot;</span><br><span class="line">          closable</span><br><span class="line">          @close=&quot;removeRightById(scope.row, item3.id)&quot;</span><br><span class="line">          &gt;&#123;&#123; item3.authName &#125;&#125;&lt;/el-tag</span><br><span class="line">        &gt;</span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>整个删除功能就完成了</p>
+<h2 id="分配权限-树形组件"><a href="#分配权限-树形组件" class="headerlink" title="分配权限-树形组件"></a>分配权限-树形组件</h2><p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301141419854.png" alt="image-20210301141419854"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 展示分配权限的对话框</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">showSetRightDialog</span>(<span class="params">role</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// 获取所有权限的数据</span></span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> <span class="built_in">this</span>.$http.get(<span class="string">&quot;rights/tree&quot;</span>)</span><br><span class="line">  <span class="keyword">if</span> (res.meta.status !== <span class="number">200</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.$message.error(<span class="string">&quot;获取权限数据失败&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">this</span>.rightsList = res.data</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.rightsList)</span><br><span class="line">  <span class="comment">// 递归获取三级节点的id</span></span><br><span class="line">  <span class="built_in">this</span>.getLeafKeys(role, <span class="built_in">this</span>.defKeys)</span><br><span class="line">  <span class="built_in">this</span>.setRightDialogVisible = <span class="literal">true</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">//  递归获取所有三级权限的 id 保存到 defKeys 中</span></span><br><span class="line"><span class="function"><span class="title">getLeafKeys</span>(<span class="params">node, arr</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// 如果当前  node 节点不包含 children 则是三级节点</span></span><br><span class="line">  <span class="keyword">if</span> (!node.children) &#123;</span><br><span class="line">    <span class="keyword">return</span> arr.push(node.id)</span><br><span class="line">  &#125;</span><br><span class="line">  node.children.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.getLeafKeys(item, arr)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301143511849.png" alt="image-20210301143511849" style="zoom:50%;" />
+
+<h2 id="解决bug"><a href="#解决bug" class="headerlink" title="解决bug"></a>解决bug</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 监听分配权限对话框的关闭事件</span></span><br><span class="line"><span class="function"><span class="title">setRightDailogClosed</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.defKeys = []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在打开新的对话框的时候，之前打开的会对当前的有影响</p>
+<h2 id="具体分配权限"><a href="#具体分配权限" class="headerlink" title="具体分配权限"></a>具体分配权限</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301144101859.png" alt="image-20210301144101859" style="zoom:50%;" />
+
+
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301144114552.png" alt="image-20210301144114552" style="zoom:50%;" />
+
+<p>拿到树形控件的引用，拿到它的这两个属性就可以</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 监听分配权限对话框的关闭事件</span></span><br><span class="line"><span class="function"><span class="title">setRightDailogClosed</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.defKeys = []</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// 点击为角色分配权限</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">allotRights</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> keys = [</span><br><span class="line">    ...this.$refs.treeRef.getCheckedKeys(),</span><br><span class="line">    ...this.$refs.treeRef.getHalfCheckedKeys()</span><br><span class="line">  ]</span><br><span class="line">  <span class="comment">// console.log(keys);</span></span><br><span class="line">  <span class="keyword">const</span> idStr = keys.join(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">  <span class="keyword">const</span> &#123;<span class="attr">data</span>: res&#125; = <span class="keyword">await</span> <span class="built_in">this</span>.$http.post(<span class="string">`roles/<span class="subst">$&#123;<span class="built_in">this</span>.rightId&#125;</span>/rights`</span>, &#123;<span class="attr">rids</span>: idStr&#125;)</span><br><span class="line">  <span class="keyword">if</span> (res.meta.status !== <span class="number">200</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.$message.error(<span class="string">&#x27;分配权限失败!&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">this</span>.$message.success(<span class="string">&#x27;分配权限成功&#x27;</span>)</span><br><span class="line">  <span class="built_in">this</span>.getRolesList()</span><br><span class="line">  <span class="built_in">this</span>.setRightDialogVisible = <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在点击 对话框之后，需要拿到 id 保存在当前页面中</p>
+<p>然后确定之后，把半选和全选的 id 拼接成一个数组，传过去</p>
+<p>然后刷新列表，关闭对话框</p>
+<h2 id="用户列表分配角色"><a href="#用户列表分配角色" class="headerlink" title="用户列表分配角色"></a>用户列表分配角色</h2><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210301150742580.png" alt="image-20210301150742580" style="zoom:50%;" />
+
+<p>照葫芦画瓢，看gitee 提交即可</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>props 和 scope 的原理</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># vue</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/28/%E9%BB%91%E9%A9%ACvue%E5%95%86%E5%9F%8E-day02-%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/" rel="prev" title="黑马vue商城-day02-用户列表功能开发">
+                  <i class="fa fa-chevron-left"></i> 黑马vue商城-day02-用户列表功能开发
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhouzhou</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
