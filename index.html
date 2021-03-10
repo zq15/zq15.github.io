@@ -181,14 +181,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -238,6 +238,93 @@
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/10/%E5%89%8D%E7%AB%AF%E6%8B%BE%E9%81%9702-%E7%BB%9D%E5%AF%B9%E5%B8%83%E5%B1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zhouzhou">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/10/%E5%89%8D%E7%AB%AF%E6%8B%BE%E9%81%9702-%E7%BB%9D%E5%AF%B9%E5%B8%83%E5%B1%80/" class="post-title-link" itemprop="url">前端拾遗02-绝对布局</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-03-10 14:30:51 / 修改时间：14:31:04" itemprop="dateCreated datePublished" datetime="2021-03-10T14:30:51+08:00">2021-03-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>绝对定位是元素以带有定位的父级元素来移动未知</p>
+<p>1.完全托镖–完全不占位置</p>
+<p>2.父元素没有定位，则以浏览器为准定位</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.father</span> &#123;</span></span><br><span class="line">            width: 350px;</span><br><span class="line">            height: 350px;</span><br><span class="line">            background-color: pink;</span><br><span class="line">            margin: 100px;</span><br><span class="line"><span class="css">        <span class="comment">/*    标准流的子盒子总是以父级为准移动位置  */</span></span></span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.son</span> &#123;</span></span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 200px;</span><br><span class="line">            background-color: purple;</span><br><span class="line">            margin-left: 100px;</span><br><span class="line">            position: absolute;</span><br><span class="line"><span class="css">            <span class="comment">/*top: 50px;*/</span></span></span><br><span class="line"><span class="css">            <span class="comment">/*left: 50px;*/</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;father&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;son&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210310140637481.png" alt="image-20210310140637481" style="zoom:50%;" />
+
+
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.father</span> &#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">350px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">350px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: pink;</span><br><span class="line">            <span class="attribute">margin</span>: <span class="number">100px</span>;</span><br><span class="line">        <span class="comment">/*    标准流的子盒子总是以父级为准移动位置  */</span></span><br><span class="line">        <span class="comment">/*    如果父级没有定位 绝对定位子盒子 以我们的文档为准浏览器移动位置*/</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-class">.son</span> &#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: purple;</span><br><span class="line">            <span class="comment">/*margin-left: 100px;*/</span></span><br><span class="line">            <span class="attribute">position</span>: absolute;</span><br><span class="line">            <span class="attribute">top</span>: <span class="number">50px</span>;</span><br><span class="line">            <span class="attribute">left</span>: <span class="number">50px</span>;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210310140801989.png" alt="image-20210310140801989" style="zoom:50%;" />
+
+<h2 id="绝对定位的父元素有定位"><a href="#绝对定位的父元素有定位" class="headerlink" title="绝对定位的父元素有定位"></a>绝对定位的父元素有定位</h2><p>如果父盒子有定位，以父盒子为准</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.father</span> &#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">350px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">350px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: pink;</span><br><span class="line">            <span class="attribute">margin</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">position</span>: relative;</span><br><span class="line">        <span class="comment">/*    标准流的子盒子总是以父级为准移动位置  */</span></span><br><span class="line">        <span class="comment">/*    如果父级没有定位 绝对定位子盒子 以我们的文档为准浏览器移动位置*/</span></span><br><span class="line">     <span class="comment">/*    如果父级有定位 绝对定位子盒子 以（最近的已经定位 绝对 固定 相对定位）父级为准为准移动位置*/</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-class">.son</span> &#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: purple;</span><br><span class="line">            <span class="comment">/*margin-left: 100px;*/</span></span><br><span class="line">            <span class="attribute">position</span>: absolute;</span><br><span class="line">            <span class="attribute">top</span>: <span class="number">50px</span>;</span><br><span class="line">            <span class="attribute">left</span>: <span class="number">50px</span>;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210310141112795.png" alt="image-20210310141112795" style="zoom:50%;" />
+
+<h2 id="绝对定位的盒子不占有位置"><a href="#绝对定位的盒子不占有位置" class="headerlink" title="绝对定位的盒子不占有位置"></a>绝对定位的盒子不占有位置</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.father</span> &#123;</span></span><br><span class="line">            width: 550px;</span><br><span class="line">            height: 550px;</span><br><span class="line">            background-color: pink;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.damao</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="comment">/*position: absolute;*/</span></span></span><br><span class="line"><span class="css">            <span class="comment">/*top: 0;*/</span></span></span><br><span class="line"><span class="css">            <span class="comment">/*left: 0;*/</span></span></span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 200px;</span><br><span class="line">            background-color: purple;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.ermao</span> &#123;</span></span><br><span class="line">            width: 250px;</span><br><span class="line">            height: 250px;</span><br><span class="line">            background-color: skyblue;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;father&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;damao&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;ermao&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<img src="image-20210310141829937.png" alt="image-20210310141829937" style="zoom:50%;" />
+
+<p>注释放开</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210310141901954.png" alt="image-20210310141901954" style="zoom:50%;" />
+
+<p>给 father 加上 相对定位</p>
+<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210310141901954.png" alt="image-20210310141901954" style="zoom:50%;" />
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1463,98 +1550,6 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name kibana -e ELASTICSEARCH_HOSTS=http://192.168.218.128:9200 -p 5601:5601 -d kibana:7.4.2</span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="http://192.168.126.89:5601/">http://192.168.126.89:5601/</a></p>
 <img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210226160455748.png" alt="image-20210226160455748" style="zoom:50%;" />
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/25/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-day08-%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1-%E5%93%81%E7%89%8C%E7%AE%A1%E7%90%86-%E5%93%81%E7%89%8C%E5%88%86%E7%B1%BB%E4%B8%8E%E7%BA%A7%E8%81%94%E6%9B%B4%E6%96%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="zhouzhou">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/25/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-day08-%E5%95%86%E5%93%81%E6%9C%8D%E5%8A%A1-%E5%93%81%E7%89%8C%E7%AE%A1%E7%90%86-%E5%93%81%E7%89%8C%E5%88%86%E7%B1%BB%E4%B8%8E%E7%BA%A7%E8%81%94%E6%9B%B4%E6%96%B0/" class="post-title-link" itemprop="url">谷粒商城-day08-商品服务-品牌管理-品牌分类与级联更新</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-02-25 17:23:25 / 修改时间：17:23:46" itemprop="dateCreated datePublished" datetime="2021-02-25T17:23:25+08:00">2021-02-25</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="获得与品牌关联的分类"><a href="#获得与品牌关联的分类" class="headerlink" title="获得与品牌关联的分类"></a>获得与品牌关联的分类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取当前品牌关联的所有分类列表</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="comment">//    @RequestMapping(value = &quot;/catelog/list&quot;, method = RequestMethod.GET)</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/catelog/list&quot;)</span></span><br><span class="line"><span class="comment">//    @RequiresPermissions(&quot;product:categorybrandrelation:list&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">list</span><span class="params">(<span class="meta">@RequestParam(&quot;brandId&quot;)</span> Long brandId)</span></span>&#123;</span><br><span class="line">        List&lt;CategoryBrandRelationEntity&gt; data = categoryBrandRelationService.list(</span><br><span class="line">                <span class="keyword">new</span> QueryWrapper&lt;CategoryBrandRelationEntity&gt;().eq(<span class="string">&quot;brand_id&quot;</span>, brandId));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> R.ok().put(<span class="string">&quot;data&quot;</span>, data);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225150950036.png" alt="image-20210225150950036" style="zoom:50%;" />
-
-<h2 id="新增品牌与分类关联关系"><a href="#新增品牌与分类关联关系" class="headerlink" title="新增品牌与分类关联关系"></a>新增品牌与分类关联关系</h2><p><img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225151212281.png" alt="image-20210225151212281"></p>
-<p>考虑到电商系统，没有设计外键，这里在存放id的时候也存放了名字，生成的代码中没有名字，需要重写</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: CategoryBrandRelationController</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 保存</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/save&quot;)</span></span><br><span class="line"><span class="comment">//     @RequiresPermissions(&quot;product:categorybrandrelation:save&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">save</span><span class="params">(<span class="meta">@RequestBody</span> CategoryBrandRelationEntity categoryBrandRelation)</span></span>&#123;</span><br><span class="line">		categoryBrandRelationService.saveDetail(categoryBrandRelation);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> R.ok();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// file: CategoryBrandRelationServiceImpl</span></span><br><span class="line"> <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveDetail</span><span class="params">(CategoryBrandRelationEntity categoryBrandRelation)</span> </span>&#123;</span><br><span class="line">        Long brandId = categoryBrandRelation.getBrandId();</span><br><span class="line">        Long catelogId = categoryBrandRelation.getCatelogId();</span><br><span class="line"><span class="comment">//        1.查询详细名字</span></span><br><span class="line">        BrandEntity brandEntity = brandDao.selectById(brandId);</span><br><span class="line">        CategoryEntity categoryEntity = categoryDao.selectById(catelogId);</span><br><span class="line"></span><br><span class="line">        categoryBrandRelation.setBrandName(brandEntity.getName());</span><br><span class="line">        categoryBrandRelation.setCatelogName(categoryEntity.getName());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.save(categoryBrandRelation);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225151741391.png" alt="image-20210225151741391" style="zoom:50%;" />
-
-<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225151757865.png" alt="image-20210225151757865" style="zoom:50%;" />
-
-<h2 id="冗余数据的级联更新"><a href="#冗余数据的级联更新" class="headerlink" title="冗余数据的级联更新"></a>冗余数据的级联更新</h2><p>冗余设计需要实时更新</p>
-<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225154212945.png" alt="image-20210225154212945" style="zoom:50%;" />
-
-<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225154153849.png" alt="image-20210225154153849" style="zoom:50%;" />
-
-
-
-<h3 id="brand"><a href="#brand" class="headerlink" title="brand"></a>brand</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: BrandController</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 修改</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/update&quot;)</span></span><br><span class="line"><span class="comment">//     @RequiresPermissions(&quot;product:brand:update&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">update</span><span class="params">(<span class="meta">@Validated(UpdateGroup.class)</span> <span class="meta">@RequestBody</span> BrandEntity brand)</span> </span>&#123;</span><br><span class="line">        brandService.updateDeatil(brand);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> R.ok();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// file: BrandServiceImpl</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateDeatil</span><span class="params">(BrandEntity brand)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 保证冗余字段的数据一致</span></span><br><span class="line">    <span class="keyword">this</span>.updateById(brand);</span><br><span class="line">    <span class="keyword">if</span> (!StringUtils.isEmpty(brand.getName())) &#123;</span><br><span class="line">        <span class="comment">// 同步更新其他关联表中的数据</span></span><br><span class="line">        categoryBrandRelationService.updateBrand(brand.getBrandId(), brand.getName());</span><br><span class="line">        <span class="comment">//TODO 更新其他关联</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// file: CategoryBrandRelationServiceImpl</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateBrand</span><span class="params">(Long brandId, String name)</span> </span>&#123;</span><br><span class="line">    CategoryBrandRelationEntity relationEntity = <span class="keyword">new</span> CategoryBrandRelationEntity();</span><br><span class="line">    relationEntity.setBrandId(brandId);</span><br><span class="line">    relationEntity.setBrandName(name);</span><br><span class="line">    <span class="keyword">this</span>.update(relationEntity, <span class="keyword">new</span> QueryWrapper&lt;CategoryBrandRelationEntity&gt;().eq(<span class="string">&quot;brand_id&quot;</span>, brandId));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="category"><a href="#category" class="headerlink" title="category"></a>category</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: CategoryController</span></span><br><span class="line"><span class="comment">// 这里前面都一样，但是到了CategoryBrandRelationServiceImpl 的时候，在mapper层进行重写</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateCategory</span><span class="params">(Long catId, String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.baseMapper.updateCategory(catId, name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CategoryBrandRelationDao</span> <span class="keyword">extends</span> <span class="title">BaseMapper</span>&lt;<span class="title">CategoryBrandRelationEntity</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">updateCategory</span><span class="params">(<span class="meta">@Param(&quot;catId&quot;)</span> Long catId, <span class="meta">@Param(&quot;name&quot;)</span> String name)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">&quot;updateCategory&quot;</span>&gt;</span></span><br><span class="line">    UPDATE `pms_category_brand_relation` SET catelog_name=#&#123;name&#125; where catelog_id=#&#123;catId&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>一个用的 <code>QueryWrapper</code> 一个用的 mapper </p>
-<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225164641276.png" alt="image-20210225164641276" style="zoom:50%;" />
-
-<img src="https://sugon666.oss-cn-hangzhou.aliyuncs.com/images/image-20210225164649288.png" alt="image-20210225164649288" style="zoom:50%;" />
-
-<p>最后 加上事务控制</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateDeatil</span><span class="params">(BrandEntity brand)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 保证冗余字段的数据一致</span></span><br><span class="line">    <span class="keyword">this</span>.updateById(brand);</span><br><span class="line">    <span class="keyword">if</span> (!StringUtils.isEmpty(brand.getName())) &#123;</span><br><span class="line">        <span class="comment">// 同步更新其他关联表中的数据</span></span><br><span class="line">        categoryBrandRelationService.updateBrand(brand.getBrandId(), brand.getName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//TODO 更新其他关联</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateCascade</span><span class="params">(CategoryEntity category)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.updateById(category);</span><br><span class="line">    categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也是由于 <code>MyabtisConfig</code> 里面添加了事务相关的配置</p>
-
       
     </div>
 
